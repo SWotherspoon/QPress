@@ -1,0 +1,21 @@
+# QPress
+
+This package simulates qualitative press perturbation scenarios for network models 
+specified as signed directed graphs. 
+
+The package has four main functions.
+
+* The package reads signed directed graphs from pre-specified formats
+  and generates a community matrix.
+
+* The package samples a community matrix to generate a set of outcomes 
+  which can explored interactively.
+
+* The package provides a means to specify combinations of validation
+  criteria and press perturbation scenarios, and to determine the 
+  proportion of simulated outcomes that meet these specifications.
+
+* The package writes sign directed graphs as .svg and .dia files.
+
+
+
