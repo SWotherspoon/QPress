@@ -1,5 +1,13 @@
-## Functions to read and parse sign directed graphs created in dia
-library(XML)
+#' Qualitative press perturbations for signed digraphs
+#'
+#' This package provides facilities for simulating press
+#' perturbation scenarios for qualitative network models
+#' specified as signed directed graphs (signed digraphs).
+#' @name QPress-package
+#' @docType package
+#' @author B. Raymond, J. Melbourne-Thomas and S. Wotherspoon
+NULL
+
 
 ##' Read and write Dia representations of models
 ##'
@@ -8,9 +16,9 @@ library(XML)
 ##'
 ##' These functions should be used with care as no attempt is made to
 ##' test for model mis-specification.  The \code{model.dia} function
-##' only recognizes node shapes 'Flowchart - Ellipse', 'Flowchart -
-##' Box' and 'Flowchart - Terminal', line types 'Standard - Arc',
-##' 'Standard - ZigZagLine' and 'Standard - Line', and arrow types 8,
+##' only recognizes node shapes "Flowchart - Ellipse", "Flowchart - Box"
+##' and "Flowchart - Terminal", line types "Standard - Arc",
+##' "Standard - ZigZagLine" and "Standard - Line", and arrow types 8,
 ##' 1 and 5.  Other node shapes, line or arrow types will be silently
 ##' ignored leading to a mispecified model.
 ##' @title Dia Representations
@@ -22,6 +30,7 @@ library(XML)
 ##' @param self should self edges be written.
 ##' @return The \code{model.dia} function returns an edge list.
 ##' @export
+##' @import XML
 model.dia <- function(file,labels=NULL) {
   parse.dia(read.dia(file),labels=labels)
 }
@@ -148,11 +157,6 @@ parse.dia <- function(dia,labels=NULL) {
 
 
 
-
-
-##' .. content for \description{} (no empty lines) ..
-##'
-##' .. content for \details{} ..
 ##' @rdname model.dia
 ##' @export
 write.dia <- function(edges,file,width=8,height=2,self=T) {

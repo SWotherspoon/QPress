@@ -1,9 +1,10 @@
 Package: QPress
 Type: Package
-Title: What the package does (short line)
-Version: 1.0
+Title: Qualitative Network Analysis
+Version: 0.1-1
 Date: 2013-05-08
-Author: Who wrote it
-Maintainer: Who to complain to <yourfault@somewhere.net>
-Description: More about what it does (maybe more than one line)
-License: What license is it under?
+Author: Ben Raymond, Jessica Melbourne-Thomas, Simon Wotherspoon
+Maintainer: Simon Wotherspoon <Simon.Wotherspoon@utas.edu.au>
+Depends: XML
+Description: This package simulates qualitative press perturbation scenarios for network models specified as signed directed graphs.
+License: GPL-2

@@ -92,7 +92,7 @@ adjacency.matrix <- function(edges,labels=F,required.groups=c(0)) {
 ##' If A has integer elements and the computations are performed with
 ##' integer arithmetic the result is exact.
 ##' @title Fedeew-Leverrier
-##' @param A
+##' @param A a square matrix
 ##' @return The adjoint matrix or characteristic polynomial of A.
 ##' @export
 adjoint <- function(A) {
@@ -109,7 +109,7 @@ adjoint <- function(A) {
 
 
 ##' @rdname adjoint
-##' @author
+##' @export
 charpoly <- function(A) {
   n <- nrow(A)
   B <- diag(1,n,n)
