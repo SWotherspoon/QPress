@@ -29,6 +29,7 @@ NULL
 ##' @param height height of the nodes in Dia
 ##' @param self should self edges be written.
 ##' @return The \code{model.dia} function returns an edge list.
+##' @seealso \code{\link{model.text}}
 ##' @export
 ##' @import XML
 model.dia <- function(file,labels=NULL) {
@@ -132,6 +133,9 @@ parse.dia <- function(dia,labels=NULL) {
   type <- c("N","P","U","Z")
   backward.type <- type[start]
   forward.type <- type[end]
+
+
+
 
   ## Construct (directed) edge list
   edges <- rbind(data.frame(From=from,
