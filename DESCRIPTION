@@ -5,6 +5,6 @@ Version: 0.1-1
 Date: 2013-05-13
 Author: Ben Raymond, Jessica Melbourne-Thomas, Simon Wotherspoon
 Maintainer: Simon Wotherspoon <Simon.Wotherspoon@utas.edu.au>
-Depends: XML
+Depends: XML, tcltk, tcltk2
 Description: This package simulates qualitative press perturbation scenarios for network models specified as signed directed graphs.
 License: GPL-2
