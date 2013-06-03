@@ -229,35 +229,93 @@ interactive.selection <- function(action,nodes,edges=NULL,
 ##'
 ##' @title Impact Barplot
 ##' @param edges the edgelist of the network
-##' @param As list of simulated community matrices
+##' @param As list of simulated inverse community matrices
 ##' @param epsilon outomes below this in absolute magnitude are treated as zero.
 ##' @export
 impact.barplot <- function(edges,As,epsilon=1.0E-5) {
-  pal <- c("#92C5DE", "#F7F7F7", "#F4A582")
   nodes <- node.labels(edges)
-
-
   action <- function(perturb,monitor,edges,check,slider) {
-    results <- 0
-    for(i in 1:length(As)) {
-      impact <- signum(drop(As[[i]]%*%perturb),epsilon=epsilon)
-      if(all(monitor==impact,na.rm=T)) {
-        results <- results + outer(impact,-1:1,'==')
-      }
-    }
-    if(length(results)>0) {
-      plot.new()
-      rownames(results) <- nodes
-      lwidth <- max(strwidth(nodes,"inches"))
-      opar <- par(mai=c(1,lwidth+0.2,0.4,0.4)+0.2)
-      barplot(t(results),horiz=T,las=1,border=F,col=pal,xlab="Simulations")
-      par(opar)
-    }
+    impact.barplot.action(nodes,As,perturb,monitor,epsilon=epsilon)
   }
 
   interactive.selection(action,nodes,
                         perturb=T,monitor=T)
 }
 
+
+impact.barplot.action <- function(nodes,As,perturb,monitor,epsilon=1.0E-5) {
+  pal <- c("#92C5DE", "#F7F7F7", "#F4A582")
+  results <- 0
+
+  for(i in 1:length(As)) {
+    impact <- signum(drop(As[[i]]%*%perturb),epsilon=epsilon)
+    if(all(monitor==impact,na.rm=T)) {
+      results <- results + outer(impact,-1:1,'==')
+    }
+  }
+  if(length(results)>0) {
+    plot.new()
+    rownames(results) <- nodes
+    lwidth <- max(strwidth(nodes,"inches"))
+    opar <- par(mai=c(1,lwidth+0.2,0.4,0.4)+0.2)
+      barplot(t(results),horiz=T,las=1,border=F,col=pal,xlab="Simulations")
+    par(opar)
+  }
+}
+
+
+
+
+##' Display weights of valid and invalid matrices as a density plots
+##'
+##' This control constructs density plots that show the distribution
+##' of selected edge weights for the cases that meet the selected
+##' validation criteria (blue), and those that do not (red), following
+##' a given perturbation.
+##'
+##' The slider controls the level of smoothing of the densities.
+##' Edges are labelled by pairs of integers for compactness, where the
+##' integer codes correspond to the ordering of the node labels.
+##'
+##' @title Weight Density Plots
+##' @param edges the edgelist of the network
+##' @param As list simulated inverse community matrices
+##' @param ws matrix of simulated edge weights
+##' @param epsilon outomes below this in absolute magnitude are treated as zero.
+##' @export
+weight.density <- function(edges,As,ws,epsilon=1.0E-5) {
+  nodes <- node.labels(edges)
+  colnames(ws) <- paste(unclass(edges$To),unclass(edges$From),sep=":")
+
+  action <- function(perturb,monitor,edges,check,slider) {
+    weight.density.action(As,ws,perturb,monitor,edges,slider,epsilon=epsilon)
+  }
+  interactive.selection(action,nodes,cbind(edges$From,edges$To),
+                        slider=list(initial=1,from=0,to=2),perturb=T,monitor=T)
+}
+
+
+weight.density.action <- function(As,ws,perturb,monitor,edges,slider,epsilon=1.0E-5) {
+  pal <- c("#CA0020", "#0571B0")
+  if(any(edges)) {
+    keep <- rep(F,nrow(ws))
+    for(i in 1:length(As)) {
+      impact <- signum(drop(As[[i]]%*%perturb),epsilon=epsilon)
+      if(all(monitor==impact,na.rm=T)) keep[i] <- T
+    }
+    n <- ceiling(sqrt(sum(edges)))
+    m <- ceiling(sum(edges)/n)
+
+    opar <- par(mfrow=c(m,n),mar=c(5,4,1,1)+0.1)
+    for(k in which(edges)) {
+      d1 <- density(ws[keep,k],adjust=slider)
+      d2 <- density(ws[!keep,k],adjust=slider)
+      plot(d1,xlab=colnames(ws)[k],main="",
+           xlim=range(d1$x,d2$x),ylim=range(d1$y,d2$y),col=pal[1])
+      lines(d2,col=pal[2])
+    }
+    par(opar)
+  }
+}
 
 
