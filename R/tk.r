@@ -244,7 +244,7 @@ impact.barplot <- function(edges,As,epsilon=1.0E-5) {
 
 
 impact.barplot.action <- function(nodes,As,perturb,monitor,epsilon=1.0E-5) {
-  pal <- c("#92C5DE", "#F7F7F7", "#F4A582")
+  pal <- c("#92C5DE", "#808080", "#F4A582")
   results <- 0
 
   for(i in 1:length(As)) {
