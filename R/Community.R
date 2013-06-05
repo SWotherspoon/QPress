@@ -185,7 +185,7 @@ enforce.limitation <- function(edges) {
 ##' @export
 retain.groups <- function(edges,groups) {
   labels <- node.labels(edges)
-  edges[edges$Group %in% groups,]
+  edges <- edges[edges$Group %in% groups,]
   labels <- labels[labels %in% c(as.character(edges$From),
                                  as.character(edges$To))]
   edges$From <- factor(edges$From,levels=labels)
@@ -382,7 +382,7 @@ stable.community <- function(W) {
 ##' \code{press.validate} constructs a function of a single argument
 ##' \code{W} to test whether the response to perturbation of the
 ##' system represented by the community matrix \code{W} matches
-##' anobserved outcome.  The outcome is only specified up to sign (-1,
+##' an observed outcome.  The outcome is only specified up to sign (-1,
 ##' 0 or +1), where outcomes smaller than \code{epsilon} are treated
 ##' as zero.
 ##' @title Validation Criterion
@@ -394,6 +394,7 @@ stable.community <- function(W) {
 ##' @return Returns a function that when applied to a community matrix
 ##' determines whether the matrix is consistent with the given
 ##' validation criterion.
+##' @examples
 ##' set.seed(32)
 ##' ## Sample model
 ##' edges <- parse.text(c(
