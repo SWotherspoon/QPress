@@ -245,7 +245,7 @@ impact.barplot <- function(edges,As,epsilon=1.0E-5) {
 
 impact.barplot.action <- function(nodes,As,perturb,monitor,epsilon=1.0E-5) {
   pal <- c("#92C5DE", "#808080", "#F4A582")
-  results <- 0
+  results <- matrix(0,length(nodes),3)
 
   for(i in 1:length(As)) {
     impact <- signum(drop(As[[i]]%*%perturb),epsilon=epsilon)
@@ -253,14 +253,12 @@ impact.barplot.action <- function(nodes,As,perturb,monitor,epsilon=1.0E-5) {
       results <- results + outer(impact,-1:1,'==')
     }
   }
-  if(length(results)>0) {
-    plot.new()
-    rownames(results) <- nodes
-    lwidth <- max(strwidth(nodes,"inches"))
-    opar <- par(mai=c(1,lwidth+0.2,0.4,0.4)+0.2)
-      barplot(t(results),horiz=T,las=1,border=F,col=pal,xlab="Simulations")
-    par(opar)
-  }
+  plot.new()
+  rownames(results) <- nodes
+  lwidth <- max(strwidth(nodes,"inches"))
+  opar <- par(mai=c(1,lwidth+0.2,0.4,0.4)+0.2)
+  barplot(t(results),horiz=T,las=1,border=F,col=pal,xlab="Simulations")
+  par(opar)
 }
 
 
