@@ -1,0 +1,373 @@
+\documentclass[a4paper]{article}
+\usepackage{tikz}
+\usetikzlibrary{arrows}
+\usepackage{a4wide}
+\usepackage[authoryear]{natbib}
+\usepackage{amsmath}
+
+%\SweaveOpts{engine=R, eps=FALSE, keep.source = FALSE}
+%\VignetteIndexEntry{Simple example analyses}
+%\VignetteDepends{QPress}
+%\VignettePackage{QPress}
+\begin{document}
+
+\title{Snowshoe Example}
+\date{2013}
+\author{\textbf{Jessica Melbourne-Thomas} \\
+Australian Antarctic Division\\
+\and \textbf{Ben Raymond} \\
+Australian Antarctic Division\\
+\and \textbf{Andrew Constable} \\
+Australian Antarctic Division\\
+\and \textbf{Simon Wotherspoon} \\
+Australian Antarctic Division\\
+Institute for Marine and Antarctic Studies\\
+University of Tasmania}
+\maketitle
+
+\begin{abstract}
+  The \textbf{QPress} package provides facilities for qualitatively
+  modelling the impact of a press perturbation upon a network model.
+  This document illustrates the basic features of the package through
+  a simple example.}
+\end{abstract}
+
+\section{Introduction}
+\label{sec:introduction}
+
+The \textbf{QPress} package provides facilities for qualitatively
+modelling the impact of a press perturbation upon a network model in
+the style of~\cite{JMT2012}.
+
+In this document we illustrate some of the basic facilities provided
+by the package using the Snowshoe hare example from
+\cite{Dambacher2007}.
+
+
+\section{Snowshoe Hare}
+\label{sec:snowshoe-hare}
+
+\cite{Dambacher2007} describes five alternative models for the
+interactions between the snowshoe hare, its major predator and the
+supporting vegetation.  These five models are reproduced in
+Table~\ref{tab:Models}, and show the interactions of the hare $H$,
+with the vegetation $V$ and predator $P$.
+
+\begin{table}[ht]
+  \centering
+  \begin{tabular}{lll}
+    Model A &
+    \begin{tikzpicture}[baseline=(current bounding box.center),->,>=stealth',auto,node distance=2cm,
+      thick,main node/.style={circle,fill=blue!20,draw,font=\sffamily\bfseries}]
+      \node[main node] (V) {V};
+      \node[main node] (H) [right of=V] {H};
+      \node[main node] (P) [right of=H] {P};
+      \draw[*->] (V) edge (H);
+      \draw[*->] (H) edge (P);
+      \draw[-*] (V) to [loop below,out=210,in=270,looseness=5] (V);
+      \draw[-*] (P) to [loop below,out=210,in=270,looseness=5] (P);
+    \end{tikzpicture}\\
+    Model B &
+    \begin{tikzpicture}[baseline=(current bounding box.center),->,>=stealth',auto,node distance=2cm,
+      thick,main node/.style={circle,fill=blue!20,draw,font=\sffamily\bfseries}]
+      \node[main node] (V) {V};
+      \node[main node] (H) [right of=V] {H};
+      \node[main node] (P) [right of=H] {P};
+      \draw[*->] (V) edge (H);
+      \draw[*->] (H) edge (P);
+      \draw[->] (V) edge [bend left=50] (P);
+      \draw[-*] (V) to [loop below,out=210,in=270,looseness=5] (V);
+      \draw[-*] (P) to [loop below,out=210,in=270,looseness=5] (P);
+    \end{tikzpicture}\\
+    Model C &
+    \begin{tikzpicture}[baseline=(current bounding box.center),->,>=stealth',auto,node distance=2cm,
+      thick,main node/.style={circle,fill=blue!20,draw,font=\sffamily\bfseries}]
+      \node[main node] (V) {V};
+      \node[main node] (H) [right of=V] {H};
+      \node[main node] (P) [right of=H] {P};
+      \draw[*->] (V) edge (H);
+      \draw[*->] (H) edge (P);
+      \draw[->] (V) edge [bend left=50] (P);
+      \draw[-*] (V) to [loop below,out=210,in=270,looseness=5] (V);
+      \draw[-*] (H) to [loop below,out=210,in=270,looseness=5] (H);
+      \draw[-*] (P) to [loop below,out=210,in=270,looseness=5] (P);
+    \end{tikzpicture}\\
+    Model D &
+    \begin{tikzpicture}[baseline=(current bounding box.center),->,>=stealth',auto,node distance=2cm,
+      thick,main node/.style={circle,fill=blue!20,draw,font=\sffamily\bfseries}]
+      \node[main node] (V) {V};
+      \node[main node] (H) [right of=V] {H};
+      \node[main node] (P) [right of=H] {P};
+      \draw[*->] (V) edge (H);
+      \draw[*->] (H) edge (P);
+      \draw[*->] (V) edge [bend left=50] (P);
+      \draw[-*] (V) to [loop below,out=210,in=270,looseness=5] (V);
+      \draw[-*] (P) to [loop below,out=210,in=270,looseness=5] (P);
+    \end{tikzpicture}\\
+    Model E &
+    \begin{tikzpicture}[baseline=(current bounding box.center),->,>=stealth',auto,node distance=2cm,
+      thick,main node/.style={circle,fill=blue!20,draw,font=\sffamily\bfseries}]
+      \node[main node] (V) {V};
+      \node[main node] (H) [right of=V] {H};
+      \node[main node] (P) [right of=H] {P};
+      \draw[*->] (V) edge (H);
+      \draw[*->] (H) edge (P);
+      \draw[*->] (V) edge [bend left=50] (P);
+      \draw[-*] (V) to [loop below,out=210,in=270,looseness=5] (V);
+      \draw[-*] (H) to [loop below,out=210,in=270,looseness=5] (H);
+      \draw[-*] (P) to [loop below,out=210,in=270,looseness=5] (P);
+    \end{tikzpicture}\\
+  \end{tabular}
+  \label{tab:Models}
+  \caption{Alternate models for the Snowshoe hare system.}
+\end{table}
+
+
+\section{Model Definition}
+\label{sec:model-definition}
+
+The first step of any analysis is to define an appropriate model
+structure.
+
+A directed graph representation of a model may be constructed from
+simple textual description with the \texttt{parse.text} and
+\texttt{model.text} functions.  The \texttt{parse.text} allows the
+edges of the graph to be specified as a vector of character strings
+<<>>=
+library(QPress)
+modelA <- parse.text(c("V-*V","P-*P","V*->H","H*->P"))
+@
+Alternately, the edge descriptions can be stored in a text file, one edge
+per line, and read and written with \texttt{model.text} and
+\texttt{write.text} respectively
+<<>>=
+write.text(modelA,"modelA.txt")
+modelA <- model.text("modelA.txt")
+@
+
+[DIA HERE]
+
+Within \textsf{R}, the graph is represented as an edge list, a
+dataframe of directed edges
+<<>>=
+modelA
+@
+This dataframe records the nodes connected by the directed edge
+(\texttt{To} and \texttt{From}), whether the edge represents a
+positive (P) or negative (N) impact(\texttt{Type}), and which edges
+were paired in the original specification (\texttt{Pair}).  As will be
+demonstrated below, it also it is possible to group edges (\texttt{Group)}).
+For example, the edge connecting $V$ and $H$ in model A has been separated into
+the positive impact of \texttt{V} upon \texttt{H}, and the negative
+impact of \texttt{H} upon \texttt{V}.
+
+Models $B$ to $E$ may be defined similarly
+<<>>=
+modelB <- parse.text(c("V-*V","P-*P","V*->H","H*->P","V->P"))
+modelC <- parse.text(c("V-*V","H-*H","P-*P","V*->H","H*->P","V->P"))
+modelD <- parse.text(c("V-*V","P-*P","V*->H","H*->P","V*->P"))
+modelE <- parse.text(c("V-*V","H-*H","P-*P","V*->H","H*->P","V*->P"))
+@
+It is also possible to combine these four models into one ``super''
+model using the mechanism of uncertain edges. Edges are allocated into
+groups according to the number of dashes in their text definition or
+the line style in their Dia definition.  The (directed) edges common
+to the four models are specified as one group, and the disjoint edges
+as a second
+<<>>=
+modelBCDE <- parse.text(c("V-*V","P-*P","V*->H","H*->P","V->P","H--*H","P*--H"))
+modelBCDE
+@
+When simulating from this super model, edges from the first group
+(group 0) can be treated as ``required'' and then will be included in
+all simulations, while second group (group 1) can be treated as
+``uncertain'', and included or excluded at random.
+
+Many models will not be stable unless the majority of nodes are self
+limiting. The \texttt{enforce.limitations} function adds a self
+limiting edge to every node.  So models C and E could be obtained from
+models B and D as
+<<>>=
+modelC <- enforce.limitation(modelB)
+modelE <- enforce.limitation(modelD)
+@
+
+The adjacency matrix can be constructed from the edge list with the
+\texttt{adjacency.matrix} function
+<<>>=
+adjacency.matrix(modelA,labels=T)
+@
+
+\section{High Level Simulation}
+\label{sec:high-level-sim}
+
+Many analyses can be performed with the high level simulation
+function \texttt{system.simulate}.  This function simulates random
+community matrices that:
+\begin{itemize}
+\item are consistent with the given signed directed graph,
+\item correspond to a system with a stable equilibrium, and optionally
+\item are consistent with a set of validation criteria,
+\end{itemize}
+and returns the negative inverses and the non-zero elements of the
+simulated community matrices.  The properties of these simulated
+matrices can be interactively explored with the
+\texttt{impact.barplot} and \texttt{weight.density} functions.
+
+
+\cite{Dambacher2007} note that model A predicts that a positive press
+perturbation of the vegetation always results in an increase in hare
+numbers, yet manipulation experiments have shown that this is not
+always the case, suggesting that model A is not an adequate
+description of the physical system.
+
+
+To show that model A predicts an increase in hare numbers following a
+positive press perturbation of the vegetation, we simulate 1000
+community matrices corresponding to model A
+<<>>=
+simA <- system.simulate(1000,modelA)
+@
+and explore the simulations with \texttt{impact.barplot}
+<<eval=F>>=
+impact.barplot(simA)
+@
+This creates an interactive control panel that allows the user to
+specify a press perturbation and optionally a validation criterion,
+and then displays the impact of the perturbation on each node as a
+barplot. This plot shows the fraction of positive (orange), zero
+(brown), and negative (blue) outcomes at each node.  Selecting a
+positive (\texttt{+}) perturbation of the $V$ node in the perturbation panel, and
+pressing the update button produces the first barplot shown in
+Figure~\ref{fig:Impact1}. This plot shows that a positive press
+perturbation to the vegetation always has a positive impact at each
+node.
+
+Repeating this process for model B
+<<eval=F>>=
+simB <- system.simulate(1000,modelB)
+impact.barplot(simB)
+@
+produces the second barplot in in Figure~\ref{fig:Impact1}.  This
+shows that for model B, approximately $40\%$ of the community matrices
+simulated yield a decrease in hare numbers following a positive press
+perturbation to the vegetation.
+
+The third and fourth plots in Figure~\ref{fig:Impact1} show results
+for the combined model BCDE.
+<<eval=F>>=
+simBCDE <- system.simulate(1000,modelBCDE)
+impact.barplot(simBCDE)
+@
+Model BCDE includes uncertain edges -- edges that are included or
+excluded at random in each simulated community matrix. The plot on the
+lower left shows the result of selecting a positive (\texttt{+})
+perturbation of the $V$ node in the perturbation panel as for the
+previous models. This shows that for the combined model, it is
+possible for a positive press perturbation to lead to an overall
+negative impact on the vegetation. We can impose the additional
+constraint that a positive press perturbation must lead to an increase
+in vegetation by also selecting a positive (\texttt{+}) validation
+criterion for the $V$ node in the monitor panel.  This yields the
+final plot in Figure~\ref{fig:Impact1}, which shows the proportion of
+positive (orange), zero (brown) and negative (blue) impacts at each
+node predicted by the combined model but only for the simulated
+community matrices for which a positive press perturbation to the
+vegetation lead to an increase in perturbation.
+\begin{figure}[ht]
+  \centering
+<<echo=F,fig=T>>=
+opar <- par(mfrow=c(2,2))
+QPress:::impact.barplot.action(node.labels(modelA),simA$A,c(0,0,1),c(NA,NA,NA),main="Model A")
+simB <- system.simulate(1000,modelB)
+QPress:::impact.barplot.action(node.labels(modelB),simB$A,c(0,0,1),c(NA,NA,NA),main="Model B")
+simBCDE <- system.simulate(1000,modelBCDE)
+QPress:::impact.barplot.action(node.labels(modelBCDE),simBCDE$A,c(0,0,1),c(NA,NA,NA),main="Model BCDE")
+QPress:::impact.barplot.action(node.labels(modelBCDE),simBCDE$A,c(0,0,1),c(NA,NA,1),main="Validated BCDE")
+par(opar)
+@
+\caption{Model outcomes in response to a positive press perturbation to the
+  vegetation. Each plot shows the fraction of positive (orange), zero
+  (brown), and negative (blue) outcomes at each node following a
+  positive press perturbation to the vegetation.}
+  \label{fig:Impact1}
+\end{figure}
+
+The \texttt{weight.density} function can be used to explore the
+magnitude of the edge weights (model interaction strengths) associated
+with a particular outcomes. For example, the call
+<<eval=F>>=
+weights.density(simBCDE)
+@
+produces an interactive control panel that allows the user to specify
+a press perturbation, an observed outcome, and a subset of edges.  For
+ease of identification, the edge selection panel is layed out in the
+same structure as the adjacency matrix
+<<>>=
+adjacency.matrix(modelBCDE,required.groups=0:1)
+@
+
+The community matrices simulated from the model are classified as
+either consistent or inconsistent with the observed outcome given the
+specified press perturbation, and for each selected edge, density
+plots of the edge weights are produced for the two groups of
+matrices. For matrices consistent with the observed outcome, the
+density of edge weights is shown in blue, while for those inconsistent
+with the observed outcome, the density of edge weights is shown in
+red.  For readibility, the plots are labelled by the indices that edge
+would have in the adjacency matrix.
+
+For the simulated matrices from model BCDE, selecting a positive
+(\texttt{+}) perturbation of the $V$ node in the perturbation panel,
+and negative (\texttt{-}) outcome for $H$ in the monitor panel and
+selecting all edges produces the suite of density plots shown in
+Figure~\ref{fig:Weights1}.  Each plot in the figure corresponds to an
+edge of model BCDE, and the blue lines show the density of the edge
+weights where hares decreased, while the red lines show the density of
+edge weights where hares increased.  So for example, the plot labelled
+\texttt{1:1} corresponds to the self limiting edge on \texttt{H}, and
+shows that decreases in hare numbers following a positive press
+perturbation to vegetation is associated with stronger self limitation
+of hares.
+\begin{figure}[ht]
+  \centering
+<<echo=F,fig=T>>=
+colnames(simBCDE$w) <- paste(unclass(simBCDE$edges$To),unclass(simBCDE$edges$From),sep=":")
+QPress:::weight.density.action(simBCDE$A,simBCDE$w,
+                               c(0,0,1),c(-1,NA,NA),
+                               edges=c(T,T,T,F,T,T,T,T,T),slider=1)
+@
+\caption{Edge weight density plots for a decrease in hares following a positive
+  press perturbation to vegetation in model BCDE. Each plot
+  corresponds to an edge, and shows the distribution of edge weights
+  when hares decrease (blue) and when hares increase (red).}
+  \label{fig:Weights1}
+\end{figure}
+
+
+More complex validation criteria can be specified by passing
+validation functions generated by \texttt{press.validate} to
+\texttt{system.simulate} directly.  For example, the call
+<<>>=
+simBCDE1 <- system.simulate(1000,modelBCDE,
+                            validators=list(
+                              press.validate(modelBCDE,
+                                             perturb=c(P=1),
+                                             monitor=c(H=-1)),
+                              press.validate(modelBCDE,
+                                             perturb=c(V=1),
+                                             monitor=c(V=1))))
+@
+simulates community matrices consistent with model BCDE that
+satisfy the validation criteria that hares decrease following a
+positive press perturbation of the predators, and vegetation increases
+following a press perturbation of vegetation.
+
+
+
+
+
+\bibliographystyle{apalike}
+\bibliography{QPress}
+
+\end{document}
