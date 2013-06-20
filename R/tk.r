@@ -228,14 +228,16 @@ interactive.selection <- function(action,nodes,edges=NULL,
 ##' barplot of the frequency table of outcomes at each node.
 ##'
 ##' @title Impact Barplot
-##' @param edges the edgelist of the network
-##' @param As list of simulated inverse community matrices
+##' @param sim the result from \code{system.simulate}
 ##' @param epsilon outomes below this in absolute magnitude are treated as zero.
+##' @param main text for plot title
 ##' @export
-impact.barplot <- function(edges,As,epsilon=1.0E-5) {
+impact.barplot <- function(sim,epsilon=1.0E-5,main="") {
+  edges <- sim$edges
+  As <- sim$A
   nodes <- node.labels(edges)
   action <- function(perturb,monitor,edges,check,slider) {
-    impact.barplot.action(nodes,As,perturb,monitor,epsilon=epsilon)
+    impact.barplot.action(nodes,As,perturb,monitor,epsilon=epsilon,main=main)
   }
 
   interactive.selection(action,nodes,
@@ -243,7 +245,7 @@ impact.barplot <- function(edges,As,epsilon=1.0E-5) {
 }
 
 
-impact.barplot.action <- function(nodes,As,perturb,monitor,epsilon=1.0E-5) {
+impact.barplot.action <- function(nodes,As,perturb,monitor,epsilon=1.0E-5,main="") {
   pal <- c("#92C5DE", "#808080", "#F4A582")
   results <- matrix(0,length(nodes),3)
 
@@ -253,11 +255,10 @@ impact.barplot.action <- function(nodes,As,perturb,monitor,epsilon=1.0E-5) {
       results <- results + outer(impact,-1:1,'==')
     }
   }
-  plot.new()
   rownames(results) <- nodes
   lwidth <- max(strwidth(nodes,"inches"))
   opar <- par(mai=c(1,lwidth+0.2,0.4,0.4)+0.2)
-  barplot(t(results),horiz=T,las=1,border=F,col=pal,xlab="Simulations")
+  barplot(t(results),horiz=T,las=1,border=F,col=pal,xlab="Simulations",main=main)
   par(opar)
 }
 
@@ -276,25 +277,28 @@ impact.barplot.action <- function(nodes,As,perturb,monitor,epsilon=1.0E-5) {
 ##' integer codes correspond to the ordering of the node labels.
 ##'
 ##' @title Weight Density Plots
-##' @param edges the edgelist of the network
-##' @param As list simulated inverse community matrices
-##' @param ws matrix of simulated edge weights
+##' @param sim the result from \code{system.simulate}
 ##' @param epsilon outomes below this in absolute magnitude are treated as zero.
+##' @param main text for plot title
 ##' @export
-weight.density <- function(edges,As,ws,epsilon=1.0E-5) {
+weight.density <- function(sim,epsilon=1.0E-5,main="") {
+  edges <- sim$edges
+  As <- sim$A
+  ws <- sim$w
+
   nodes <- node.labels(edges)
   colnames(ws) <- paste(unclass(edges$To),unclass(edges$From),sep=":")
 
   action <- function(perturb,monitor,edges,check,slider) {
-    weight.density.action(As,ws,perturb,monitor,edges,slider,epsilon=epsilon)
+    weight.density.action(As,ws,perturb,monitor,edges,slider,epsilon=epsilon,main=main)
   }
   interactive.selection(action,nodes,cbind(edges$From,edges$To),
                         slider=list(initial=1,from=0,to=2),perturb=T,monitor=T)
 }
 
 
-weight.density.action <- function(As,ws,perturb,monitor,edges,slider,epsilon=1.0E-5) {
-  pal <- c("#CA0020", "#0571B0")
+weight.density.action <- function(As,ws,perturb,monitor,edges,slider,epsilon=1.0E-5,main="") {
+  pal <- c("#0571B0", "#CA0020")
   if(any(edges)) {
     keep <- rep(F,nrow(ws))
     for(i in 1:length(As)) {
@@ -311,6 +315,7 @@ weight.density.action <- function(As,ws,perturb,monitor,edges,slider,epsilon=1.0
       plot(d1,xlab=colnames(ws)[k],main="",
            xlim=range(d1$x,d2$x),ylim=range(d1$y,d2$y),col=pal[1])
       lines(d2,col=pal[2])
+      title(main=main,outer=T)
     }
     par(opar)
   }
