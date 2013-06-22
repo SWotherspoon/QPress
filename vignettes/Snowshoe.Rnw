@@ -299,7 +299,7 @@ weights.density(simBCDE)
 @
 produces an interactive control panel that allows the user to specify
 a press perturbation, an observed outcome, and a subset of edges.  For
-ease of identification, the edge selection panel is layed out in the
+ease of identification, the edge selection panel is laid out in the
 same structure as the adjacency matrix
 <<>>=
 adjacency.matrix(modelBCDE,required.groups=0:1)
@@ -312,7 +312,7 @@ plots of the edge weights are produced for the two groups of
 matrices. For matrices consistent with the observed outcome, the
 density of edge weights is shown in blue, while for those inconsistent
 with the observed outcome, the density of edge weights is shown in
-red.  For readibility, the plots are labelled by the indices that edge
+red.  For readability, the plots are labelled by the indices that edge
 would have in the adjacency matrix.
 
 For the simulated matrices from model BCDE, selecting a positive
@@ -368,7 +368,7 @@ models reproduce an observed outcome.  At a simple level, the more
 frequently a model reproduces a observed outcome, the more likely the
 model is correct.  This notion can be embedded within Bayesian
 framework to produce a formal system of model comparison. Suppose a
-postive press perturbation of vegetation is observed to produce a
+positive press perturbation of vegetation is observed to produce a
 decrease in hare numbers.  It is believed that the system can be
 described by model B, C, D, or E, but it is believed that models D and
 E are slightly more plausible than models B and C.  Models B and C are
@@ -465,7 +465,7 @@ impact(W)
 
 The \texttt{press.validate} function constructs a function to
 determine whether a community matrix satisfies a given validation
-ceriterion
+criterion
 <<>>=
 g <- press.validate(modelBCDE,perturb=c(V=1),monitor=c(H=-1))
 g(W)
