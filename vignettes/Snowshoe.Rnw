@@ -145,8 +145,6 @@ write.text(modelA,"modelA.txt")
 modelA <- model.text("modelA.txt")
 @
 
-[DIA HERE]
-
 Within \textsf{R}, the graph is represented as an edge list, a
 dataframe of directed edges
 <<>>=
@@ -199,7 +197,7 @@ adjacency.matrix(modelA,labels=T)
 @
 
 \section{High Level Simulation}
-\label{sec:high-level-sim}
+\label{sec:high-level-simulation}
 
 Many analyses can be performed with the high level simulation
 function \texttt{system.simulate}.  This function simulates random
@@ -358,13 +356,120 @@ simBCDE1 <- system.simulate(1000,modelBCDE,
                                              perturb=c(V=1),
                                              monitor=c(V=1))))
 @
-simulates community matrices consistent with model BCDE that
-satisfy the validation criteria that hares decrease following a
-positive press perturbation of the predators, and vegetation increases
-following a press perturbation of vegetation.
+simulates community matrices consistent with model BCDE that satisfy
+the validation criteria that hares decrease following a positive press
+perturbation of the predators, and vegetation increases following a
+press perturbation of vegetation.  As \texttt{system.simulate}
+attempts to generate a fixed number of matrices, the simulation may
+fail to terminate of too stringent a validation criteria is set.
+
+Competing models can be compared based on the frequency with which the
+models reproduce an observed outcome.  At a simple level, the more
+frequently a model reproduces a observed outcome, the more likely the
+model is correct.  This notion can be embedded within Bayesian
+framework to produce a formal system of model comparison. Suppose a
+postive press perturbation of vegetation is observed to produce a
+decrease in hare numbers.  It is believed that the system can be
+described by model B, C, D, or E, but it is believed that models D and
+E are slightly more plausible than models B and C.  Models B and C are
+both assigned prior probabilities of $4/16$ and models D and E are
+assigned prior probabilities of $5/16$ each
+<<>>=
+prior <- c(B=3/16,C=3/16,D=5/16,E=5/16)
+@
+The marginal likelihood of each model is the fraction of simulate
+community matrices that yield an prediction consistent with the
+observed impact
+<<>>=
+simB <- system.simulate(
+  1000,modelB,validators=list(
+                press.validate(modelB,perturb=c(V=1),monitor=c(H=-1))))
+simC <- system.simulate(
+  1000,modelC,validators=list(
+                press.validate(modelC,perturb=c(V=1),monitor=c(H=-1))))
+simD <- system.simulate(
+  1000,modelD,validators=list(
+                press.validate(modelD,perturb=c(V=1),monitor=c(H=-1))))
+simE <- system.simulate(
+  1000,modelE,validators=list(
+                press.validate(modelE,perturb=c(V=1),monitor=c(H=-1))))
+likelihood <- c(B=simB$accepted/simB$total,
+                C=simC$accepted/simC$total,
+                D=simD$accepted/simD$total,
+                E=simE$accepted/simE$total)
+@
+The posterior probabilities for the four models are then
+<<>>=
+posterior <- (prior*likelihood)/sum(prior*likelihood)
+posterior
+@
+suggesting that model E is the most likely model.
 
 
+\section{Low Level Simulation}
+\label{sec:low-level-simulation}
 
+The \texttt{system.simulate} function is a wrapper for the lower level
+functions \texttt{community.sampler}, \texttt{stable.community},
+\texttt{press.validate} and \texttt{press.impact}.  More flexible
+simulations can be constructed in terms of these primitives.
+
+The \texttt{community.sampler} function constructs functions for
+sampling community matrices from a given model
+<<>>=
+s <- community.sampler(modelBCDE)
+@
+
+This returns a list with components \texttt{select},
+\texttt{community}, \texttt{weights}, \texttt{weight.labels} and
+\texttt{optional.labels}.  The \texttt{select} component randomly
+selects which uncertain edges will be included or excluded from the
+model in subsequent simulations.  This is a function takes as single
+argument the probability with which any uncertain edge is to be
+retained in the model
+<<>>=
+s$select(p=0.5)
+@
+This function returns a vector that indicates which uncertain edges
+have been retained.  The \texttt{community} component generates a
+random community matrix consistent with the model and the selected of
+uncertain edges
+<<>>=
+W <- s$community()
+W
+@
+The non-zero elements of this matrix can be extracted with the
+\texttt{weights} element
+<<>>=
+s$weights(W)
+@
+and the corresponding edge labels, and the labels of the uncertain
+edges are given by \texttt{weight.labels} and \texttt{optional.labels}
+<<>>=
+s$weight.labels
+s$optional.labels
+@
+
+The \texttt{stable.community} function determines whether community
+matrix corresponds to a system with a stable equilibrium
+<<>>=
+stable.community(W)
+@
+
+The \texttt{press.impact} function constructs a function to compute
+the impact of a system to a given press perturbation
+<<>>=
+impact <- press.impact(modelBCDE,perturb=c(V=1))
+impact(W)
+@
+
+The \texttt{press.validate} function constructs a function to
+determine whether a community matrix satisfies a given validation
+ceriterion
+<<>>=
+g <- press.validate(modelBCDE,perturb=c(V=1),monitor=c(H=-1))
+g(W)
+@
 
 
 \bibliographystyle{apalike}
