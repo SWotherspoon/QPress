@@ -519,9 +519,16 @@ press.impact <- function(edges,perturb,monitor=NULL) {
 ##' Simulate Inverse Community Matrices for a Network
 ##'
 ##' Generate sets of edge weights and the inverse community matrices
-##' given a directed graph and validation criteria.  Note that this
-##' function returns the \emph{inverse} community matrix, and the
-##' weights that define the community matrix.
+##' given a directed graph and validation criteria by rejection
+##' sampling.  Matrices with a pattern of signs consistent with the
+##' given model are generated, and only the matrices that correspond
+##' to stable equilibria and consistent with the given validation
+##' criteria are retained.  For matrices retained in the sample, the
+##' matrix is inverted, and the \emph{inverse} community matrix, and
+##' the weights that define the community matrix are returned. The
+##' function also returns the total number of matrices generated, the
+##' number of these that are stable and the number that are ultimately
+##' accepted for the sample.
 ##'
 ##' The output of this function may be passed to the interactive
 ##' exploratory tools.
@@ -539,6 +546,9 @@ press.impact <- function(edges,perturb,monitor=NULL) {
 ##' \item{\code{edges}}{The edge list}
 ##' \item{\code{A}}{A list of inverse community matrices}
 ##' \item{\code{w}}{A matrix of the corresponding edge weights}
+##' \item{\code{total}}{The total number of matrices generated}
+##' \item{\code{stable}}{The number of stable matrices generated}
+##' \item{\code{accepted}}{The number of matrices accepted for the sample}
 ##' @examples
 ##' set.seed(32)
 ##' ## Sample model
@@ -567,9 +577,13 @@ system.simulate <- function(n.sims,edges,
   As <- vector("list",n.sims)
   ws <- matrix(0,n.sims,nrow(edges))
   s <- community.sampler(edges,required.groups)
+  total <- 0
+  stable <- 0
+  accepted <- 0
 
-  i <- 0
-  while(i < n.sims) {
+
+  while(accepted < n.sims) {
+    total <- total+1
 
     ## Sample community matrix
     ## The select step selects which optional edges will be retained,
@@ -580,14 +594,16 @@ system.simulate <- function(n.sims,edges,
     W <- s$community()
 
     ## Check stability and validation criteria
-    if(!stable.community(W) ||
-       !all(as.logical(lapply(validators,function(v) v(W))))) next
+    if(!stable.community(W)) next
+    stable <- stable+1
+
+    if(!all(as.logical(lapply(validators,function(v) v(W))))) next
 
     ## Store
-    i <- i+1
-    As[[i]] <- -solve(W)
-    ws[i,] <- s$weights(W)
+    accepted <- accepted+1
+    As[[accepted]] <- -solve(W)
+    ws[accepted,] <- s$weights(W)
   }
   colnames(ws) <- s$weight.labels
-  list(edges=edges,A=As,w=ws)
+  list(edges=edges,A=As,w=ws,total=total,stable=stable,accepted=accepted)
 }
