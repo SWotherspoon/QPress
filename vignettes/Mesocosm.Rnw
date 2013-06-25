@@ -1,6 +1,4 @@
 \documentclass[a4paper]{article}
-\usepackage{tikz}
-\usetikzlibrary{arrows}
 \usepackage{a4wide}
 \usepackage[authoryear]{natbib}
 \usepackage{amsmath}
@@ -26,11 +24,15 @@ Antarctic Climate \& Ecosystems CRC \\
 \and \textbf{Jess Melbourne-Thomas} \\
 %EndAName
 Australian Antarctic Division\\
+Antarctic Climate \& Ecosystems CRC\\
+\and \textbf{Andrew Constable} \\
+%EndAName
+Australian Antarctic Division\\
 Antarctic Climate \& Ecosystems CRC}
 \maketitle
 
 \begin{abstract}
-The \textbf{QPress} package provides facilities for qualitatively modelling the 
+The \textbf{QPress} package provides facilities for modelling the qualitative
 impact of a press perturbation upon a network model. This document illustrates 
 the comparison of alternative models in terms of their responses to perturbation. 
 Two examples are provided for experimental mesocosms in (I) a lake environment 
@@ -45,7 +47,7 @@ are performed in the `natural environment' rather than in a laboratory, but in
 an enclosure that is small enough that key variables can be directly controlled.
 Because the responses of component species to perturbation can be observed 
 directly in a mesocosm setting, the results from such studies lend themselves to
-analysis using qualitative network analysis. In particular, these analyses can 
+analysis using qualitative network modelling. In particular, these analyses can 
 be used to make inferences regarding the trophic and competitive interactions 
 that drive assemblage-level responses to perturbation in a mesocosm setting and
 potentially more broadly.
@@ -62,9 +64,9 @@ authors) in Antarctica (Davidson et al. unpublished).
 \cite{Hulot2000} describe an eight-variable lake mesocosm model comprising
 phosphorous, three algal groups, two size-classes of herbivores, invertebrate
 carnivores and carnivorous fish (Figure~\ref{fig:Lake}). Unambiguous,
-directional responses of model components to increased phosphorous in the 
+directional responses of model components to increased phosphorous observed in the 
 mesocosm experiment were increases in each of: phosphorous (Phos), large herbivores 
-(Herb2), fish (Carn2) and periphyton (AlgP). \cite{JMT2012} compared the ability
+(Herb2), fish (Carn2) and periphyton (AlgP). \cite{JMT2012} compare the ability
 of Hulot et al.'s original model (Figure~\ref{fig:Lake}a) and a variant of the
 model with one edge added and one edge deleted (Figure~\ref{fig:Lake}b) to
 reproduce these changes in response to a positive perturbation to phosphorous.
@@ -87,12 +89,12 @@ been deleted.
 \vspace{1cm}
 
 The models shown in Figure~\ref{fig:Lake} were created using Dia and so are 
-read using \texttt{model.dia}. Here we read the two models into a list
-(\texttt{lake}) using \texttt{lapply}.
+read using \texttt{model.dia}. Here we assign the two model objects to 
+\texttt{lake.a} and \texttt{lake.b}.
 <<>>=
 library(QPress)
-files <- c("Lake-a.dia","Lake-b.dia")
-lake <- lapply(files,model.dia)
+lake.a <- model.dia("Lake-a.dia")
+lake.b <- model.dia("Lake-b.dia")
 @
 We then simulate for model (a) and use \texttt{impact.barplot} to view 
 simulation outcomes corresponding with observations from the mesocosm
@@ -100,7 +102,7 @@ experiment (Figure~\ref{fig:Selector1}).
 
 @
 <<eval=F>>=
-simlake.a <- system.simulate(1000,lake[[1]])
+simlake.a <- system.simulate(1000,lake.a)
 impact.barplot(simlake.a)
 @
 Doing the same for model (b) gives Figure~\ref{fig:Perturb1}.
@@ -115,11 +117,11 @@ Doing the same for model (b) gives Figure~\ref{fig:Perturb1}.
 \begin{figure}[ht]
   \centering
 <<echo=F,fig=T,height=4,width=8>>=
-simlake.a <- system.simulate(1000,lake[[1]])
-simlake.b <- system.simulate(1000,lake[[2]])
+simlake.a <- system.simulate(1000,lake.a)
+simlake.b <- system.simulate(1000,lake.b)
 opar <- par(mfrow=c(1,2))
-QPress:::impact.barplot.action(node.labels(lake[[1]]),simlake.a$A,c(0,0,0,0,0,0,0,1),c(NA,NA,1,NA,1,NA,1,1),main="Model (a)")
-QPress:::impact.barplot.action(node.labels(lake[[2]]),simlake.b$A,c(0,0,0,0,0,0,0,1),c(NA,NA,1,NA,1,NA,1,1),main="Model (b)")
+QPress:::impact.barplot.action(node.labels(lake.a),simlake.a$A,c(0,0,0,0,0,0,0,1),c(NA,NA,1,NA,1,NA,1,1),main="Model (a)")
+QPress:::impact.barplot.action(node.labels(lake.b),simlake.b$A,c(0,0,0,0,0,0,0,1),c(NA,NA,1,NA,1,NA,1,1),main="Model (b)")
 par(opar)
 @
 \caption{Simulation outcomes from the two lake mesocosm models in response to a  
@@ -137,7 +139,7 @@ provides a more parsimonious representation of the lake mesocosm system.
 
 \section{Example II: Antarctic mesocosm}
 This example is based on experiments conducted at Australia's Davis Station in 
-Antarctica which assessed the responses of a natural community of Antarctic 
+Antarctica, which assessed the responses of a natural community of Antarctic 
 marine microbes from near-shore waters to elevated concentrations of CO$_2$ 
 using environmentally controlled tanks (mesocosms). Davidson et al. 
 (in prep) describe the main components of the Southern Ocean microbial loop
@@ -157,8 +159,8 @@ the DOC pool.
 These interactions are represented in a model that was built using Dia 
 (black-coloured edges in Figure~\ref{fig:Antarctic-a}).
 
-When this system was subjected to elevated CO$_2$ in experimental mesocosms, the
-following responses were observed:
+When this system was subjected to elevated CO$_2$ concentrations in experimental 
+mesocosms, the following responses were observed:
 \begin{itemize}
 \item Small phytoplankton increased;
 \item Large phytoplankton decreased;
@@ -166,14 +168,14 @@ following responses were observed:
 \item Bacteria increased.
 \end{itemize}
 
-In the model shown in (Figure~\ref{fig:Antarctic-a}) we assumed that the direct 
+In the model shown in Figure~\ref{fig:Antarctic-a} we assume that the direct 
 effects of CO$_2$ correspond with these observed changes.
 \vspace{1cm}
 
 \begin{figure}[ht]
   \centering
   \includegraphics{Antarctic-a.pdf}
-  \caption{Model representing the effects of CO$_2$ on the Southern Ocean 
+  \caption{Model (a) representing the effects of CO$_2$ on the Southern Ocean 
   microbial loop, determined directly from observed responses in experimental
   mesocosms. These direct effects are shown in red.}
   \label{fig:Antarctic-a}
@@ -191,8 +193,8 @@ labels <- c("CO2","Fe","Macronutrients","Small phytoplankton",
 antarctic.a <- model.dia("Antarctic-a.dia",labels=labels)
 antarctic.a <- enforce.limitation(antarctic.a)
 @
-As for Example I, we then simulate and use \texttt{impact.barplot}, with
-the selections shown in Figure~\ref{fig:Selector2} to produce
+As for Example I, we then simulate and use \texttt{impact.barplot} (with
+the selections shown in Figure~\ref{fig:Selector2}) to produce
 Figure~\ref{fig:Perturb2}.
 @
 <<eval=F>>=
@@ -203,7 +205,7 @@ impact.barplot(simantarctic.a)
 \begin{figure}[ht]
   \centering
   \includegraphics[width=0.6\textwidth]{Antarctic-selector.png}
-  \caption{Selection of observations for Antarctic model.}
+  \caption{Node selector for the Antarctic mesocosm example.}
   \label{fig:Selector2}
 \end{figure}
 
@@ -213,16 +215,17 @@ impact.barplot(simantarctic.a)
 simantarctic.a <- system.simulate(1000,antarctic.a)
 QPress:::impact.barplot.action(node.labels(antarctic.a),simantarctic.a$A,c(1,0,0,0,0,0,0,0,0),c(NA,NA,NA,1,-1,-1,NA,1,NA),main="Model (a)")
 @
-\caption{Simulation outcomes in response to a positive press perturbation to the
-  CO$_2$. Each plot shows the fraction of positive (orange), and negative (blue)
-  outcomes at each node.}
+\caption{Simulation outcomes in response to a positive press perturbation to
+  CO$_2$ for Antarctic mesocosm model (a). Each plot shows the fraction of 
+  positive (orange), and negative (blue) outcomes at each node.}
   \label{fig:Perturb2}
 \end{figure}
 \clearpage
 
 For this version of the model, less than 20\% of the simulations match with our
 `Monitor' criteria, suggesting that it does not provide a particularly good
-representation of the Antarctic microbial loop system. Given that increases in
+representation of the Antarctic microbial loop system or its response to 
+increased CO$_2$ concentrations. Given that increases in
 dissolved CO$_2$ are generally expected to have negative impacts of the growth
 of marine organisms, we could assume a direct negative effect of CO$_2$ on each
 of large phytoplankton, small phytoplankton, heterortophic nanoflagellates, and 
@@ -232,8 +235,8 @@ also the pool of available iron (Figure~\ref{fig:Antarctic-b}).
 \begin{figure}[ht]
   \centering
   \includegraphics{Antarctic-b.pdf}
-  \caption{Alternative model representing the effects of CO$_2$ on the Southern  
-  Ocean microbial loop}
+  \caption{Alternative model (b) representing the effects of CO$_2$ on the 
+  Southern  Ocean microbial loop.}
   \label{fig:Antarctic-b}
 \end{figure}
 \vspace{1cm}
@@ -243,7 +246,7 @@ Reading this alternative representation from a Dia file
 antarctic.b <- model.dia("Antarctic-b.dia",labels=labels)
 antarctic.b <- enforce.limitation(antarctic.b)
 @
-and explorting simulation outcomes with \texttt{impact.barplot} (with the same 
+and exploring simulation outcomes with \texttt{impact.barplot} (with the same 
 `Monitor' criteria as before) produces Figure~\ref{fig:Perturb3}.
 @
 <<eval=F>>=
@@ -257,9 +260,9 @@ Davidson et al. (in prep) indicate that bacteria ``transform dissolved organic
 carbon (DOC)... thereby repackaging carbon and making it available to higher 
 trophic levels''. Looking at our original model, we haven't quite captured this
 in our representation of interactions between bacteria, DOC and macronutrients.
-In a third version of our microbial loop model (Figure~\ref{fig:Antarctic-c})
-we therefore assume a negative effect of bacteria on DOC and a positive effect
-of bacteria on macronutrients (which includes carbon).
+In a third version of our microbial loop model (model (c) -- 
+Figure~\ref{fig:Antarctic-c}) we therefore assume a negative effect of bacteria 
+on DOC and a positive effect of bacteria on macronutrients (which includes carbon).
 
 Reading a third Dia version of the model
 <<>>=
@@ -276,7 +279,7 @@ simantarctic.b <- system.simulate(1000,antarctic.b)
 QPress:::impact.barplot.action(node.labels(antarctic.b),simantarctic.b$A,c(1,0,0,0,0,0,0,0,0),c(NA,NA,NA,1,-1,-1,NA,1,NA),main="Model (b)")
 @
 \caption{Simulation outcomes in response to a positive press perturbation to the
-  CO$_2$ for the alternative microbial loop model shown in 
+  CO$_2$ for the alternative microbial loop model (b) shown in 
   Figure~\ref{fig:Antarctic-b}.}
   \label{fig:Perturb3}
 \end{figure}
@@ -284,7 +287,8 @@ QPress:::impact.barplot.action(node.labels(antarctic.b),simantarctic.b$A,c(1,0,0
 \begin{figure}[ht]
   \centering
   \includegraphics{Antarctic-c.pdf}
-  \caption{Model representing the effects of CO$_2$ on the Southern Ocean microbial loop.}
+  \caption{Alternative model (c) representing the effects of CO$_2$ on the 
+  Southern Ocean  microbial loop.}
   \label{fig:Antarctic-c}
 \end{figure}
 
@@ -295,7 +299,7 @@ simantarctic.c <- system.simulate(1000,antarctic.c)
 QPress:::impact.barplot.action(node.labels(antarctic.c),simantarctic.c$A,c(1,0,0,0,0,0,0,0,0),c(NA,NA,NA,1,-1,-1,NA,1,NA),main="Model (c)")
 @
 \caption{Simulation outcomes in response to a positive press perturbation to the
-  CO$_2$ for the alternative microbial loop model shown in 
+  CO$_2$ for the alternative microbial loop model (c) shown in 
   Figure~\ref{fig:Antarctic-c}.}
   \label{fig:Perturb4}
 \end{figure}
