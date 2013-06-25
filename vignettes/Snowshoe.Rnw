@@ -15,10 +15,13 @@
 \date{2013}
 \author{\textbf{Jessica Melbourne-Thomas} \\
 Australian Antarctic Division\\
+Antarctic Climate \& Ecosystems CRC\\
 \and \textbf{Ben Raymond} \\
 Australian Antarctic Division\\
+Antarctic Climate \& Ecosystems CRC\\
 \and \textbf{Andrew Constable} \\
 Australian Antarctic Division\\
+Antarctic Climate \& Ecosystems CRC\\
 \and \textbf{Simon Wotherspoon} \\
 Australian Antarctic Division\\
 Institute for Marine and Antarctic Studies\\
