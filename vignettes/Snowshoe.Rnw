@@ -33,7 +33,7 @@ University of Tasmania}
   The \textbf{QPress} package provides facilities for qualitatively
   modelling the impact of a press perturbation upon a network model.
   This document illustrates the basic features of the package through
-  a simple example.}
+  a simple example.
 \end{abstract}
 
 \section{Introduction}

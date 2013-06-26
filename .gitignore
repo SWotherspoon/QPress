@@ -19,5 +19,4 @@ auto/
 *.synctex
 *.synctex.gz
 *.dvi
-*.pdf
 .Rproj.user
