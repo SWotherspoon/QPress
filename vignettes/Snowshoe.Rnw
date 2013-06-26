@@ -10,6 +10,7 @@
 %\VignetteDepends{QPress}
 %\VignettePackage{QPress}
 \begin{document}
+\definecolor{nodefl}{RGB}{255,187,99}
 
 \title{Snowshoe Example}
 \date{2013}
@@ -58,10 +59,10 @@ with the vegetation $V$ and predator $P$.
 
 \begin{table}[ht]
   \centering
-  \begin{tabular}{lll}
+  \begin{tabular}{ll}
     Model A &
-    \begin{tikzpicture}[baseline=(current bounding box.center),->,>=stealth',auto,node distance=2cm,
-      thick,main node/.style={circle,fill=blue!20,draw,font=\sffamily\bfseries}]
+    \begin{tikzpicture}[baseline=(P.base),->,>=stealth',auto,node distance=2cm,
+      thick,main node/.style={circle,fill=nodefl,draw,font=\sffamily\bfseries}]
       \node[main node] (V) {V};
       \node[main node] (H) [right of=V] {H};
       \node[main node] (P) [right of=H] {P};
@@ -71,8 +72,8 @@ with the vegetation $V$ and predator $P$.
       \draw[-*] (P) to [loop below,out=210,in=270,looseness=5] (P);
     \end{tikzpicture}\\
     Model B &
-    \begin{tikzpicture}[baseline=(current bounding box.center),->,>=stealth',auto,node distance=2cm,
-      thick,main node/.style={circle,fill=blue!20,draw,font=\sffamily\bfseries}]
+    \begin{tikzpicture}[baseline=(P.base),->,>=stealth',auto,node distance=2cm,
+      thick,main node/.style={circle,fill=nodefl,draw,font=\sffamily\bfseries}]
       \node[main node] (V) {V};
       \node[main node] (H) [right of=V] {H};
       \node[main node] (P) [right of=H] {P};
@@ -83,8 +84,8 @@ with the vegetation $V$ and predator $P$.
       \draw[-*] (P) to [loop below,out=210,in=270,looseness=5] (P);
     \end{tikzpicture}\\
     Model C &
-    \begin{tikzpicture}[baseline=(current bounding box.center),->,>=stealth',auto,node distance=2cm,
-      thick,main node/.style={circle,fill=blue!20,draw,font=\sffamily\bfseries}]
+    \begin{tikzpicture}[baseline=(P.base),->,>=stealth',auto,node distance=2cm,
+      thick,main node/.style={circle,fill=nodefl,draw,font=\sffamily\bfseries}]
       \node[main node] (V) {V};
       \node[main node] (H) [right of=V] {H};
       \node[main node] (P) [right of=H] {P};
@@ -96,8 +97,8 @@ with the vegetation $V$ and predator $P$.
       \draw[-*] (P) to [loop below,out=210,in=270,looseness=5] (P);
     \end{tikzpicture}\\
     Model D &
-    \begin{tikzpicture}[baseline=(current bounding box.center),->,>=stealth',auto,node distance=2cm,
-      thick,main node/.style={circle,fill=blue!20,draw,font=\sffamily\bfseries}]
+    \begin{tikzpicture}[baseline=(P.base),->,>=stealth',auto,node distance=2cm,
+      thick,main node/.style={circle,fill=nodefl,draw,font=\sffamily\bfseries}]
       \node[main node] (V) {V};
       \node[main node] (H) [right of=V] {H};
       \node[main node] (P) [right of=H] {P};
@@ -108,8 +109,8 @@ with the vegetation $V$ and predator $P$.
       \draw[-*] (P) to [loop below,out=210,in=270,looseness=5] (P);
     \end{tikzpicture}\\
     Model E &
-    \begin{tikzpicture}[baseline=(current bounding box.center),->,>=stealth',auto,node distance=2cm,
-      thick,main node/.style={circle,fill=blue!20,draw,font=\sffamily\bfseries}]
+    \begin{tikzpicture}[baseline=(P.base),->,>=stealth',auto,node distance=2cm,
+      thick,main node/.style={circle,fill=nodefl,draw,font=\sffamily\bfseries}]
       \node[main node] (V) {V};
       \node[main node] (H) [right of=V] {H};
       \node[main node] (P) [right of=H] {P};
