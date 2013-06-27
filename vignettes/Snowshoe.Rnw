@@ -47,10 +47,6 @@ In this document we illustrate some of the basic facilities provided
 by the package using the Snowshoe hare example from
 \cite{Dambacher2007}.
 
-
-\section{Snowshoe Hare}
-\label{sec:snowshoe-hare}
-
 \cite{Dambacher2007} describes five alternative models for the
 interactions between the snowshoe hare, its major predator and the
 supporting vegetation.  These five models are reproduced in
