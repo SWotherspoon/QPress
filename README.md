@@ -15,8 +15,6 @@ The package has four main functions.
   criteria and press perturbation scenarios, and to determine the 
   proportion of simulated outcomes that meet these specifications.
 
-* The package writes sign directed graphs as .svg and .dia files.
-
 
 ## Installing
 
