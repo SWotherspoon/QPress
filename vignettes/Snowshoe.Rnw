@@ -5,7 +5,7 @@
 \usepackage[authoryear]{natbib}
 \usepackage{amsmath}
 
-%\SweaveOpts{engine=R, eps=FALSE, keep.source = FALSE}
+\SweaveOpts{engine=R, eps=FALSE, keep.source = FALSE}
 %\VignetteIndexEntry{Simple example analyses}
 %\VignetteDepends{QPress}
 %\VignettePackage{QPress}
@@ -138,6 +138,7 @@ simple textual description with the \texttt{parse.text} and
 \texttt{model.text} functions.  The \texttt{parse.text} allows the
 edges of the graph to be specified as a vector of character strings
 <<>>=
+## Read a textual model description
 library(QPress)
 modelA <- parse.text(c("V-*V","P-*P","V*->H","H*->P"))
 @
@@ -145,6 +146,7 @@ Alternately, the edge descriptions can be stored in a text file, one edge
 per line, and read and written with \texttt{model.text} and
 \texttt{write.text} respectively
 <<>>=
+## Write/read a model description to a text file
 write.text(modelA,"modelA.txt")
 modelA <- model.text("modelA.txt")
 @
@@ -152,6 +154,7 @@ modelA <- model.text("modelA.txt")
 Within \textsf{R}, the graph is represented as an edge list, a
 dataframe of directed edges
 <<>>=
+## Model is represented as a set of paired directed edges
 modelA
 @
 This dataframe records the nodes connected by the directed edge
@@ -165,6 +168,7 @@ impact of \texttt{H} upon \texttt{V}.
 
 Models $B$ to $E$ may be defined similarly
 <<>>=
+## Define variant models
 modelB <- parse.text(c("V-*V","P-*P","V*->H","H*->P","V->P"))
 modelC <- parse.text(c("V-*V","H-*H","P-*P","V*->H","H*->P","V->P"))
 modelD <- parse.text(c("V-*V","P-*P","V*->H","H*->P","V*->P"))
@@ -177,7 +181,9 @@ the line style in their Dia definition.  The (directed) edges common
 to the four models are specified as one group, and the disjoint edges
 as a second
 <<>>=
-modelBCDE <- parse.text(c("V-*V","P-*P","V*->H","H*->P","V->P","H--*H","P*--H"))
+## Model with uncertain edges
+modelBCDE <- parse.text(c("V-*V","P-*P","V*->H","H*->P","V->P",
+                          "H--*H","P*--H"))
 modelBCDE
 @
 When simulating from this super model, edges from the first group
@@ -190,6 +196,7 @@ limiting. The \texttt{enforce.limitations} function adds a self
 limiting edge to every node.  So models C and E could be obtained from
 models B and D as
 <<>>=
+## Add self-limitation to all nodes
 modelC <- enforce.limitation(modelB)
 modelE <- enforce.limitation(modelD)
 @
@@ -197,6 +204,7 @@ modelE <- enforce.limitation(modelD)
 The adjacency matrix can be constructed from the edge list with the
 \texttt{adjacency.matrix} function
 <<>>=
+## Signed adjacency matrix representation
 adjacency.matrix(modelA,labels=T)
 @
 
@@ -228,10 +236,12 @@ To show that model A predicts an increase in hare numbers following a
 positive press perturbation of the vegetation, we simulate 1000
 community matrices corresponding to model A
 <<>>=
+## Simulate 1000 community matrices from model A
 simA <- system.simulate(1000,modelA)
 @
 and explore the simulations with \texttt{impact.barplot}
 <<eval=F>>=
+## Interactively explore
 impact.barplot(simA)
 @
 This creates an interactive control panel that allows the user to
@@ -239,14 +249,15 @@ specify a press perturbation and optionally a validation criterion,
 and then displays the impact of the perturbation on each node as a
 barplot. This plot shows the fraction of positive (orange), zero
 (brown), and negative (blue) outcomes at each node.  Selecting a
-positive (\texttt{+}) perturbation of the $V$ node in the perturbation panel, and
-pressing the update button produces the first barplot shown in
-Figure~\ref{fig:Impact1}. This plot shows that a positive press
+positive (\texttt{+}) perturbation of the $V$ node in the perturbation
+panel, and pressing the update button produces the first barplot shown
+in Figure~\ref{fig:Impact1}. This plot shows that a positive press
 perturbation to the vegetation always has a positive impact at each
 node.
 
 Repeating this process for model B
 <<eval=F>>=
+## Simulate 1000 community matrices from model B
 simB <- system.simulate(1000,modelB)
 impact.barplot(simB)
 @
@@ -258,6 +269,7 @@ perturbation to the vegetation.
 The third and fourth plots in Figure~\ref{fig:Impact1} show results
 for the combined model BCDE.
 <<eval=F>>=
+## Simulate 1000 community matrices from the uncertain model
 simBCDE <- system.simulate(1000,modelBCDE)
 impact.barplot(simBCDE)
 @
@@ -279,6 +291,7 @@ vegetation lead to an increase in perturbation.
 \begin{figure}[ht]
   \centering
 <<echo=F,fig=T>>=
+## Create figure for vignette
 opar <- par(mfrow=c(2,2))
 QPress:::impact.barplot.action(node.labels(modelA),simA$A,c(0,0,1),c(NA,NA,NA),main="Model A")
 simB <- system.simulate(1000,modelB)
@@ -299,6 +312,7 @@ The \texttt{weight.density} function can be used to explore the
 magnitude of the edge weights (model interaction strengths) associated
 with a particular outcomes. For example, the call
 <<eval=F>>=
+## Investigate relation between weights and outcomes
 weights.density(simBCDE)
 @
 produces an interactive control panel that allows the user to specify
@@ -306,6 +320,7 @@ a press perturbation, an observed outcome, and a subset of edges.  For
 ease of identification, the edge selection panel is laid out in the
 same structure as the adjacency matrix
 <<>>=
+## Adjacency matrix of uncertain model
 adjacency.matrix(modelBCDE,required.groups=0:1)
 @
 
@@ -334,6 +349,7 @@ of hares.
 \begin{figure}[ht]
   \centering
 <<echo=F,fig=T>>=
+## Create figure for vignette
 colnames(simBCDE$w) <- paste(unclass(simBCDE$edges$To),unclass(simBCDE$edges$From),sep=":")
 QPress:::weight.density.action(simBCDE$A,simBCDE$w,
                                c(0,0,1),c(-1,NA,NA),
@@ -351,6 +367,9 @@ More complex validation criteria can be specified by passing
 validation functions generated by \texttt{press.validate} to
 \texttt{system.simulate} directly.  For example, the call
 <<>>=
+## Simulate 1000 community matrices from the uncertain model, st
+## 1. A positive perturbation of P leads to a reduction in H
+## 2. A positive perturbation of V leads to an increase in V
 simBCDE1 <- system.simulate(1000,modelBCDE,
                             validators=list(
                               press.validate(modelBCDE,
@@ -379,12 +398,14 @@ E are slightly more plausible than models B and C.  Models B and C are
 both assigned prior probabilities of $4/16$ and models D and E are
 assigned prior probabilities of $5/16$ each
 <<>>=
+## Define prior probability for the competing models
 prior <- c(B=3/16,C=3/16,D=5/16,E=5/16)
 @
 The marginal likelihood of each model is the fraction of simulate
 community matrices that yield an prediction consistent with the
 observed impact
 <<>>=
+## Compute the likelihood for each model
 simB <- system.simulate(
   1000,modelB,validators=list(
                 press.validate(modelB,perturb=c(V=1),monitor=c(H=-1))))
@@ -404,6 +425,7 @@ likelihood <- c(B=simB$accepted/simB$total,
 @
 The posterior probabilities for the four models are then
 <<>>=
+## Calculate posterior probabilities
 posterior <- (prior*likelihood)/sum(prior*likelihood)
 posterior
 @
@@ -421,17 +443,19 @@ simulations can be constructed in terms of these primitives.
 The \texttt{community.sampler} function constructs functions for
 sampling community matrices from a given model
 <<>>=
+## Make simulators
 s <- community.sampler(modelBCDE)
 @
 
 This returns a list with components \texttt{select},
 \texttt{community}, \texttt{weights}, \texttt{weight.labels} and
-\texttt{optional.labels}.  The \texttt{select} component randomly
+\texttt{uncertain.labels}.  The \texttt{select} component randomly
 selects which uncertain edges will be included or excluded from the
 model in subsequent simulations.  This is a function takes as single
 argument the probability with which any uncertain edge is to be
 retained in the model
 <<>>=
+## Select uncertain edges
 s$select(p=0.5)
 @
 This function returns a vector that indicates which uncertain edges
@@ -439,38 +463,46 @@ have been retained.  The \texttt{community} component generates a
 random community matrix consistent with the model and the selected of
 uncertain edges
 <<>>=
+## Generate a community matrix
 W <- s$community()
 W
 @
 The non-zero elements of this matrix can be extracted with the
 \texttt{weights} element
 <<>>=
+## Extract weights
 s$weights(W)
 @
 and the corresponding edge labels, and the labels of the uncertain
-edges are given by \texttt{weight.labels} and \texttt{optional.labels}
+edges are given by \texttt{weight.labels} and \texttt{uncertain.labels}
 <<>>=
+## Labels of non-zero edges and uncertain edges
 s$weight.labels
-s$optional.labels
+s$uncertain.labels
 @
 
 The \texttt{stable.community} function determines whether community
 matrix corresponds to a system with a stable equilibrium
 <<>>=
+## Test if equilibrium would be stable
 stable.community(W)
 @
 
 The \texttt{press.impact} function constructs a function to compute
 the impact of a system to a given press perturbation
 <<>>=
+## Evaluate impact of a perturbation to V
 impact <- press.impact(modelBCDE,perturb=c(V=1))
 impact(W)
+signum(impact(W))
 @
 
 The \texttt{press.validate} function constructs a function to
 determine whether a community matrix satisfies a given validation
 criterion
 <<>>=
+## Validation
+## a positive perturbation to V should produce a reduction in H
 g <- press.validate(modelBCDE,perturb=c(V=1),monitor=c(H=-1))
 g(W)
 @
