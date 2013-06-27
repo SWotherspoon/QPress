@@ -1,0 +1,17 @@
+citHeader("When citing the 'QPress' package in publications please include:")
+
+bibentry(
+  bibtype="Article",
+  title = "Comprehensive evaluation of model uncertainty in qualitative network analyses",
+  author = c(
+    person("J.","Melbourne-Thomas",role="aut"),
+    person("S.","Wotherspoon",role="aut"),
+    person("B.","Raymond",role="aut"),
+    person("A.","Constable",role="aut")),
+  journal = "Ecological Monographs",
+  month = "Nov",
+  number = "4",
+  pages="505--519",
+  publisher = "Eco Soc America",
+  volume = "82",
+  year = "2012")
