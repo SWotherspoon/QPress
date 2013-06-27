@@ -1,3 +1,18 @@
+#' Qualitative Network Analysis
+#'
+#' Qualitiative analysis of press perturbations of network models.
+#' Given a network model represented as a signed directed graphs, this
+#' package provide facilities for evaluating the impact of a press
+#' perturbation to the system through simulation.
+#'
+#' @name QPress-package
+#' @docType package
+#' @author Ben Raymond, Jessica Melbourne-Thomas, Simon Wotherspoon
+NULL
+
+
+
+
 ##' Classify elements as positive, negative or zero.
 ##'
 ##' Calculates the sign of x, except that values less than epsilon in
