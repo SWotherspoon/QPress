@@ -179,7 +179,7 @@ as a second
 <<>>=
 ## Model with uncertain edges
 modelBCDE <- parse.text(c("V-*V","P-*P","V*->H","H*->P","V->P",
-                          "H--*H","P*--H"))
+                          "H--*H","V*--P"))
 modelBCDE
 @
 When simulating from this super model, edges from the first group
@@ -258,32 +258,26 @@ simB <- system.simulate(1000,modelB)
 impact.barplot(simB)
 @
 produces the second barplot in in Figure~\ref{fig:Impact1}.  This
-shows that for model B, approximately $40\%$ of the community matrices
+shows that for model B, almost $40\%$ of the community matrices
 simulated yield a decrease in hare numbers following a positive press
 perturbation to the vegetation.
 
-The third and fourth plots in Figure~\ref{fig:Impact1} show results
-for the combined model BCDE.
+The \texttt{impact.barplot} function takes a second argument
+\texttt{epsilon} that controls sensitivity to change -- outcomes
+smaller than \texttt{epsilon} are treated as zero.  The third barplot
+in in Figure~\ref{fig:Impact1} shows the result of simulating from the
+combined model BCDE and applying a positive press perturbation to V,
+but treating changes to the equilibrium value
+of less than $5\%$ as neglible
 <<eval=F>>=
 ## Simulate 1000 community matrices from the uncertain model
 simBCDE <- system.simulate(1000,modelBCDE)
-impact.barplot(simBCDE)
+impact.barplot(simBCDE,epsilon=0.05)
 @
-Model BCDE includes uncertain edges -- edges that are included or
-excluded at random in each simulated community matrix. The plot on the
-lower left shows the result of selecting a positive (\texttt{+})
-perturbation of the $V$ node in the perturbation panel as for the
-previous models. This shows that for the combined model, it is
-possible for a positive press perturbation to lead to an overall
-negative impact on the vegetation. We can impose the additional
-constraint that a positive press perturbation must lead to an increase
-in vegetation by also selecting a positive (\texttt{+}) validation
-criterion for the $V$ node in the monitor panel.  This yields the
-final plot in Figure~\ref{fig:Impact1}, which shows the proportion of
-positive (orange), zero (brown) and negative (blue) impacts at each
-node predicted by the combined model but only for the simulated
-community matrices for which a positive press perturbation to the
-vegetation lead to an increase in perturbation.
+We can limit the plot to just those cases in which hares decrease in
+response to the perturbation applied to $V$ by selecting a negative
+(\texttt{-}) for the $H$ node in the monitor panel. This yields the
+fourth barplot in in Figure~\ref{fig:Impact1}
 \begin{figure}[ht]
   \centering
 <<echo=F,fig=T>>=
@@ -294,7 +288,7 @@ simB <- system.simulate(1000,modelB)
 QPress:::impact.barplot.action(node.labels(modelB),simB$A,c(0,0,1),c(NA,NA,NA),main="Model B")
 simBCDE <- system.simulate(1000,modelBCDE)
 QPress:::impact.barplot.action(node.labels(modelBCDE),simBCDE$A,c(0,0,1),c(NA,NA,NA),main="Model BCDE")
-QPress:::impact.barplot.action(node.labels(modelBCDE),simBCDE$A,c(0,0,1),c(NA,NA,1),main="Validated BCDE")
+QPress:::impact.barplot.action(node.labels(modelBCDE),simBCDE$A,c(0,0,1),c(1,NA,NA),main="Model BCDE, Hares -")
 par(opar)
 @
 \caption{Model outcomes in response to a positive press perturbation to the
@@ -338,10 +332,10 @@ Figure~\ref{fig:Weights1}.  Each plot in the figure corresponds to an
 edge of model BCDE, and the blue lines show the density of the edge
 weights where hares decreased, while the red lines show the density of
 edge weights where hares increased.  So for example, the plot labelled
-\texttt{1:1} corresponds to the self limiting edge on \texttt{H}, and
+\texttt{2:2} corresponds to the self limiting edge on \texttt{P}, and
 shows that decreases in hare numbers following a positive press
 perturbation to vegetation is associated with stronger self limitation
-of hares.
+of the predator.
 \begin{figure}[ht]
   \centering
 <<echo=F,fig=T>>=
