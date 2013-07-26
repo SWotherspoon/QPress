@@ -124,13 +124,13 @@ parse.dia <- function(dia,labels=NULL) {
   group <- ifelse(is.na(line),0,as.numeric(line))
 
   ## Edge types are determined by arrow styles
-  code <- c("8","1","5",NA)
+  code <- c("8","9","1","2","3","12","22","23","4","5",NA)
+  type <- c("N","N","P","P","P","P","P","P","U","U","Z")
+  levels <- c("N","P","U","Z")
   start <- match(sapply(dia$edges,"[[",4),code)
   end <- match(sapply(dia$edges,"[[",5),code)
   if(any(is.na(start)|is.na(end)))
     stop("Dia file contains unknown arrow type")
-
-  type <- c("N","P","U","Z")
   backward.type <- type[start]
   forward.type <- type[end]
 
@@ -141,12 +141,12 @@ parse.dia <- function(dia,labels=NULL) {
   edges <- rbind(data.frame(From=from,
                             To=to,
                             Group=group,
-                            Type=factor(forward.type,type),
+                            Type=factor(forward.type,levels),
                             Pair=1:length(dia$edges)),
                  data.frame(From=to,
                             To=from,
                             Group=group,
-                            Type=factor(backward.type,type),
+                            Type=factor(backward.type,levels),
                             Pair=1:length(dia$edges)))
 
   ## Drop zero weight edges
