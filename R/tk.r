@@ -231,21 +231,23 @@ interactive.selection <- function(action,nodes,edges=NULL,
 ##' @param sim the result from \code{system.simulate}
 ##' @param epsilon outomes below this in absolute magnitude are treated as zero.
 ##' @param main text for plot title
+##' @param cex.axis character expansion factor for the edge labels
 ##' @export
-impact.barplot <- function(sim,epsilon=1.0E-5,main="") {
+impact.barplot <- function(sim,epsilon=1.0E-5,main="",cex.axis=1) {
   edges <- sim$edges
   As <- sim$A
   nodes <- node.labels(edges)
   action <- function(perturb,monitor,edges,check,slider) {
-    impact.barplot.action(nodes,As,perturb,monitor,epsilon=epsilon,main=main)
+    impact.barplot.action(nodes,As,perturb,monitor,epsilon=epsilon,
+                          main=main,cex.axis=cex.axis)
   }
 
-  interactive.selection(action,nodes,
-                        perturb=T,monitor=T)
+  interactive.selection(action,nodes,perturb=T,monitor=T)
 }
 
 
-impact.barplot.action <- function(nodes,As,perturb,monitor,epsilon=1.0E-5,main="") {
+impact.barplot.action <- function(nodes,As,perturb,monitor,
+                                  epsilon=1.0E-5,main="",cex.axis=1) {
   pal <- c("#92C5DE", "#808080", "#F4A582")
   results <- matrix(0,length(nodes),3)
 
@@ -256,9 +258,10 @@ impact.barplot.action <- function(nodes,As,perturb,monitor,epsilon=1.0E-5,main="
     }
   }
   rownames(results) <- nodes
-  lwidth <- max(strwidth(nodes,"inches"))
+  lwidth <- max(strwidth(nodes,units="inches",cex=cex.axis))
   opar <- par(mai=c(1,lwidth+0.2,0.4,0.4)+0.2)
-  barplot(t(results),horiz=T,las=1,border=F,col=pal,xlab="Simulations",main=main)
+  barplot(t(results),horiz=T,las=1,border=F,col=pal,
+          xlab="Simulations",main=main,cex.axis=cex.axis)
   par(opar)
 }
 
