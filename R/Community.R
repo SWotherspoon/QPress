@@ -13,10 +13,10 @@ NULL
 
 
 
-##' Classify elements as positive, negative or zero.
+##' Classify the sign of the elements of a vector
 ##'
-##' Calculates the sign of x, except that values less than epsilon in
-##' magnitude are rounded down to zero.
+##' Calculates the sign of the elements of then vector x, except that
+##' values less than epsilon in magnitude are rounded down to zero.
 ##' @title Sign classification
 ##' @param x vector of values to test
 ##' @param epsilon magnitude threshold
@@ -81,6 +81,7 @@ edge.labels <- function(edges,reverse=F) {
 ##' @param edges an edge list
 ##' @param labels add row and column labels
 ##' @param required.groups which edge groups should be included?
+##' @seealso \code{\link{adjacency.image}}
 ##' @return Returns the adjacency matrix for the directed graph.
 ##' @examples
 ##' edges <- parse.text(c(
@@ -106,6 +107,46 @@ adjacency.matrix <- function(edges,labels=FALSE,required.groups=c(0)) {
   A
 }
 
+
+
+
+##' Display adjacency matrix of the directed graph as an image
+##'
+##' Display the matrix constructed by \code{adjacency.matrix} as
+##' an image.
+##' @title Adjacency Matrix Image
+##' @param edges an edge list
+##' @param required.groups which edge groups should be included?
+##' @param cex.axis character expansion factor for the edge labels
+##' @seealso \code{\link{adjacency.matrix}}
+##' @return Returns the adjacency matrix for the directed graph.
+##' @examples
+##' edges <- parse.text(c(
+##'   "E *-> D",
+##'   "D *-> C",
+##'   "C -> E",
+##'   "E *-> B",
+##'   "B *-> A",
+##'   "A -> E",
+##'   "D -> B"))
+##' edges <- enforce.limitation(edges)
+##' adjacency.image(edges)
+##' @export
+adjacency.image <- function(edges,required.groups=c(0),cex.axis=1) {
+  pal <- c("#92C5DE", "#FFFFFF", "#F4A582")
+
+  A <- adjacency.matrix(edges,required.groups=required.groups)
+  nodes <- node.labels(edges)
+  n <- length(nodes)
+  lwidth <- max(strwidth(nodes,units="inches",cex=cex.axis))
+  opar <- par(mai=c(0,lwidth+0.2,lwidth+0.2,0)+0.1)
+  ## Flip image to match matrix ordering
+  image(1:n,1:n,t(A)[,n:1],axes=F,xlab="",ylab="",col=pal)
+  axis(2,n:1,nodes,las=2,cex.axis=cex.axis)
+  axis(3,1:n,nodes,las=2,cex.axis=cex.axis)
+  box()
+  par(opar)
+}
 
 
 
