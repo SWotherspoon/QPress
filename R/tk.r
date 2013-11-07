@@ -12,6 +12,8 @@
 ##' \item{\code{window}}{the widget}
 ##' \item{\code{selected}}{function that returns the state of the radiobuttons}
 ##' \item{\code{state}}{the tclVars representing the state of the radiobuttons}
+##' @import tcltk
+##' @import tcltk2
 radiogrid <- function(parent,label,rows,choices,initial=1,label.rows=T) {
   if(is.null(names(choices))) names(choices) <- as.character(choices)
   initial <- rep(initial,length=length(rows))
@@ -53,6 +55,8 @@ radiogrid <- function(parent,label,rows,choices,initial=1,label.rows=T) {
 ##' \item{\code{window}}{the widget}
 ##' \item{\code{selected}}{function that returns the state of the check buttons}
 ##' \item{\code{state}}{the tclVars representing the state of the check buttons}
+##' @import tcltk
+##' @import tcltk2
 checkedges <- function(parent,label,rows,edges,group=NULL,label.rows=T) {
   group <- if(is.null(group)) seq_len(nrow(edges)) else match(group,unique(group))
   state <- lapply(unique(group),function(k) tclVar("0"))[group]
@@ -90,6 +94,8 @@ checkedges <- function(parent,label,rows,edges,group=NULL,label.rows=T) {
 ##' \item{\code{window}}{the widget}
 ##' \item{\code{selected}}{function that returns the state of the checkboxes}
 ##' \item{\code{state}}{the tclVars representing the state of the checkboxes}
+##' @import tcltk
+##' @import tcltk2
 checkbox <- function(parent,label,initial=0) {
   state <- tclVar(initial)
   w.check <- tk2checkbutton(parent,text=label,variable=state)
@@ -132,6 +138,8 @@ checkcolumn <- function(parent,label,rows,label.rows=T) {
 ##' \item{\code{window}}{the widget}
 ##' \item{\code{selected}}{function that returns the state of the sliders}
 ##' \item{\code{state}}{the tclVars representing the state of the sliders}
+##' @import tcltk
+##' @import tcltk2
 slider <- function(parent,initial=1,from=0,to=100,orient="horizontal") {
   state <- tclVar(initial)
   w.slider <- tk2scale(parent,orientation=orient,from=to,to=from,variable=state)
@@ -172,6 +180,7 @@ slider <- function(parent,initial=1,from=0,to=100,orient="horizontal") {
 ##' @param checkbox checkbox label
 ##' @param perturb should a node perturbation control be rendered
 ##' @param monitor should a node monitoring control be rendered
+##' @import tcltk
 interactive.selection <- function(action,nodes,edges=NULL,
                                   slider=NULL,checkbox=NULL,
                                   perturb=T,monitor=T) {
