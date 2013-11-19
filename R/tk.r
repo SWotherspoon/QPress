@@ -322,10 +322,12 @@ weight.density.action <- function(As,ws,perturb,monitor,edges,slider,epsilon=1.0
 
     opar <- par(mfrow=c(m,n),mar=c(5,4,1,1)+0.1)
     for(k in which(edges)) {
-      d1 <- density(ws[keep,k],adjust=slider)
-      d2 <- density(ws[!keep,k],adjust=slider)
-      plot(d1,xlab=colnames(ws)[k],main="",
-           xlim=range(d1$x,d2$x),ylim=range(d1$y,d2$y),col=pal[1])
+      d1 <- if(sum(keep) > 10) density(ws[keep,k],adjust=slider) else list(x=c(),y=c())
+      d2 <- if(sum(!keep) > 10) density(ws[!keep,k],adjust=slider) else list(x=c(),y=c())
+      plot(NULL,xlab=colnames(ws)[k],main="",
+           xlim=range(d1$x,d2$x),
+           ylim=range(d1$y,d2$y))
+      lines(d1,col=pal[1])
       lines(d2,col=pal[2])
       title(main=main,outer=T)
     }
