@@ -1,5 +1,5 @@
 \documentclass[a4paper]{article}
-\usepackage{a4wide}
+%\usepackage{a4wide} %BR
 \usepackage[authoryear]{natbib}
 \usepackage{amsmath}
 
