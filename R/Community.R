@@ -7,6 +7,7 @@
 #'
 #' @name QPress-package
 #' @docType package
+#' @import XML tcltk tcltk2
 #' @author Ben Raymond, Jessica Melbourne-Thomas, Simon Wotherspoon
 NULL
 
