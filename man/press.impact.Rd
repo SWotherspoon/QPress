@@ -1,0 +1,60 @@
+\name{press.impact}
+\alias{press.impact}
+\title{Response to Press Perturbation}
+\usage{
+  press.impact(edges, perturb, monitor = NULL)
+}
+\arguments{
+  \item{edges}{an edge list.}
+
+  \item{perturb}{a named vector that indicates which nodes
+  were perturbed and the relative magnitude of the
+  perturbation.}
+
+  \item{monitor}{n named vector that indicates the subset
+  of nodes to monitor.}
+}
+\value{
+  Returns a function that when applied to a community
+  matrix calculates the response to a press perturbation.
+}
+\description{
+  Construct a function to calculate response to
+  perturbation.
+}
+\details{
+  Given the an edge list that specifies a directed graph, a
+  set of nodes to perturb and a set of nodes to monitor,
+  \code{press.impact} constructs a function of a single
+  argument \code{W} that determines the response of the
+  monitored nodes to the perturbation for a simulated
+  community matrix \code{W}.
+}
+\examples{
+set.seed(32)
+## Sample model
+edges <- parse.text(c(
+  "E *-> D",
+  "D *-> C",
+  "C -> E",
+  "E *-> B",
+  "B *-> A",
+  "A -> E",
+  "D --> B"))
+edges <- enforce.limitation(edges)
+s <- community.sampler(edges)
+s$select(0.5)
+## Perturb D, monitor C
+f <- press.impact(edges,perturb=c(D=1),monitor=c(C=0))
+W <- s$community()
+f(W)
+W <- s$community()
+f(W)
+## Perturb D, monitor all
+f <- press.impact(edges,perturb=c(D=1))
+W <- s$community()
+f(W)
+W <- s$community()
+f(W)
+}
+

@@ -1,0 +1,33 @@
+\name{slider}
+\alias{slider}
+\title{Slider Widgets}
+\usage{
+  slider(parent, initial = 1, from = 0, to = 100,
+    orient = "horizontal")
+}
+\arguments{
+  \item{parent}{the parent window}
+
+  \item{initial}{the initial values of the sliders}
+
+  \item{from}{minimum slider values}
+
+  \item{to}{maximum slider value}
+
+  \item{orient}{slider orientation}
+}
+\value{
+  Returns an object of class slider with elements
+  \item{\code{window}}{the widget}
+  \item{\code{selected}}{function that returns the state of
+  the sliders} \item{\code{state}}{the tclVars representing
+  the state of the sliders}
+}
+\description{
+  Construct a slider widget.
+}
+\details{
+  The \code{slider} function creates a widget containing a
+  single horizontal slider.
+}
+

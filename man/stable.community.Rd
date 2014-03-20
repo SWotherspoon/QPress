@@ -1,0 +1,43 @@
+\name{stable.community}
+\alias{stable.community}
+\title{System Stability}
+\usage{
+  stable.community(W)
+}
+\arguments{
+  \item{W}{a simulated community matrix}
+}
+\value{
+  Returns TRUE if the system is stable, FALSE otherwise.
+}
+\description{
+  Test community matrix stability
+}
+\details{
+  The system is stable if the eigenvalues of community
+  matrix all have negative real part. This function tests
+  the eigenvalues of a simulated community matrix to
+  determine the stability of the repreeented system.
+}
+\examples{
+set.seed(32)
+## Sample model
+edges <- parse.text(c(
+  "E *-> D",
+  "D *-> C",
+  "C -> E",
+  "E *-> B",
+  "B *-> A",
+  "A -> E",
+  "D --> B"))
+edges <- enforce.limitation(edges)
+s <- community.sampler(edges)
+s$select(0)
+## First sample is stable
+W <- s$community()
+stable.community(W)
+## Second is not
+W <- s$community()
+stable.community(W)
+}
+

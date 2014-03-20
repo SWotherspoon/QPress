@@ -1,0 +1,43 @@
+\name{adjoint}
+\alias{adjoint}
+\alias{charpoly}
+\title{Fedeew-Leverrier}
+\usage{
+  adjoint(A)
+
+  charpoly(A)
+}
+\arguments{
+  \item{A}{a square matrix}
+}
+\value{
+  \code{adjoint} returns the adjoint matrix of \code{A}
+
+  \code{charpoly} returns the coefficients of the
+  characteristic polynomial of \code{A} as a vector.
+}
+\description{
+  Adjoint matrix and Characteristic Polynomial
+}
+\details{
+  These functions compute the adjoint matrix and
+  characteristic polynomial of A by the Fedeew-Leverrier
+  algorithm.
+
+  If A has integer elements and the computations are
+  performed with integer arithmetic the result is exact.
+}
+\examples{
+edges <- parse.text(c(
+  "E *-> D",
+  "D *-> C",
+  "C -> E",
+  "E *-> B",
+  "B *-> A",
+  "A -> E",
+  "D -> B"))
+edges <- enforce.limitation(edges)
+A <- adjacency.matrix(edges,labels=TRUE)
+adjoint(A)
+}
+

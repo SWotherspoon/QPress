@@ -1,0 +1,32 @@
+\name{radiogrid}
+\alias{radiogrid}
+\title{Grid of Radio Buttons}
+\usage{
+  radiogrid(parent, label, rows, choices, initial = 1,
+    label.rows = T)
+}
+\arguments{
+  \item{parent}{the parent window}
+
+  \item{label}{the label for the enclosing frame}
+
+  \item{rows}{the labels for the rows/items}
+
+  \item{choices}{the labels for the columns/choices}
+
+  \item{initial}{the initial selection}
+
+  \item{label.rows}{whether to label rows}
+}
+\value{
+  Returns an object of class radiogrid with elements
+  \item{\code{window}}{the widget}
+  \item{\code{selected}}{function that returns the state of
+  the radiobuttons} \item{\code{state}}{the tclVars
+  representing the state of the radiobuttons}
+}
+\description{
+  Construct a grid of radio buttons to select from a range
+  of options that are common to many items.
+}
+

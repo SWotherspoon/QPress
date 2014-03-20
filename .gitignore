@@ -6,7 +6,7 @@
 .Rbuildignore
 .Rhistory
 NAMESPACE
-man/*.Rd
+#man/*.Rd
 *~
 auto/
 *.tex

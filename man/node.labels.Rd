@@ -1,0 +1,26 @@
+\name{node.labels}
+\alias{edge.labels}
+\alias{node.labels}
+\title{Node and Edge Labels}
+\usage{
+  node.labels(edges)
+
+  edge.labels(edges, reverse = F)
+}
+\arguments{
+  \item{edges}{an edge list}
+
+  \item{reverse}{reverse the direction of edges}
+}
+\value{
+  Return a vector of node or edge labels
+}
+\description{
+  Extract labels for the nodes and edges of the directed
+  graph.
+}
+\details{
+  These functions construct meaningful labels for the nodes
+  and edges from an edge list.
+}
+
