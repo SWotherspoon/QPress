@@ -1,24 +1,46 @@
 # QPress
 
-This package simulates qualitative press perturbation scenarios for network models 
-specified as signed directed graphs. 
+This package simulates qualitative press perturbation scenarios for network models
+specified as signed directed graphs.
 
 The package has four main functions.
 
 * The package reads signed directed graphs from pre-specified formats
   and generates a community matrix.
 
-* The package samples a community matrix to generate a set of outcomes 
+* The package samples a community matrix to generate a set of outcomes
   which can explored interactively.
 
 * The package provides a means to specify combinations of validation
-  criteria and press perturbation scenarios, and to determine the 
+  criteria and press perturbation scenarios, and to determine the
   proportion of simulated outcomes that meet these specifications.
 
 
 ## Installing
 
-The package is easily built with RStudio
+First install the dependencies from CRAN:
+
+```{r}
+install.packages(c("tcltk2","XML"))
+```
+
+(This assumes that R has been compiled with Tcl/Tk support, which should be true for most distributions.)
+
+Then install QPress itself.
+
+On Windows:
+```{r}
+install.packages("QPress",repos="http://www.rforge.net/",type="source")
+```
+
+On Linux:
+```{r}
+install.packages("QPress",repos="http://www.rforge.net/")
+```
+
+## Building
+
+If you prefer to build the package from source, this is easily done with RStudio:
 
 1. Install R
 
