@@ -1,0 +1,46 @@
+\name{model.dia}
+\alias{model.dia}
+\alias{write.dia}
+\title{Dia Representations}
+\usage{
+  model.dia(file, labels = NULL)
+
+  write.dia(edges, file, width = 8, height = 2, self = T)
+}
+\arguments{
+  \item{file}{name of the file to read or write}
+
+  \item{labels}{the sequence of labels to use for the
+  nodes}
+
+  \item{edges}{an edge list}
+
+  \item{width}{width of the nodes in Dia}
+
+  \item{height}{height of the nodes in Dia}
+
+  \item{self}{should self edges be written.}
+}
+\value{
+  The \code{model.dia} function returns an edge list.
+}
+\description{
+  Read and write Dia representations of models
+}
+\details{
+  These functions read and write Dia representions of model
+  toplogies.
+
+  These functions should be used with care as no attempt is
+  made to test for model mis-specification.  The
+  \code{model.dia} function only recognizes node shapes
+  "Flowchart - Ellipse", "Flowchart - Box" and "Flowchart -
+  Terminal", line types "Standard - Arc", "Standard -
+  ZigZagLine" and "Standard - Line", and arrow types 8, 1
+  and 5.  Other node shapes, line or arrow types will be
+  silently ignored leading to a mispecified model.
+}
+\seealso{
+  \code{\link{model.text}}
+}
+

@@ -1,0 +1,64 @@
+\name{model.text}
+\alias{model.text}
+\alias{parse.text}
+\alias{write.text}
+\title{Text Representations}
+\usage{
+  model.text(file, labels = NULL)
+
+  parse.text(lines, labels = NULL)
+
+  write.text(edges, file = "")
+}
+\arguments{
+  \item{file}{the name of the file to read or write}
+
+  \item{lines}{a string representation of the model}
+
+  \item{labels}{the sequence of labels to use for the
+  nodes}
+
+  \item{edges}{an edge list.}
+}
+\value{
+  The \code{write.text} function invisibly returns the text
+  that was written to the file.
+
+  The functions \code{model.text} and \code{parse.text}
+  return an edge list - a data frame with columns
+
+  \item{\code{From}}{a factor indicating the origin of each
+  edge (the node that effects)} \item{\code{To}}{a factor
+  indicating the destination of each edge (the node that is
+  effected)} \item{\code{Group}}{an integer vector that
+  indicates the group each edge belons to}
+  \item{\code{Type}}{a factor indicating the edge type -
+  "N" (negative) ,"P" (positive),"U" (unknown) or "Z"
+  (zero)} \item{\code{Pair}}{an integer vector that
+  indicates the pairing of directed edges}
+
+  Each edge of the text specification is separated into two
+  directed edges, and every row of an edge list corresponds
+  to a single directed edge.
+}
+\description{
+  Read and write text representations of models
+}
+\details{
+  The functions \code{model.text} and \code{parse.text}
+  read a model description from a text file and a string
+  respectively, while \code{write.text} writes a text
+  representation of the model to and file.
+
+  These functions recognize the following text format.
+  Each line corresponds to an edge, and must consist of two
+  node labels separated by an arrow.  An arrow consists of
+  one of the character sequences "<","*","<>" or "" on the
+  left and ">","*","<>" or "" on the right, separated by a
+  sequence of dashes "-".  The number of dashes used in the
+  arrow defines the group number of the edge.
+}
+\examples{
+parse.text(c("A <-* B","C *-> A","C <- D","D -> C","B *--* C","A <--- D"))
+}
+

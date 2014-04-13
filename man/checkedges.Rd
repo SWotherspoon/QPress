@@ -1,0 +1,35 @@
+\name{checkedges}
+\alias{checkedges}
+\title{Edge Selection Widget}
+\usage{
+  checkedges(parent, label, rows, edges, group = NULL,
+    label.rows = T)
+}
+\arguments{
+  \item{parent}{the parent window}
+
+  \item{label}{the label for the enclosing frame}
+
+  \item{rows}{the labels for the rows (node names)}
+
+  \item{edges}{an nx2 matrix that defines the edges}
+
+  \item{group}{a numeric vector that groups edges}
+
+  \item{label.rows}{whether to label rows}
+}
+\value{
+  Returns an object of class checkedges with elements
+  \item{\code{window}}{the widget}
+  \item{\code{selected}}{function that returns the state of
+  the check buttons} \item{\code{state}}{the tclVars
+  representing the state of the check buttons}
+}
+\description{
+  Construct an edge selection widget
+}
+\details{
+  Makes a widget consisting of a grid of check buttons that
+  allow the user to select edges of the network.
+}
+

@@ -1,0 +1,33 @@
+\name{impact.barplot}
+\alias{impact.barplot}
+\title{Impact Barplot}
+\usage{
+  impact.barplot(sim, epsilon = 1e-05, main = "",
+    cex.axis = 1)
+}
+\arguments{
+  \item{sim}{the result from \code{system.simulate}}
+
+  \item{epsilon}{outomes below this in absolute magnitude
+  are treated as zero.}
+
+  \item{main}{text for plot title}
+
+  \item{cex.axis}{character expansion factor for the edge
+  labels}
+}
+\description{
+  Display the impact of a perturbation as a barplot
+}
+\details{
+  This control constructs a barplot that shows the fraction
+  of simulations in which a positive (orange), negative
+  (blue) or zero (off white) outcome occurs at each node
+  following a given perturbation.
+
+  The user may specify the perturbation of the nodes, and
+  any outcome known from monitoring the network, and then
+  construct a barplot of the frequency table of outcomes at
+  each node.
+}
+

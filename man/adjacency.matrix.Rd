@@ -1,0 +1,43 @@
+\name{adjacency.matrix}
+\alias{adjacency.matrix}
+\title{Adjacency Matrix}
+\usage{
+  adjacency.matrix(edges, labels = FALSE,
+    required.groups = c(0))
+}
+\arguments{
+  \item{edges}{an edge list}
+
+  \item{labels}{add row and column labels}
+
+  \item{required.groups}{which edge groups should be
+  included?}
+}
+\value{
+  Returns the adjacency matrix for the directed graph.
+}
+\description{
+  Adjacency matrix of the directed graph.
+}
+\details{
+  This function converts an edge list to an adjacency
+  matrix \code{A}, following the convention that
+  \code{A[i,j]} represents the impact of node \code{j} on
+  node \code{i}.
+}
+\examples{
+edges <- parse.text(c(
+  "E *-> D",
+  "D *-> C",
+  "C -> E",
+  "E *-> B",
+  "B *-> A",
+  "A -> E",
+  "D -> B"))
+edges <- enforce.limitation(edges)
+adjacency.matrix(edges,labels=TRUE)
+}
+\seealso{
+  \code{\link{adjacency.image}}
+}
+

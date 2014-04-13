@@ -1,0 +1,36 @@
+\name{retain.groups}
+\alias{retain.groups}
+\alias{retain.nodes}
+\title{Edge Subsets}
+\usage{
+  retain.groups(edges, groups)
+
+  retain.nodes(edges, nodes)
+}
+\arguments{
+  \item{edges}{an edge list}
+
+  \item{groups}{the groups to retain in the subset}
+
+  \item{nodes}{the nodes to retain in the subset}
+}
+\value{
+  \code{retain.groups} returns an edge list containing only
+  edges from the specified groups.
+
+  \code{retain.nodes} returns an edge list containing only
+  edges incident on the specified nodes.
+}
+\description{
+  Subset an edge list
+}
+\details{
+  These functions extract a subset of an edge list
+  containing only edges in a specified group, or incident
+  with a specified set of nodes.
+}
+\examples{
+edges <- parse.text(c("A *-> B","B *-> C","C *--> D"))
+write.text(retain.groups(edges,c(0)))
+}
+

@@ -1,0 +1,59 @@
+\name{press.validate}
+\alias{press.validate}
+\title{Validation Criterion}
+\usage{
+  press.validate(edges, perturb, monitor, epsilon = 1e-05)
+}
+\arguments{
+  \item{edges}{an edge list}
+
+  \item{perturb}{a named vector that indicates which nodes
+  were perturbed and the relative magnitude of the
+  perturbation.}
+
+  \item{monitor}{n named vector of signs (-1,0,1) that
+  indicates the outcome of the perturbation.}
+
+  \item{epsilon}{outomes below this in absolute magnitude
+  are treated as zero.}
+}
+\value{
+  Returns a function that when applied to a community
+  matrix determines whether the matrix is consistent with
+  the given validation criterion.
+}
+\description{
+  Construct a function to test a validation criterion
+}
+\details{
+  Given the an edge list that specifies a directed graph, a
+  set of nodes to perturb and a set of nodes to monitor,
+  \code{press.validate} constructs a function of a single
+  argument \code{W} to test whether the response to
+  perturbation of the system represented by the community
+  matrix \code{W} matches an observed outcome.  The outcome
+  is only specified up to sign (-1, 0 or +1), where
+  outcomes smaller than \code{epsilon} are treated as zero.
+}
+\examples{
+set.seed(32)
+## Sample model
+edges <- parse.text(c(
+  "E *-> D",
+  "D *-> C",
+  "C -> E",
+  "E *-> B",
+  "B *-> A",
+  "A -> E",
+  "D --> B"))
+edges <- enforce.limitation(edges)
+s <- community.sampler(edges)
+s$select(0.5)
+## Perturb D, B and C must decrease
+f <- press.validate(edges,perturb=c(D=1),monitor=c(B=-1,C=-1))
+W <- s$community()
+f(W)
+W <- s$community()
+f(W)
+}
+
