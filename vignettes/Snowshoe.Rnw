@@ -303,7 +303,7 @@ magnitude of the edge weights (model interaction strengths) associated
 with a particular outcomes. For example, the call
 <<eval=F>>=
 ## Investigate relation between weights and outcomes
-weights.density(simBCDE)
+weight.density(simBCDE)
 @
 produces an interactive control panel that allows the user to specify
 a press perturbation, an observed outcome, and a subset of edges.  For
