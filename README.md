@@ -28,14 +28,9 @@ install.packages(c("tcltk2","XML"))
 
 Then install QPress itself.
 
-On Windows:
 ```{r}
-install.packages("QPress",repos="http://www.rforge.net/",type="source")
-```
-
-On Linux:
-```{r}
-install.packages("QPress",repos="http://www.rforge.net/")
+library(devtools)
+install_github("swotherspoon/QPress")
 ```
 
 ## Building
