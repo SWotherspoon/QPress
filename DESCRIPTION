@@ -1,8 +1,8 @@
 Package: QPress
 Type: Package
 Title: Qualitative Network Analysis
-Version: 0.2
-Date: 2013-05-13
+Version: 0.21
+Date: 2016-03-08
 Author: Ben Raymond, Jessica Melbourne-Thomas, Simon Wotherspoon
 Maintainer: Simon Wotherspoon <Simon.Wotherspoon@utas.edu.au>
 Imports:
@@ -19,3 +19,4 @@ Collate:
     'text.R'
     'tk.r'
     'XML.R'
+RoxygenNote: 5.0.1
