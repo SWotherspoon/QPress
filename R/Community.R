@@ -225,6 +225,27 @@ enforce.limitation <- function(edges) {
 }
 
 
+##' Apply a relative scaling to weights in predator-prey relationships
+##'
+##' The per-capita effect of a prey on its predator should in theory be
+##' smaller than that of the predator on its prey.
+##' This function adds a scaling to each predator-prey pair such that
+##' abs(a_ij) <= abs(scaling*a_ji), where i is the predator and j is the prey
+##' @title Predator Scaling
+##' @param edges an edge list
+##' @param scaling the scaling to apply
+##' @return Returns an edge list augmented with scaling information on predator-prey edges.
+##' @export
+rescale.predators <- function(edges,scaling=0.2) {
+    edges$predator.scaling=NA
+    for (p in unique(edges$Pair)) {
+        if (sum(edges$Pair==p)==2 & identical(sort(as.character(edges$Type[edges$Pair==p])),c("N","P"))) {
+            edges$predator.scaling[edges$Pair==p & edges$Type=="P"]=scaling
+        }
+    }
+    edges
+}
+
 
 ##' Subset an edge list
 ##'
@@ -340,6 +361,7 @@ retain.nodes <- function(edges,nodes) {
 ##' @export
 community.sampler <- function(edges,required.groups=c(0)) {
 
+  if (is.null(edges$predator.scaling)) edges$predator.scaling <- NA
   labels <- node.labels(edges)
   n.nodes <- length(labels)
   n.edges <- nrow(edges)
@@ -366,12 +388,24 @@ community.sampler <- function(edges,required.groups=c(0)) {
   community <- if(n.omit > 0) {
     function() {
       W[k.edges] <- runif(n.edges,lower,upper)
+      to.rescale=!is.na(edges$predator.scaling)
+      if (sum(to.rescale)>0) {
+          k.reverse.edges <- as.vector(unclass(edges$From)+(unclass(edges$To)-1)*n.nodes)
+          rescaled.weights <- abs(W[k.reverse.edges[to.rescale]]*edges$predator.scaling[to.rescale])*W[k.edges[to.rescale]]
+          W[k.edges[to.rescale]] <- rescaled.weights
+      }
       W[k.uncertain] <- W[k.uncertain]*zs[expand]
       W
     }
   } else {
     function() {
       W[k.edges] <- runif(n.edges,lower,upper)
+      to.rescale=!is.na(edges$predator.scaling)
+      if (sum(to.rescale)>0) {
+          k.reverse.edges <- as.vector(unclass(edges$From)+(unclass(edges$To)-1)*n.nodes)
+          rescaled.weights <- abs(W[k.reverse.edges[to.rescale]]*edges$predator.scaling[to.rescale])*W[k.edges[to.rescale]]
+          W[k.edges[to.rescale]] <- rescaled.weights
+      }
       W
     }
   }
