@@ -386,9 +386,14 @@ community.sampler <- function(edges,required.groups=c(0)) {
   zs <- rep(1,n.omit)
 
   community <- if(n.omit > 0) {
-    if (any(!is.na(edges$predator.scaling))) stop("predator scaling not coded")
     function() {
       W[k.edges] <- runif(n.edges,lower,upper)
+      to.rescale=!is.na(edges$predator.scaling)
+      if (sum(to.rescale)>0) {
+          k.reverse.edges <- as.vector(unclass(edges$From)+(unclass(edges$To)-1)*n.nodes)
+          rescaled.weights <- abs(W[k.reverse.edges[to.rescale]]*edges$predator.scaling[to.rescale])*W[k.edges[to.rescale]]
+          W[k.edges[to.rescale]] <- rescaled.weights
+      }
       W[k.uncertain] <- W[k.uncertain]*zs[expand]
       W
     }
