@@ -254,7 +254,7 @@ impact.barplot <- function(sim,epsilon=1.0E-5,main="",cex.axis=1) {
   interactive.selection(action,nodes,perturb=T,monitor=T)
 }
 
-
+##' @importFrom graphics barplot par strwidth
 impact.barplot.action <- function(nodes,As,perturb,monitor,
                                   epsilon=1.0E-5,main="",cex.axis=1) {
   pal <- c("#92C5DE", "#808080", "#F4A582")
@@ -308,7 +308,8 @@ weight.density <- function(sim,epsilon=1.0E-5,main="") {
                         slider=list(initial=1,from=0,to=2),perturb=T,monitor=T)
 }
 
-
+##' @importFrom stats density
+##' @importFrom graphics lines plot title
 weight.density.action <- function(As,ws,perturb,monitor,edges,slider,epsilon=1.0E-5,main="") {
   pal <- c("#0571B0", "#CA0020")
   if(any(edges)) {

@@ -1,4 +1,6 @@
 # QPress
+[![Travis-CI Build Status](https://travis-ci.org/SWotherspoon/QPress.svg?branch=master)](https://travis-ci.org/SWotherspoon/QPress)
+[![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/SWotherspoon/QPress?branch=master&svg=true)](https://ci.appveyor.com/project/SWotherspoon/QPress)
 
 This package simulates qualitative press perturbation scenarios for network models
 specified as signed directed graphs.

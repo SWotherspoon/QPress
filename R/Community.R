@@ -132,6 +132,7 @@ adjacency.matrix <- function(edges,labels=FALSE,required.groups=c(0)) {
 ##'   "D -> B"))
 ##' edges <- enforce.limitation(edges)
 ##' adjacency.image(edges)
+##' @importFrom graphics axis box image par strwidth
 ##' @export
 adjacency.image <- function(edges,required.groups=c(0),cex.axis=1) {
   pal <- c("#92C5DE", "#FFFFFF", "#F4A582")
@@ -337,6 +338,7 @@ retain.nodes <- function(edges,nodes) {
 ##' ## Generate community matrices
 ##' s$community()
 ##' s$community()
+##' @importFrom stats runif rbinom
 ##' @export
 community.sampler <- function(edges,required.groups=c(0)) {
 
@@ -626,6 +628,7 @@ press.impact <- function(edges,perturb,monitor=NULL) {
 ##'                           press.validate(edges,
 ##'                                          perturb=c(D=1),
 ##'                                          monitor=c(B=-1,C=1))))
+##' @importFrom stats runif
 ##' @export
 system.simulate <- function(n.sims,edges,
                             required.groups=c(0),
