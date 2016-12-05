@@ -224,6 +224,19 @@ interactive.selection <- function(action,nodes,edges=NULL,
 }
 
 
+## Utility function
+extend.vector <- function(named,nodes,default) {
+  if(is.null(names(named)))
+    v <- rep(named,length.out=length(nodes))
+  else {
+    k <- match(names(named),nodes)
+    if(any(is.na(k)))
+      warning("Unknown nodes:",paste(names(named)[is.na(k)],collapse=" "))
+    v <- rep(default,length(nodes))
+    v[k] <- named
+  }
+  v
+}
 
 ##' Display the impact of a perturbation as a barplot
 ##'
@@ -236,29 +249,39 @@ interactive.selection <- function(action,nodes,edges=NULL,
 ##' outcome known from monitoring the network, and then construct a
 ##' barplot of the frequency table of outcomes at each node.
 ##'
+##' \code{impact.barplot0} is a non-interactive variant for
+##' programmatic use.
+##'
 ##' @title Impact Barplot
 ##' @param sim the result from \code{system.simulate}
 ##' @param epsilon outomes below this in absolute magnitude are treated as zero.
 ##' @param main text for plot title
 ##' @param cex.axis character expansion factor for the edge labels
+##' @param perturb a named vector that indicates which nodes were
+##' perturbed and the relative magnitude of the perturbation.
+##' @param monitor n named vector of signs (-1,0,1) or NA that indicates the outcome of the perturbation.
 ##' @export
 impact.barplot <- function(sim,epsilon=1.0E-5,main="",cex.axis=1) {
-  edges <- sim$edges
-  As <- sim$A
-  nodes <- node.labels(edges)
   action <- function(perturb,monitor,edges,check,slider) {
-    impact.barplot.action(nodes,As,perturb,monitor,epsilon=epsilon,
-                          main=main,cex.axis=cex.axis)
+    impact.barplot0(sim,perturb,monitor,epsilon=epsilon,
+                    main=main,cex.axis=cex.axis)
   }
-
-  interactive.selection(action,nodes,perturb=T,monitor=T)
+  interactive.selection(action,node.labels(sim$edges),perturb=T,monitor=T)
 }
 
+##' @rdname impact.barplot
 ##' @importFrom graphics barplot par strwidth
-impact.barplot.action <- function(nodes,As,perturb,monitor,
-                                  epsilon=1.0E-5,main="",cex.axis=1) {
+##' @export
+impact.barplot0 <- function(sim,perturb=0,monitor=NA,
+                            epsilon=1.0E-5,main="",cex.axis=1) {
+
+  As <- sim$A
+  nodes <- node.labels(sim$edges)
   pal <- c("#92C5DE", "#808080", "#F4A582")
   results <- matrix(0,length(nodes),3)
+
+  perturb <- extend.vector(perturb,nodes,0)
+  monitor <- extend.vector(monitor,nodes,NA)
 
   for(i in 1:length(As)) {
     impact <- signum(drop(As[[i]]%*%perturb),epsilon=epsilon)
@@ -275,8 +298,6 @@ impact.barplot.action <- function(nodes,As,perturb,monitor,
 }
 
 
-
-
 ##' Display weights of valid and invalid matrices as a density plots
 ##'
 ##' This control constructs density plots that show the distribution
@@ -288,30 +309,46 @@ impact.barplot.action <- function(nodes,As,perturb,monitor,
 ##' Edges are labelled by pairs of integers for compactness, where the
 ##' integer codes correspond to the ordering of the node labels.
 ##'
+##' \code{weight.density0} is a non-interactive variant for
+##' programmatic use.
+##'
 ##' @title Weight Density Plots
 ##' @param sim the result from \code{system.simulate}
 ##' @param epsilon outomes below this in absolute magnitude are treated as zero.
 ##' @param main text for plot title
+##' @param perturb a named vector that indicates which nodes were
+##' perturbed and the relative magnitude of the perturbation.
+##' @param monitor n named vector of signs (-1,0,1) or NA that indicates the outcome of the perturbation.
+##' @param edges logical vector indicating which edges to plot.
+##' @param smooth double in the range [0,1] controlling the level of smoothing applied.
 ##' @export
 weight.density <- function(sim,epsilon=1.0E-5,main="") {
   edges <- sim$edges
-  As <- sim$A
-  ws <- sim$w
 
   nodes <- node.labels(edges)
-  colnames(ws) <- paste(unclass(edges$To),unclass(edges$From),sep=":")
+  colnames(sim$w) <- paste(unclass(edges$To),unclass(edges$From),sep=":")
 
   action <- function(perturb,monitor,edges,check,slider) {
-    weight.density.action(As,ws,perturb,monitor,edges,slider,epsilon=epsilon,main=main)
+    weight.density0(sim,perturb,monitor,edges,smooth=slider,epsilon=epsilon,main=main)
   }
   interactive.selection(action,nodes,cbind(edges$From,edges$To),
                         slider=list(initial=1,from=0,to=2),perturb=T,monitor=T)
 }
 
+##' @rdname weight.density
 ##' @importFrom stats density
 ##' @importFrom graphics lines plot title
-weight.density.action <- function(As,ws,perturb,monitor,edges,slider,epsilon=1.0E-5,main="") {
+##' @export
+weight.density0 <- function(sim,perturb,monitor,edges,
+                            smooth=1,epsilon=1.0E-5,main="") {
   pal <- c("#0571B0", "#CA0020")
+  As <- sim$A
+  ws <- sim$w
+  nodes <- node.labels(sim$edges)
+
+  perturb <- extend.vector(perturb,nodes,0)
+  monitor <- extend.vector(monitor,nodes,NA)
+
   if(any(edges)) {
     keep <- rep(F,nrow(ws))
     for(i in 1:length(As)) {
@@ -323,8 +360,8 @@ weight.density.action <- function(As,ws,perturb,monitor,edges,slider,epsilon=1.0
 
     opar <- par(mfrow=c(m,n),mar=c(5,4,1,1)+0.1)
     for(k in which(edges)) {
-      d1 <- if(sum(keep) > 10) density(ws[keep,k],adjust=slider) else list(x=c(),y=c())
-      d2 <- if(sum(!keep) > 10) density(ws[!keep,k],adjust=slider) else list(x=c(),y=c())
+      d1 <- if(sum(keep) > 10) density(ws[keep,k],adjust=smooth) else list(x=c(),y=c())
+      d2 <- if(sum(!keep) > 10) density(ws[!keep,k],adjust=smooth) else list(x=c(),y=c())
       plot(NULL,xlab=colnames(ws)[k],main="",
            xlim=range(d1$x,d2$x),
            ylim=range(d1$y,d2$y))

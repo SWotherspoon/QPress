@@ -2,9 +2,13 @@
 % Please edit documentation in R/tk.r
 \name{impact.barplot}
 \alias{impact.barplot}
+\alias{impact.barplot0}
 \title{Impact Barplot}
 \usage{
 impact.barplot(sim, epsilon = 1e-05, main = "", cex.axis = 1)
+
+impact.barplot0(sim, perturb = 0, monitor = NA, epsilon = 1e-05,
+  main = "", cex.axis = 1)
 }
 \arguments{
 \item{sim}{the result from \code{system.simulate}}
@@ -14,6 +18,11 @@ impact.barplot(sim, epsilon = 1e-05, main = "", cex.axis = 1)
 \item{main}{text for plot title}
 
 \item{cex.axis}{character expansion factor for the edge labels}
+
+\item{perturb}{a named vector that indicates which nodes were
+perturbed and the relative magnitude of the perturbation.}
+
+\item{monitor}{n named vector of signs (-1,0,1) or NA that indicates the outcome of the perturbation.}
 }
 \description{
 Display the impact of a perturbation as a barplot
@@ -27,5 +36,8 @@ perturbation.
 The user may specify the perturbation of the nodes, and any
 outcome known from monitoring the network, and then construct a
 barplot of the frequency table of outcomes at each node.
+
+\code{impact.barplot0} is a non-interactive variant for
+programmatic use.
 }
 

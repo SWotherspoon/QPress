@@ -283,12 +283,12 @@ fourth barplot in in Figure~\ref{fig:Impact1}
 <<echo=F,fig=T>>=
 ## Create figure for vignette
 opar <- par(mfrow=c(2,2))
-QPress:::impact.barplot0(simA,c(0,0,1),c(NA,NA,NA),main="Model A")
+QPress:::impact.barplot.action(node.labels(modelA),simA$A,c(0,0,1),c(NA,NA,NA),main="Model A")
 simB <- system.simulate(1000,modelB)
-QPress:::impact.barplot0(simB,c(0,0,1),c(NA,NA,NA),main="Model B")
+QPress:::impact.barplot.action(node.labels(modelB),simB$A,c(0,0,1),c(NA,NA,NA),main="Model B")
 simBCDE <- system.simulate(1000,modelBCDE)
-QPress:::impact.barplot0(simBCDE,c(0,0,1),c(NA,NA,NA),main="Model BCDE")
-QPress:::impact.barplot0(simBCDE,c(0,0,1),c(1,NA,NA),main="Model BCDE, Hares -")
+QPress:::impact.barplot.action(node.labels(modelBCDE),simBCDE$A,c(0,0,1),c(NA,NA,NA),main="Model BCDE")
+QPress:::impact.barplot.action(node.labels(modelBCDE),simBCDE$A,c(0,0,1),c(1,NA,NA),main="Model BCDE, Hares -")
 par(opar)
 @
 \caption{Model outcomes in response to a positive press perturbation to the
@@ -341,8 +341,9 @@ of the predator.
 <<echo=F,fig=T>>=
 ## Create figure for vignette
 colnames(simBCDE$w) <- paste(unclass(simBCDE$edges$To),unclass(simBCDE$edges$From),sep=":")
-weight.density0(simBCDE,c(0,0,1),c(-1,NA,NA),
-                edges=c(T,T,T,F,T,T,T,T,T))
+QPress:::weight.density.action(simBCDE$A,simBCDE$w,
+                               c(0,0,1),c(-1,NA,NA),
+                               edges=c(T,T,T,F,T,T,T,T,T),slider=1)
 @
 \caption{Edge weight density plots for a decrease in hares following a positive
   press perturbation to vegetation in model BCDE. Each plot
