@@ -222,7 +222,7 @@ enforce.limitation <- function(edges) {
                      To=factor(limit,levels=labels),
                      Group=rep(0,n),
                      Type=factor(rep("N",n),levels(edges$Type)),
-                     Pair=max(edges$Pair)+1:n))
+                     Pair=seq(max(edges$Pair)+1,length.out=n)))
 }
 
 
