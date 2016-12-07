@@ -48,14 +48,25 @@ model.text <- function(file,labels=NULL) {
 ##' @rdname model.text
 ##' @export
 parse.text <- function(lines,labels=NULL) {
-  m <- regmatches(lines,regexec("([^\\*<-]+)(\\*|<|<>)?(-+)(\\*|>|<>)?([^\\*>-]+)",lines))
+  ## Attempt to parse specifications
+  m <- regexec("^([^\\*<>-]+)(\\*|<|<>)?(-+)(\\*|>|<>)?([^\\*<>-]+)$",lines)
+  err <- sapply(m,"[[",1)== -1
+  if(any(err)) {
+    warning("Could not parse edges: ",paste(lines[err],collapse=", "))
+    lines <- lines[!err]
+    m <- m[!err]
+  }
+  m <- regmatches(lines,m)
   from <- gsub("^\\s+|\\s+$","",lapply(m,"[[",2))
   to <-   gsub("^\\s+|\\s+$","",lapply(m,"[[",6))
   tail <- sapply(m,"[[",3)
   line <- sapply(m,"[[",4)
   head <- sapply(m,"[[",5)
 
+  if(any(head=="" & tail==""))
+    warning("Zero edges specified: ",paste(lines[head=="" & tail==""],collapse=", "))
 
+  ## Construct edge dataframe
   if(is.null(labels)) labels <- sort(unique(c(from,to)))
   from <- factor(from,levels=labels)
   to <- factor(to,levels=labels)
@@ -70,12 +81,12 @@ parse.text <- function(lines,labels=NULL) {
                             To=to,
                             Group=group,
                             Type=factor(forward.type,type),
-                            Pair=1:length(lines)),
+                            Pair=seq_along(lines)),
                  data.frame(From=to,
                             To=from,
                             Group=group,
                             Type=factor(backward.type,type),
-                            Pair=1:length(lines)))
+                            Pair=seq_along(lines)))
 
   ## Drop zero weight edges
   edges <- edges[edges$Type!="Z",,drop=F]
