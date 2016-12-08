@@ -24,7 +24,7 @@ repreeented system.
 \examples{
 set.seed(32)
 ## Sample model
-edges <- parse.text(c(
+edges <- parse.digraph(c(
   "E *-> D",
   "D *-> C",
   "C -> E",

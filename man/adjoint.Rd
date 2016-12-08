@@ -28,7 +28,7 @@ If A has integer elements and the computations are performed with
 integer arithmetic the result is exact.
 }
 \examples{
-edges <- parse.text(c(
+edges <- parse.digraph(c(
   "E *-> D",
   "D *-> C",
   "C -> E",
