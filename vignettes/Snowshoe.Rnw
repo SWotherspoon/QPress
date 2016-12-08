@@ -130,21 +130,21 @@ The first step of any analysis is to define an appropriate model
 structure.
 
 A directed graph representation of a model may be constructed from
-simple textual description with the \texttt{parse.text} and
-\texttt{model.text} functions.  The \texttt{parse.text} allows the
+simple textual description with the \texttt{parse.digraph} and
+\texttt{read.digraph} functions.  The \texttt{parse.digraph} allows the
 edges of the graph to be specified as a vector of character strings
 <<>>=
 ## Read a textual model description
 library(QPress)
-modelA <- parse.text(c("V-*V","P-*P","V*->H","H*->P"))
+modelA <- parse.digraph(c("V-*V","P-*P","V*->H","H*->P"))
 @
 Alternately, the edge descriptions can be stored in a text file, one edge
-per line, and read and written with \texttt{model.text} and
-\texttt{write.text} respectively
+per line, and read and written with \texttt{read.digraph} and
+\texttt{write.digraph} respectively
 <<>>=
 ## Write/read a model description to a text file
-write.text(modelA,"modelA.txt")
-modelA <- model.text("modelA.txt")
+write.digraph(modelA,"modelA.txt")
+modelA <- read.digraph("modelA.txt")
 @
 
 Within \textsf{R}, the graph is represented as an edge list, a
@@ -165,10 +165,10 @@ impact of \texttt{H} upon \texttt{V}.
 Models $B$ to $E$ may be defined similarly
 <<>>=
 ## Define variant models
-modelB <- parse.text(c("V-*V","P-*P","V*->H","H*->P","V->P"))
-modelC <- parse.text(c("V-*V","H-*H","P-*P","V*->H","H*->P","V->P"))
-modelD <- parse.text(c("V-*V","P-*P","V*->H","H*->P","V*->P"))
-modelE <- parse.text(c("V-*V","H-*H","P-*P","V*->H","H*->P","V*->P"))
+modelB <- parse.digraph(c("V-*V","P-*P","V*->H","H*->P","V->P"))
+modelC <- parse.digraph(c("V-*V","H-*H","P-*P","V*->H","H*->P","V->P"))
+modelD <- parse.digraph(c("V-*V","P-*P","V*->H","H*->P","V*->P"))
+modelE <- parse.digraph(c("V-*V","H-*H","P-*P","V*->H","H*->P","V*->P"))
 @
 It is also possible to combine these four models into one ``super''
 model using the mechanism of uncertain edges. Edges are allocated into
@@ -178,8 +178,8 @@ to the four models are specified as one group, and the disjoint edges
 as a second
 <<>>=
 ## Model with uncertain edges
-modelBCDE <- parse.text(c("V-*V","P-*P","V*->H","H*->P","V->P",
-                          "H--*H","V*--P"))
+modelBCDE <- parse.digraph(c("V-*V","P-*P","V*->H","H*->P","V->P",
+                             "H--*H","V*--P"))
 modelBCDE
 @
 When simulating from this super model, edges from the first group
