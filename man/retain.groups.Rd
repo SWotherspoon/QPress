@@ -32,7 +32,7 @@ edges in a specified group, or incident with a specified set of
 nodes.
 }
 \examples{
-edges <- parse.text(c("A *-> B","B *-> C","C *--> D"))
-write.text(retain.groups(edges,c(0)))
+edges <- parse.digraph(c("A *-> B","B *-> C","C *--> D"))
+write.digraph(retain.groups(edges,c(0)))
 }
 

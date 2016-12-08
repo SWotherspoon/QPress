@@ -18,13 +18,11 @@ Imports:
     tcltk,
     tcltk2
 License: GPL-2
+NeedsCompilation: no
+ByteCompile: yes
 LazyData: TRUE
 RoxygenNote: 5.0.1
-Collate:
-    'Community.R'
-    'text.R'
-    'tk.r'
-    'XML.R'
+
 
 
 

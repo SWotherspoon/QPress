@@ -41,6 +41,6 @@ and "Flowchart - Terminal", line types "Standard - Arc",
 ignored leading to a mispecified model.
 }
 \seealso{
-\code{\link{model.text}}
+\code{\link{read.digraph}}
 }
 
