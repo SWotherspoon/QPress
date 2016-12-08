@@ -3,9 +3,9 @@
 
 ##' Read and write text representations of models
 ##'
-##' The functions \code{model.text} and \code{parse.text} read a model
+##' The functions \code{read.digraph} and \code{parse.digraph} read a model
 ##' description from a text file and a string respectively, while
-##' \code{write.text} writes a text representation of the model to and
+##' \code{write.digraph} writes a text representation of the model to and
 ##' file.
 ##'
 ##' These functions recognize the following text format.  Each line
@@ -15,15 +15,15 @@
 ##' the right, separated by a sequence of dashes "-".  The number of
 ##' dashes used in the arrow defines the group number of the edge.
 ##'
-##' @title Text Representations
+##' @title Text Representations of Models
 ##' @param file the name of the file to read or write
 ##' @param lines a string representation of the model
 ##' @param labels the sequence of labels to use for the nodes
 ##' @param edges an edge list.
-##' @return The \code{write.text} function invisibly returns the text that was
-##' written to the file.
+##' @return The \code{write.digraph} function invisibly returns the
+##' text that was written to the file.
 ##'
-##' The functions \code{model.text} and \code{parse.text} return an
+##' The functions \code{read.digraph} and \code{parse.digraph} return an
 ##' edge list - a data frame with columns
 ##'
 ##' \item{\code{From}}{a factor indicating the origin of each edge (the node that effects)}
@@ -37,17 +37,17 @@
 ##' directed edge.
 ##'
 ##' @examples
-##' edges <- parse.text(c("A <-* B","C *-> A","C <- D","D -> B","B *--* C","A <--- D"))
+##' edges <- parse.digraph(c("A <-* B","C *-> A","C <- D","D -> B","B *--* C","A <--- D"))
 ##' edges
-##' deparse.text(edges)
+##' deparse.digraph(edges)
 ##' @export
-model.text <- function(file,labels=NULL) {
-  parse.text(readLines(file),labels=labels)
+read.digraph <- function(file,labels=NULL) {
+  parse.digraph(readLines(file),labels=labels)
 }
 
-##' @rdname model.text
+##' @rdname read.digraph
 ##' @export
-parse.text <- function(lines,labels=NULL) {
+parse.digraph <- function(lines,labels=NULL) {
   ## Attempt to parse specifications
   m <- regexec("^([^\\*<>-]+)(\\*|<|<>)?(-+)(\\*|>|<>)?([^\\*<>-]+)$",lines)
   err <- sapply(m,"[[",1)== -1
@@ -96,9 +96,9 @@ parse.text <- function(lines,labels=NULL) {
 }
 
 
-##' @rdname model.text
+##' @rdname read.digraph
 ##' @export
-deparse.text <- function(edges) {
+deparse.digraph <- function(edges) {
 
   make.edge <- function(edge) {
     edge <- edge[order(match(edge$Type,c("P","N","U","Z"),4),
@@ -120,13 +120,73 @@ deparse.text <- function(edges) {
 }
 
 
-##' @rdname model.text
+##' @rdname read.digraph
 ##' @export
-write.text <- function(edges,file="") {
-  txt <- deparse.text(edges)
+write.digraph <- function(edges,file="") {
+  txt <- deparse.digraph(edges)
   cat(txt,sep="\n",file=file)
   invisible(txt)
 }
+
+##' Parse a text representation of (directed) edges, return the index
+##' of the directed edge within the edge list.
+##'
+##' Each directed edge is represented as a string consisting of two
+##' node labels separated by an arrow, where the arrow consists of a
+##' sequence of dashes "-" followed by one of the character sequences
+##' ">","*","<>". The number of dashes used in the arrow is ignored.
+##'
+##' @title Indices of (Directed) Edges
+##' @param lines a vector of strings representing directed edges
+##' @param edges an edge list
+##' @return the indices of the directed edges within the edge list
+##' @examples
+##' ## Sample model
+##' edges <- parse.digraph(c(
+##'   "E *-> D",
+##'   "D *-> C",
+##'   "C -> E",
+##'   "E *-> B",
+##'   "B *-> A",
+##'   "A -> E",
+##'   "D --> B"))
+##' edges <- enforce.limitation(edges)
+##' parse.edge(c("E->D","D-*E","A-*B"),edges)
+##' @export
+parse.edge <- function(lines,edges) {
+  ## Parse lines
+  m <- regexec("([^\\*<>-]+)(-+)(\\*|>)?([^\\*<>-]+)",lines)
+  err <- sapply(m,"[[",1)== -1
+  if(any(err)) {
+    warning("Could not parse constraints: ",paste(lines[err],collapse=", "))
+    lines <- lines[!err]
+    m <- m[!err]
+  }
+  m <- regmatches(lines,m)
+  from <- gsub("^\\s+|\\s+$","",lapply(m,"[[",2))
+  to <-   gsub("^\\s+|\\s+$","",lapply(m,"[[",5))
+  line <- sapply(m,"[[",3)
+  head <- sapply(m,"[[",4)
+
+  ## Extract edges
+  labels <- node.labels(edges)
+  from <- factor(from,levels=labels)
+  to <- factor(to,levels=labels)
+
+  group <- nchar(line)-1
+
+  type <- c("N","P","U","Z")
+  type <- type[match(head,c("*",">","<>",""))]
+
+
+  es <- mapply(function(from,to,type)
+    match(TRUE,edges$From==from & edges$To==to & edges$Type==type),
+    from,to,type)
+
+  if(any(is.na(es)))
+    warning("Encountered undefined edges: ",paste(lines[is.na(es)],collapse=", "))
+  es
+ }
 
 
 
@@ -145,7 +205,7 @@ write.text <- function(edges,file="") {
 ##' @param edge.color The edge color.
 ##' @return Returns a string.
 ##' @export
-deparse.grViz <- function(edges,name="web",
+grviz.digraph <- function(edges,name="web",
                           fontsize=10,node.style="filled",
                           node.shape="oval",node.color="DarkOrange",
                           edge.color="DarkGrey") {

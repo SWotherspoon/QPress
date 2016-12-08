@@ -85,7 +85,7 @@ edge.labels <- function(edges,reverse=F) {
 ##' @seealso \code{\link{adjacency.image}}
 ##' @return Returns the adjacency matrix for the directed graph.
 ##' @examples
-##' edges <- parse.text(c(
+##' edges <- parse.digraph(c(
 ##'   "E *-> D",
 ##'   "D *-> C",
 ##'   "C -> E",
@@ -122,7 +122,7 @@ adjacency.matrix <- function(edges,labels=FALSE,required.groups=c(0)) {
 ##' @seealso \code{\link{adjacency.matrix}}
 ##' @return Returns the adjacency matrix for the directed graph.
 ##' @examples
-##' edges <- parse.text(c(
+##' edges <- parse.digraph(c(
 ##'   "E *-> D",
 ##'   "D *-> C",
 ##'   "C -> E",
@@ -163,7 +163,7 @@ adjacency.image <- function(edges,required.groups=c(0),cex.axis=1) {
 ##' @param A a square matrix
 ##' @return \code{adjoint} returns the adjoint matrix of \code{A}
 ##' @examples
-##' edges <- parse.text(c(
+##' edges <- parse.digraph(c(
 ##'   "E *-> D",
 ##'   "D *-> C",
 ##'   "C -> E",
@@ -238,8 +238,8 @@ enforce.limitation <- function(edges) {
 ##' @return \code{retain.groups} returns an edge list containing only
 ##' edges from the specified groups.
 ##' @examples
-##' edges <- parse.text(c("A *-> B","B *-> C","C *--> D"))
-##' write.text(retain.groups(edges,c(0)))
+##' edges <- parse.digraph(c("A *-> B","B *-> C","C *--> D"))
+##' write.digraph(retain.groups(edges,c(0)))
 ##' @export
 retain.groups <- function(edges,groups) {
   labels <- node.labels(edges)
@@ -313,7 +313,7 @@ retain.nodes <- function(edges,nodes) {
 ##' @examples
 ##' set.seed(32)
 ##' ## Sample model
-##' edges <- parse.text(c(
+##' edges <- parse.digraph(c(
 ##'   "E *-> D",
 ##'   "D *-> C",
 ##'   "C -> E",
@@ -341,9 +341,8 @@ retain.nodes <- function(edges,nodes) {
 ##' @importFrom stats runif rbinom
 ##' @export
 community.sampler <- function(edges,required.groups=c(0)) {
-
-  labels <- node.labels(edges)
-  n.nodes <- length(labels)
+  n.nodes <- length(node.labels(edges))
+  weight.labels <- edge.labels(edges)
   n.edges <- nrow(edges)
   W <- matrix(0,n.nodes,n.nodes)
 
@@ -355,20 +354,17 @@ community.sampler <- function(edges,required.groups=c(0)) {
   ## The indices of the matrix entries that can be omitted (zeroed), the
   ## expansion index that relates matching edges of a pair, and the
   ## number of edges that can be omitted.
-  required <- edges$Group %in% required.groups
-  k.uncertain <- k.edges[!required]
-  uncertain <- factor(edges$Pair[!required])
-  expand <- as.vector(unclass(uncertain))
+  uncertain <- which(!(edges$Group %in% required.groups))
+  expand <- match(edges$Pair[uncertain],unique(edges$Pair[uncertain]))
   n.omit <- max(0,expand)
-  weight.labels <- edge.labels(edges)
-  uncertain.labels <- weight.labels[!required]
 
   zs <- rep(1,n.omit)
 
   community <- if(n.omit > 0) {
     function() {
-      W[k.edges] <- runif(n.edges,lower,upper)
-      W[k.uncertain] <- W[k.uncertain]*zs[expand]
+      r <- runif(n.edges,lower,upper)
+      r[uncertain] <- r[uncertain]*zs
+      W[k.edges] <- r
       W
     }
   } else {
@@ -380,8 +376,7 @@ community.sampler <- function(edges,required.groups=c(0)) {
 
   select <- if(n.omit > 0) {
     function(p) {
-      zs <<- rbinom(n.omit,1,p)
-      zs
+      zs <<- rbinom(n.omit,1,p)[expand]
     }
   } else {
     function(p=0) {
@@ -397,7 +392,7 @@ community.sampler <- function(edges,required.groups=c(0)) {
        select=select,
        weights=weights,
        weight.labels=weight.labels,
-       uncertain.labels=uncertain.labels)
+       uncertain.labels=weight.labels[uncertain])
 }
 
 
@@ -414,7 +409,7 @@ community.sampler <- function(edges,required.groups=c(0)) {
 ##' @examples
 ##' set.seed(32)
 ##' ## Sample model
-##' edges <- parse.text(c(
+##' edges <- parse.digraph(c(
 ##'   "E *-> D",
 ##'   "D *-> C",
 ##'   "C -> E",
@@ -459,7 +454,7 @@ stable.community <- function(W) {
 ##' @examples
 ##' set.seed(32)
 ##' ## Sample model
-##' edges <- parse.text(c(
+##' edges <- parse.digraph(c(
 ##'   "E *-> D",
 ##'   "D *-> C",
 ##'   "C -> E",
@@ -523,7 +518,7 @@ press.validate <- function(edges,perturb,monitor,epsilon=1.0E-5) {
 ##' @examples
 ##' set.seed(32)
 ##' ## Sample model
-##' edges <- parse.text(c(
+##' edges <- parse.digraph(c(
 ##'   "E *-> D",
 ##'   "D *-> C",
 ##'   "C -> E",
@@ -614,7 +609,7 @@ press.impact <- function(edges,perturb,monitor=NULL) {
 ##' @examples
 ##' set.seed(32)
 ##' ## Sample model
-##' edges <- parse.text(c(
+##' edges <- parse.digraph(c(
 ##'   "E *-> D",
 ##'   "D *-> C",
 ##'   "C -> E",

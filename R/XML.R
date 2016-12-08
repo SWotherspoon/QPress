@@ -29,7 +29,7 @@ NULL
 ##' @param height height of the nodes in Dia
 ##' @param self should self edges be written.
 ##' @return The \code{model.dia} function returns an edge list.
-##' @seealso \code{\link{model.text}}
+##' @seealso \code{\link{read.digraph}}
 ##' @export
 ##' @import XML
 model.dia <- function(file,labels=NULL) {
