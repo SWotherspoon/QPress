@@ -283,7 +283,7 @@ impact.barplot0 <- function(sim,perturb=0,monitor=NA,
   perturb <- extend.vector(perturb,nodes,0)
   monitor <- extend.vector(monitor,nodes,NA)
 
-  for(i in 1:length(As)) {
+  for(i in seq_along(As)) {
     impact <- signum(drop(As[[i]]%*%perturb),epsilon=epsilon)
     if(all(monitor==impact,na.rm=T)) {
       results <- results + outer(impact,-1:1,'==')
@@ -351,7 +351,7 @@ weight.density0 <- function(sim,perturb,monitor,edges,
 
   if(any(edges)) {
     keep <- rep(F,nrow(ws))
-    for(i in 1:length(As)) {
+    for(i in seq_along(As)) {
       impact <- signum(drop(As[[i]]%*%perturb),epsilon=epsilon)
       if(all(monitor==impact,na.rm=T)) keep[i] <- T
     }

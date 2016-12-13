@@ -143,9 +143,9 @@ adjacency.image <- function(edges,required.groups=c(0),cex.axis=1) {
   lwidth <- max(strwidth(nodes,units="inches",cex=cex.axis))
   opar <- par(mai=c(0,lwidth+0.2,lwidth+0.2,0)+0.1)
   ## Flip image to match matrix ordering
-  image(1:n,1:n,t(A)[,n:1],axes=F,xlab="",ylab="",col=pal)
-  axis(2,n:1,nodes,las=2,cex.axis=cex.axis)
-  axis(3,1:n,nodes,las=2,cex.axis=cex.axis)
+  image(seq_len(n),seq_len(n),t(A)[,rev(seq_len(n))],axes=F,xlab="",ylab="",col=pal)
+  axis(2,seq_len(n),nodes,las=2,cex.axis=cex.axis)
+  axis(3,seq_len(n),nodes,las=2,cex.axis=cex.axis)
   box()
   par(opar)
 }
@@ -178,7 +178,7 @@ adjacency.image <- function(edges,required.groups=c(0),cex.axis=1) {
 adjoint <- function(A) {
   n <- nrow(A)
   B <- diag(1,n,n)
-  for(k in 1:(n-1)) {
+  for(k in seq_len(n-1)) {
     B <- A%*%B
     p <- -sum(diag(B))/k
     diag(B) <- diag(B)+p
@@ -195,7 +195,7 @@ charpoly <- function(A) {
   n <- nrow(A)
   B <- diag(1,n,n)
   p <- rep(1,n+1)
-  for(k in 1:n) {
+  for(k in seq_len(n)) {
     B <- A%*%B
     p[k+1] <- -sum(diag(B))/k
     diag(B) <- diag(B)+p[k+1]
