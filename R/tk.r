@@ -374,3 +374,26 @@ weight.density0 <- function(sim,perturb,monitor,edges,
 }
 
 
+##' Tabulate the impact of every positive perturbation as table.
+##'
+##' Crosstabulate the mean impact (positive or negative) at each node
+##' for a positive perturbation of each node.  The k-th column
+##' corresponds to a perturbation of the k-th node, and shows the mean
+##' impact on each node.
+##'
+##'
+##' @title Impact Table
+##' @param sim the result from \code{system.simulate}
+##' @param epsilon outomes below this in absolute magnitude are treated as zero.
+##' @return The crosstabulation as a matrix
+##' @export
+impact.table <- function(sim,epsilon=1.0E-5) {
+  nodes <- node.labels(sim$edges)
+  results <- matrix(0,length(nodes),length(nodes),
+                    dimnames=list(nodes,nodes))
+  for(i in seq_along(sim$A))
+    results <- results + signum(sim$A[[i]],epsilon=epsilon)
+  results/max(1,length(sim$A))
+}
+
+
