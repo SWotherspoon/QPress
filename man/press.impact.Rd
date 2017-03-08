@@ -56,4 +56,3 @@ f(W)
 W <- s$community()
 f(W)
 }
-

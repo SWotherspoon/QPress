@@ -20,4 +20,3 @@ For stability, the majority of nodes of the directed graph should
 have a self limiting edge. This function adds a self limiting edge
 for every node to an existing edge list.
 }
-

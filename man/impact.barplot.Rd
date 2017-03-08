@@ -40,4 +40,3 @@ barplot of the frequency table of outcomes at each node.
 \code{impact.barplot0} is a non-interactive variant for
 programmatic use.
 }
-

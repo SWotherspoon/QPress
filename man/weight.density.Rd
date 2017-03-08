@@ -42,4 +42,3 @@ integer codes correspond to the ordering of the node labels.
 \code{weight.density0} is a non-interactive variant for
 programmatic use.
 }
-

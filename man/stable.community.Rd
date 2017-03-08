@@ -42,4 +42,3 @@ stable.community(W)
 W <- s$community()
 stable.community(W)
 }
-

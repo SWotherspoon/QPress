@@ -35,4 +35,3 @@ nodes.
 edges <- parse.digraph(c("A *-> B","B *-> C","C *--> D"))
 write.digraph(retain.groups(edges,c(0)))
 }
-

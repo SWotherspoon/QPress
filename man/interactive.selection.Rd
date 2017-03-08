@@ -39,4 +39,3 @@ The \code{action} argument must be function of five arguments
 \item \code{slider} the state of a slider
 }
 }
-

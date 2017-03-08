@@ -3,6 +3,7 @@
 \docType{package}
 \name{QPress-package}
 \alias{QPress-package}
+\alias{QPress-package}
 \title{Qualitative Network Analysis}
 \description{
 Qualitiative analysis of press perturbations of network models.
@@ -19,4 +20,3 @@ Ben Raymond, Jessica Melbourne-Thomas, Simon Wotherspoon
 
 B. Raymond, J. Melbourne-Thomas and S. Wotherspoon
 }
-

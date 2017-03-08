@@ -40,4 +40,3 @@ edges <- enforce.limitation(edges)
 A <- adjacency.matrix(edges,labels=TRUE)
 adjoint(A)
 }
-

@@ -74,4 +74,3 @@ sims <- system.simulate(10,edges,
                                          perturb=c(D=1),
                                          monitor=c(B=-1,C=1))))
 }
-

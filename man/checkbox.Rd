@@ -34,4 +34,3 @@ The \code{checkbox} function makes a single checkbox widget, while
 \code{checkcolumn} makes a widget containing a column of
 checkboxes.
 }
-
