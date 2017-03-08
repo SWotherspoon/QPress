@@ -19,3 +19,4 @@ Collate:
     'text.R'
     'tk.r'
     'XML.R'
+RoxygenNote: 6.0.1
