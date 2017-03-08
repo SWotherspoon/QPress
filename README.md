@@ -1,4 +1,6 @@
 # QPress
+[![Travis-CI Build Status](https://travis-ci.org/SWotherspoon/QPress.svg?branch=master)](https://travis-ci.org/SWotherspoon/QPress)
+[![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/SWotherspoon/QPress?branch=master&svg=true)](https://ci.appveyor.com/project/SWotherspoon/QPress)
 
 This package simulates qualitative press perturbation scenarios for network models
 specified as signed directed graphs.
@@ -21,45 +23,17 @@ The package has four main functions.
 First install the dependencies from CRAN:
 
 ```{r}
-install.packages(c("tcltk2","XML"))
+install.packages(c("tcltk2","XML","devtools"))
 ```
 
 (This assumes that R has been compiled with Tcl/Tk support, which should be true for most distributions.)
 
-Then install QPress itself.
+Then install QPress itself from GitHub, using the devtools package. 
 
-On Windows:
-```{r}
-install.packages("QPress",repos="http://www.rforge.net/",type="source")
+```R
+devtools::install_github("SWotherspoon/QPress")
 ```
 
-On Linux:
-```{r}
-install.packages("QPress",repos="http://www.rforge.net/")
-```
+(QPress otherwise does not need devtools for normal use.)
 
-## Building
-
-If you prefer to build the package from source, this is easily done with RStudio:
-
-1. Install R
-
-2. Install [RStudio](http://www.rstudio.com)
-
-3. Install [Rtools](http://cran.r-project.org/bin/windows/Rtools/) or equivalent for your platform
-
-4. Install [devtools](http://cran.r-project.org/bin/windows/Rtools/) and [roxygen2](http://cran.r-project.org/web/packages/roxygen2/index.html) packages and dependencies in R
-
-5. Install the [XML](http://cran.r-project.org/web/packages/XML/index.html) packages and dependencies.
-
-6. Clone the repository
-
-7. Create an Rstudio project in the folder containing this Readme file.
-
-8. In the build tab, choose `More/Configure Build Tools...` and click
-`Generate documentation with Roxygen`, select `Configure` and choose to generate `Rd files` and the `NAMESPACE file`, leaving the other options as they are.
-
-9. Choose `More/Roxygenize` from the `Build` tab
-
-10. Choose `Build & Reload` to make the package immediately available to R, or choose `More/Build source package` `More/Build binary package` from the `Build` tab to make packages.
 

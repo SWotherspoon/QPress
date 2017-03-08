@@ -116,8 +116,8 @@ Doing the same for model (b) gives Figure~\ref{fig:Perturb1}.
 simlake.a <- system.simulate(1000,lake.a)
 simlake.b <- system.simulate(1000,lake.b)
 opar <- par(mfrow=c(1,2))
-QPress:::impact.barplot.action(node.labels(lake.a),simlake.a$A,c(0,0,0,0,0,0,0,1),c(NA,NA,1,NA,1,NA,1,1),main="Model (a)")
-QPress:::impact.barplot.action(node.labels(lake.b),simlake.b$A,c(0,0,0,0,0,0,0,1),c(NA,NA,1,NA,1,NA,1,1),main="Model (b)")
+impact.barplot0(simlake.a,c(0,0,0,0,0,0,0,1),c(NA,NA,1,NA,1,NA,1,1),main="Model (a)")
+impact.barplot0(simlake.b,c(0,0,0,0,0,0,0,1),c(NA,NA,1,NA,1,NA,1,1),main="Model (b)")
 par(opar)
 @
 \caption{Simulation outcomes from the two lake mesocosm models in response to a
@@ -209,7 +209,7 @@ impact.barplot(simantarctic.a)
   \centering
 <<echo=F,fig=T>>=
 simantarctic.a <- system.simulate(1000,antarctic.a)
-QPress:::impact.barplot.action(node.labels(antarctic.a),simantarctic.a$A,c(1,0,0,0,0,0,0,0,0),c(NA,NA,NA,1,-1,-1,NA,1,NA),main="Model (a)")
+impact.barplot0(simantarctic.a,c(1,0,0,0,0,0,0,0,0),c(NA,NA,NA,1,-1,-1,NA,1,NA),main="Model (a)")
 @
 \caption{Simulation outcomes in response to a positive press perturbation to
   $\mathrm{CO}_{2}$ for Antarctic mesocosm model (a). Each plot shows the fraction of
@@ -272,7 +272,7 @@ Figure~\ref{fig:Perturb4}.
   \centering
 <<echo=F,fig=T>>=
 simantarctic.b <- system.simulate(1000,antarctic.b)
-QPress:::impact.barplot.action(node.labels(antarctic.b),simantarctic.b$A,c(1,0,0,0,0,0,0,0,0),c(NA,NA,NA,1,-1,-1,NA,1,NA),main="Model (b)")
+impact.barplot0(simantarctic.b,c(1,0,0,0,0,0,0,0,0),c(NA,NA,NA,1,-1,-1,NA,1,NA),main="Model (b)")
 @
 \caption{Simulation outcomes in response to a positive press perturbation to the
   $\mathrm{CO}_{2}$ for the alternative microbial loop model (b) shown in
@@ -292,7 +292,7 @@ QPress:::impact.barplot.action(node.labels(antarctic.b),simantarctic.b$A,c(1,0,0
   \centering
 <<echo=F,fig=T>>=
 simantarctic.c <- system.simulate(1000,antarctic.c)
-QPress:::impact.barplot.action(node.labels(antarctic.c),simantarctic.c$A,c(1,0,0,0,0,0,0,0,0),c(NA,NA,NA,1,-1,-1,NA,1,NA),main="Model (c)")
+impact.barplot0(simantarctic.c,c(1,0,0,0,0,0,0,0,0),c(NA,NA,NA,1,-1,-1,NA,1,NA),main="Model (c)")
 @
 \caption{Simulation outcomes in response to a positive press perturbation to the
   $\mathrm{CO}_{2}$ for the alternative microbial loop model (c) shown in

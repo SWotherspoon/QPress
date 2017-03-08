@@ -29,7 +29,7 @@ NULL
 ##' @param height height of the nodes in Dia
 ##' @param self should self edges be written.
 ##' @return The \code{model.dia} function returns an edge list.
-##' @seealso \code{\link{model.text}}
+##' @seealso \code{\link{read.digraph}}
 ##' @export
 ##' @import XML
 model.dia <- function(file,labels=NULL) {
@@ -347,13 +347,13 @@ write.dia <- function(edges,file,width=8,height=2,self=T) {
   ## Add Nodes
   labels <- node.labels(edges)
   n <- length(labels)
-  xy <- 20+15*cbind(cos(2*pi*(1:n)/n),sin(2*pi*(1:n)/n))
-  for(k in 1:n)
+  xy <- 20+15*cbind(cos(2*pi*seq_len(n)/n),sin(2*pi*seq_len(n)/n))
+  for(k in seq_len(n))
     writeNode(k,xy[k,],labels[k])
 
   if(!self) edges <- edges[edges$From!=edges$To,]
   prs <- split(edges,interaction(edges$Pair,edges$Group,drop=T))
-  for(k in 1:length(prs)) {
+  for(k in seq_along(prs)) {
     edge <- prs[[k]]
     edge <- edge[order(match(edge$Type,c("P","N","U","Z"),4),edge$From),]
     from <- edge$From[1]

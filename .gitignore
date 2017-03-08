@@ -2,6 +2,7 @@
 ## R packages
 #################
 
+#*#
 *.Rproj
 .Rbuildignore
 .Rhistory

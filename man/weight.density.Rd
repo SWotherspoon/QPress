@@ -2,9 +2,13 @@
 % Please edit documentation in R/tk.r
 \name{weight.density}
 \alias{weight.density}
+\alias{weight.density0}
 \title{Weight Density Plots}
 \usage{
 weight.density(sim, epsilon = 1e-05, main = "")
+
+weight.density0(sim, perturb, monitor, edges, smooth = 1, epsilon = 1e-05,
+  main = "")
 }
 \arguments{
 \item{sim}{the result from \code{system.simulate}}
@@ -12,6 +16,15 @@ weight.density(sim, epsilon = 1e-05, main = "")
 \item{epsilon}{outomes below this in absolute magnitude are treated as zero.}
 
 \item{main}{text for plot title}
+
+\item{perturb}{a named vector that indicates which nodes were
+perturbed and the relative magnitude of the perturbation.}
+
+\item{monitor}{n named vector of signs (-1,0,1) or NA that indicates the outcome of the perturbation.}
+
+\item{edges}{logical vector indicating which edges to plot.}
+
+\item{smooth}{double in the range [0,1] controlling the level of smoothing applied.}
 }
 \description{
 Display weights of valid and invalid matrices as a density plots
@@ -25,4 +38,7 @@ a given perturbation.
 The slider controls the level of smoothing of the densities.
 Edges are labelled by pairs of integers for compactness, where the
 integer codes correspond to the ordering of the node labels.
+
+\code{weight.density0} is a non-interactive variant for
+programmatic use.
 }

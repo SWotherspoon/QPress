@@ -25,7 +25,7 @@ This function converts an edge list to an adjacency matrix
 the impact of node \code{j} on node \code{i}.
 }
 \examples{
-edges <- parse.text(c(
+edges <- parse.digraph(c(
   "E *-> D",
   "D *-> C",
   "C -> E",

@@ -1,22 +1,27 @@
 Package: QPress
 Type: Package
 Title: Qualitative Network Analysis
-Version: 0.2
+Version: 0.21
 Date: 2013-05-13
-Author: Ben Raymond, Jessica Melbourne-Thomas, Simon Wotherspoon
-Maintainer: Simon Wotherspoon <Simon.Wotherspoon@utas.edu.au>
-Imports:
-    XML,
-    tcltk,
-    tcltk2
+Authors@R: c(
+    as.person("Simon Wotherspoon <Simon.Wotherspoon@utas.edu.au> [aut,cre]"),
+    as.person("Jessica Melbourne-Thomas <Jess.Melbourne-Thomas@aad.gov.au> [aut]"),
+    as.person("Ben Raymond <Ben.Raymond@add.gov.au> [aut]"))
 Description: Qualitiative analysis of press perturbations of network models.
     Given a network model represented as a signed directed graphs, this package
     provide facilities for evaluating the impact of a press perturbation to the
     system through simulation.
+Depends:
+    R(>= 3.2.0)
+Imports:
+    XML,
+    tcltk,
+    tcltk2
 License: GPL-2
+LazyData: TRUE
+RoxygenNote: 6.0.1
 Collate:
     'Community.R'
     'text.R'
     'tk.r'
     'XML.R'
-RoxygenNote: 6.0.1

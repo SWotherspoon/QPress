@@ -24,7 +24,7 @@ Display the matrix constructed by \code{adjacency.matrix} as
 an image.
 }
 \examples{
-edges <- parse.text(c(
+edges <- parse.digraph(c(
   "E *-> D",
   "D *-> C",
   "C -> E",

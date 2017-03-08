@@ -85,7 +85,7 @@ edge.labels <- function(edges,reverse=F) {
 ##' @seealso \code{\link{adjacency.image}}
 ##' @return Returns the adjacency matrix for the directed graph.
 ##' @examples
-##' edges <- parse.text(c(
+##' edges <- parse.digraph(c(
 ##'   "E *-> D",
 ##'   "D *-> C",
 ##'   "C -> E",
@@ -122,7 +122,7 @@ adjacency.matrix <- function(edges,labels=FALSE,required.groups=c(0)) {
 ##' @seealso \code{\link{adjacency.matrix}}
 ##' @return Returns the adjacency matrix for the directed graph.
 ##' @examples
-##' edges <- parse.text(c(
+##' edges <- parse.digraph(c(
 ##'   "E *-> D",
 ##'   "D *-> C",
 ##'   "C -> E",
@@ -132,6 +132,7 @@ adjacency.matrix <- function(edges,labels=FALSE,required.groups=c(0)) {
 ##'   "D -> B"))
 ##' edges <- enforce.limitation(edges)
 ##' adjacency.image(edges)
+##' @importFrom graphics axis box image par strwidth
 ##' @export
 adjacency.image <- function(edges,required.groups=c(0),cex.axis=1) {
   pal <- c("#92C5DE", "#FFFFFF", "#F4A582")
@@ -142,9 +143,9 @@ adjacency.image <- function(edges,required.groups=c(0),cex.axis=1) {
   lwidth <- max(strwidth(nodes,units="inches",cex=cex.axis))
   opar <- par(mai=c(0,lwidth+0.2,lwidth+0.2,0)+0.1)
   ## Flip image to match matrix ordering
-  image(1:n,1:n,t(A)[,n:1],axes=F,xlab="",ylab="",col=pal)
-  axis(2,n:1,nodes,las=2,cex.axis=cex.axis)
-  axis(3,1:n,nodes,las=2,cex.axis=cex.axis)
+  image(seq_len(n),seq_len(n),t(A)[,rev(seq_len(n))],axes=F,xlab="",ylab="",col=pal)
+  axis(2,seq_len(n),nodes,las=2,cex.axis=cex.axis)
+  axis(3,seq_len(n),nodes,las=2,cex.axis=cex.axis)
   box()
   par(opar)
 }
@@ -162,7 +163,7 @@ adjacency.image <- function(edges,required.groups=c(0),cex.axis=1) {
 ##' @param A a square matrix
 ##' @return \code{adjoint} returns the adjoint matrix of \code{A}
 ##' @examples
-##' edges <- parse.text(c(
+##' edges <- parse.digraph(c(
 ##'   "E *-> D",
 ##'   "D *-> C",
 ##'   "C -> E",
@@ -177,7 +178,7 @@ adjacency.image <- function(edges,required.groups=c(0),cex.axis=1) {
 adjoint <- function(A) {
   n <- nrow(A)
   B <- diag(1,n,n)
-  for(k in 1:(n-1)) {
+  for(k in seq_len(n-1)) {
     B <- A%*%B
     p <- -sum(diag(B))/k
     diag(B) <- diag(B)+p
@@ -194,7 +195,7 @@ charpoly <- function(A) {
   n <- nrow(A)
   B <- diag(1,n,n)
   p <- rep(1,n+1)
-  for(k in 1:n) {
+  for(k in seq_len(n)) {
     B <- A%*%B
     p[k+1] <- -sum(diag(B))/k
     diag(B) <- diag(B)+p[k+1]
@@ -221,7 +222,7 @@ enforce.limitation <- function(edges) {
                      To=factor(limit,levels=labels),
                      Group=rep(0,n),
                      Type=factor(rep("N",n),levels(edges$Type)),
-                     Pair=max(edges$Pair)+1:n))
+                     Pair=seq(max(edges$Pair)+1,length.out=n)))
 }
 
 
@@ -237,8 +238,8 @@ enforce.limitation <- function(edges) {
 ##' @return \code{retain.groups} returns an edge list containing only
 ##' edges from the specified groups.
 ##' @examples
-##' edges <- parse.text(c("A *-> B","B *-> C","C *--> D"))
-##' write.text(retain.groups(edges,c(0)))
+##' edges <- parse.digraph(c("A *-> B","B *-> C","C *--> D"))
+##' write.digraph(retain.groups(edges,c(0)))
 ##' @export
 retain.groups <- function(edges,groups) {
   labels <- node.labels(edges)
@@ -312,7 +313,7 @@ retain.nodes <- function(edges,nodes) {
 ##' @examples
 ##' set.seed(32)
 ##' ## Sample model
-##' edges <- parse.text(c(
+##' edges <- parse.digraph(c(
 ##'   "E *-> D",
 ##'   "D *-> C",
 ##'   "C -> E",
@@ -337,11 +338,11 @@ retain.nodes <- function(edges,nodes) {
 ##' ## Generate community matrices
 ##' s$community()
 ##' s$community()
+##' @importFrom stats runif rbinom
 ##' @export
 community.sampler <- function(edges,required.groups=c(0)) {
-
-  labels <- node.labels(edges)
-  n.nodes <- length(labels)
+  n.nodes <- length(node.labels(edges))
+  weight.labels <- edge.labels(edges)
   n.edges <- nrow(edges)
   W <- matrix(0,n.nodes,n.nodes)
 
@@ -353,20 +354,17 @@ community.sampler <- function(edges,required.groups=c(0)) {
   ## The indices of the matrix entries that can be omitted (zeroed), the
   ## expansion index that relates matching edges of a pair, and the
   ## number of edges that can be omitted.
-  required <- edges$Group %in% required.groups
-  k.uncertain <- k.edges[!required]
-  uncertain <- factor(edges$Pair[!required])
-  expand <- as.vector(unclass(uncertain))
+  uncertain <- which(!(edges$Group %in% required.groups))
+  expand <- match(edges$Pair[uncertain],unique(edges$Pair[uncertain]))
   n.omit <- max(0,expand)
-  weight.labels <- edge.labels(edges)
-  uncertain.labels <- weight.labels[!required]
 
   zs <- rep(1,n.omit)
 
   community <- if(n.omit > 0) {
     function() {
-      W[k.edges] <- runif(n.edges,lower,upper)
-      W[k.uncertain] <- W[k.uncertain]*zs[expand]
+      r <- runif(n.edges,lower,upper)
+      r[uncertain] <- r[uncertain]*zs
+      W[k.edges] <- r
       W
     }
   } else {
@@ -378,8 +376,7 @@ community.sampler <- function(edges,required.groups=c(0)) {
 
   select <- if(n.omit > 0) {
     function(p) {
-      zs <<- rbinom(n.omit,1,p)
-      zs
+      zs <<- rbinom(n.omit,1,p)[expand]
     }
   } else {
     function(p=0) {
@@ -395,7 +392,7 @@ community.sampler <- function(edges,required.groups=c(0)) {
        select=select,
        weights=weights,
        weight.labels=weight.labels,
-       uncertain.labels=uncertain.labels)
+       uncertain.labels=weight.labels[uncertain])
 }
 
 
@@ -412,7 +409,7 @@ community.sampler <- function(edges,required.groups=c(0)) {
 ##' @examples
 ##' set.seed(32)
 ##' ## Sample model
-##' edges <- parse.text(c(
+##' edges <- parse.digraph(c(
 ##'   "E *-> D",
 ##'   "D *-> C",
 ##'   "C -> E",
@@ -457,7 +454,7 @@ stable.community <- function(W) {
 ##' @examples
 ##' set.seed(32)
 ##' ## Sample model
-##' edges <- parse.text(c(
+##' edges <- parse.digraph(c(
 ##'   "E *-> D",
 ##'   "D *-> C",
 ##'   "C -> E",
@@ -521,7 +518,7 @@ press.validate <- function(edges,perturb,monitor,epsilon=1.0E-5) {
 ##' @examples
 ##' set.seed(32)
 ##' ## Sample model
-##' edges <- parse.text(c(
+##' edges <- parse.digraph(c(
 ##'   "E *-> D",
 ##'   "D *-> C",
 ##'   "C -> E",
@@ -598,7 +595,10 @@ press.impact <- function(edges,perturb,monitor=NULL) {
 ##' @title Simulate System
 ##' @param n.sims number of matrices to simulate.
 ##' @param edges an edge list.
-##' @param required.groups a vector of integers specifying which groups of edges must always occur in the community matrix.
+##' @param required.groups a vector of integers specifying which
+##'   groups of edges must always occur in the community matrix.
+##' @param sampler the sampler object used to generate random weights
+##'   (see \code{\link{community.sampler}})
 ##' @param validators an (optional) list of validation functions
 ##' generated by \code{press.validate}.
 ##' @return Returns a list with elements
@@ -611,7 +611,7 @@ press.impact <- function(edges,perturb,monitor=NULL) {
 ##' @examples
 ##' set.seed(32)
 ##' ## Sample model
-##' edges <- parse.text(c(
+##' edges <- parse.digraph(c(
 ##'   "E *-> D",
 ##'   "D *-> C",
 ##'   "C -> E",
@@ -628,14 +628,15 @@ press.impact <- function(edges,perturb,monitor=NULL) {
 ##'                           press.validate(edges,
 ##'                                          perturb=c(D=1),
 ##'                                          monitor=c(B=-1,C=1))))
+##' @importFrom stats runif
 ##' @export
 system.simulate <- function(n.sims,edges,
                             required.groups=c(0),
+                            sampler=community.sampler(edges,required.groups),
                             validators=NULL) {
 
   As <- vector("list",n.sims)
   ws <- matrix(0,n.sims,nrow(edges))
-  s <- community.sampler(edges,required.groups)
   total <- 0
   stable <- 0
   accepted <- 0
@@ -647,10 +648,10 @@ system.simulate <- function(n.sims,edges,
     ## Sample community matrix
     ## The select step selects which uncertain edges will be retained,
     ## where r is the probability an uncertain edge is retained
-    z <- s$select(runif(1))
+    z <- sampler$select(runif(1))
     ## The community step constructs a random comunity matrix with the
     ## correct pattern of signs and missing edges.
-    W <- s$community()
+    W <- sampler$community()
 
     ## Check stability and validation criteria
     if(!stable.community(W)) next
@@ -661,9 +662,9 @@ system.simulate <- function(n.sims,edges,
     ## Store
     accepted <- accepted+1
     As[[accepted]] <- -solve(W)
-    ws[accepted,] <- s$weights(W)
+    ws[accepted,] <- sampler$weights(W)
   }
-  colnames(ws) <- s$weight.labels
+  colnames(ws) <- sampler$weight.labels
   list(edges=edges,A=As,w=ws,total=total,stable=stable,accepted=accepted)
 }
 
@@ -701,7 +702,7 @@ system.simulate <- function(n.sims,edges,
 ##' @examples
 ##' set.seed(32)
 ##' ## Sample model
-##' edges <- parse.text(c(
+##' edges <- parse.digraph(c(
 ##'   "E *-> D",
 ##'   "D *-> C",
 ##'   "C -> E",
