@@ -731,7 +731,7 @@ system.simulate0 <- function(n.sims,edges,
   accepted <- logical(n.sims)
 
 
-  for(k in 1:n.sims) {
+  for(k in seq_len(n.sims)) {
 
     ## Sample community matrix
     ## The select step selects which uncertain edges will be retained,
