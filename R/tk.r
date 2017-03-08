@@ -373,6 +373,74 @@ weight.density0 <- function(sim,perturb,monitor,edges,
   }
 }
 
+##' Display weights of valid and invalid matrices as a density plots
+##'
+##' This control constructs density plots that show the distribution
+##' of selected edge weights for the cases that meet the selected
+##' validation criteria (blue), and those that do not (red), following
+##' a given perturbation.
+##'
+##' The slider controls the level of smoothing of the densities.
+##' Edges are labelled by pairs of integers for compactness, where the
+##' integer codes correspond to the ordering of the node labels.
+##'
+##' \code{stability.density0} is a non-interactive variant for
+##' programmatic use.
+##'
+##' @title Stability Density Plots
+##' @param sim the result from \code{system.simulate0}
+##' @param main text for plot title
+##' @param edges logical vector indicating which edges to plot.
+##' @param smooth double in the range [0,1] controlling the level of smoothing applied.
+##' @export
+stability.density <- function(sim,main="") {
+  edges <- sim$edges
+
+  nodes <- node.labels(edges)
+  colnames(sim$w) <- paste(unclass(edges$To),unclass(edges$From),sep=":")
+
+  action <- function(perturb,monitor,edges,check,slider) {
+    stability.density0(sim,edges,smooth=slider,main=main)
+  }
+  interactive.selection(action,nodes,cbind(edges$From,edges$To),
+                        slider=list(initial=1,from=0,to=2),
+                        perturb=FALSE,monitor=FALSE)
+}
+
+
+
+##' @rdname stability.density
+##' @importFrom stats density
+##' @importFrom graphics lines plot title
+##' @export
+stability.density0 <- function(sim,edges,smooth=1,main="") {
+  pal <- c("#0571B0", "#CA0020")
+  ws <- sim$w
+  stable <- sim$stable
+  nodes <- node.labels(sim$edges)
+
+  if(any(edges)) {
+    n <- ceiling(sqrt(sum(edges)))
+    m <- ceiling(sum(edges)/n)
+
+    opar <- par(mfrow=c(m,n),mar=c(5,4,1,1)+0.1)
+    for(k in which(edges)) {
+      d1 <- if(sum(stable) > 10) density(ws[stable,k],adjust=smooth) else list(x=c(),y=c())
+      d2 <- if(sum(!stable) > 10) density(ws[!stable,k],adjust=smooth) else list(x=c(),y=c())
+      plot(NULL,xlab=colnames(ws)[k],main="",
+           xlim=range(d1$x,d2$x),
+           ylim=range(d1$y,d2$y))
+      lines(d1,col=pal[1])
+      lines(d2,col=pal[2])
+      title(main=main,outer=T)
+    }
+    par(opar)
+  }
+}
+
+
+
+
 
 ##' Tabulate the impact of every positive perturbation as table.
 ##'
