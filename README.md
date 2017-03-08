@@ -28,10 +28,10 @@ install.packages(c("tcltk2","XML","devtools"))
 
 (This assumes that R has been compiled with Tcl/Tk support, which should be true for most distributions.)
 
-Then install QPress itself from GitHub, using the devtools package. 
+Then install QPress itself from GitHub, using the devtools package.
 
 ```R
-devtools::install_github("SWotherspoon/QPress")
+devtools::install_github("SWotherspoon/QPress",ref="Constrain")
 ```
 
 (QPress otherwise does not need devtools for normal use.)
