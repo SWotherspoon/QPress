@@ -690,6 +690,8 @@ system.simulate <- function(n.sims,edges,
 ##' @title Simulate System
 ##' @param n.sims number of matrices to simulate.
 ##' @param edges an edge list.
+##' @param sampler the sampler object used to generate random weights
+##'   (see \code{\link{community.sampler}})
 ##' @param required.groups a vector of integers specifying which
 ##'   groups of edges must always occur in the community matrix.
 ##' @param validators an (optional) list of validation functions
