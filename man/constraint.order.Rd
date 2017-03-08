@@ -19,4 +19,3 @@ The absolute weights ordered to meet the edge weights
 Order a set of absolute edge weights to meet imposed edge weights
 constraints.
 }
-

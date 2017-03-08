@@ -24,4 +24,3 @@ values less than epsilon in magnitude are rounded down to zero.
 \examples{
 signum(c(-40,-3,-0.1E-8,0,2,5))
 }
-

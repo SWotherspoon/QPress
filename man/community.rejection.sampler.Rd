@@ -75,4 +75,3 @@ s$community()
 \seealso{
 \code{\link{community.sampler}}
 }
-

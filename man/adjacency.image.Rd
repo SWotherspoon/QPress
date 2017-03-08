@@ -38,4 +38,3 @@ adjacency.image(edges)
 \seealso{
 \code{\link{adjacency.matrix}}
 }
-

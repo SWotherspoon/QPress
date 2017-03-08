@@ -29,4 +29,3 @@ the arrow consists of a sequence of dashes "-" followed by one of
 the character sequences ">","*","<>". The number of dashes used in
 the arrow is ignored.
 }
-

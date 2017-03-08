@@ -32,4 +32,3 @@ Construct an edge selection widget
 Makes a widget consisting of a grid of check buttons that allow
 the user to select edges of the network.
 }
-

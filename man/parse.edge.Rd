@@ -37,4 +37,3 @@ edges <- parse.digraph(c(
 edges <- enforce.limitation(edges)
 parse.edge(c("E->D","D-*E","A-*B"),edges)
 }
-

@@ -30,4 +30,3 @@ Construct a slider widget.
 The \code{slider} function creates a widget containing a single
 horizontal slider.
 }
-

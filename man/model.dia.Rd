@@ -43,4 +43,3 @@ ignored leading to a mispecified model.
 \seealso{
 \code{\link{read.digraph}}
 }
-

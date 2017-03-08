@@ -75,4 +75,3 @@ s$select(0.6)
 s$community()
 s$community()
 }
-

@@ -29,4 +29,3 @@ Returns an object of class radiogrid with elements
 Construct a grid of radio buttons to select from a range of options
 that are common to many items.
 }
-

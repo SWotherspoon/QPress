@@ -23,4 +23,3 @@ for a positive perturbation of each node.  The k-th column
 corresponds to a perturbation of the k-th node, and shows the mean
 impact on each node.
 }
-

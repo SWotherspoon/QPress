@@ -39,4 +39,3 @@ adjacency.matrix(edges,labels=TRUE)
 \seealso{
 \code{\link{adjacency.image}}
 }
-
