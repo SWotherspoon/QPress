@@ -6,7 +6,7 @@ Date: 2013-05-13
 Authors@R: c(
     as.person("Simon Wotherspoon <Simon.Wotherspoon@utas.edu.au> [aut,cre]"),
     as.person("Jessica Melbourne-Thomas <Jess.Melbourne-Thomas@aad.gov.au> [aut]"),
-    as.person("Ben Raymond <Ben.Raymond@add.gov.au> [aut]"))
+    as.person("Ben Raymond <Ben.Raymond@aad.gov.au> [aut]"))
 Description: Qualitiative analysis of press perturbations of network models.
     Given a network model represented as a signed directed graphs, this package
     provide facilities for evaluating the impact of a press perturbation to the
