@@ -295,6 +295,7 @@ impact.barplot0 <- function(sim,perturb=0,monitor=NA,
   barplot(t(results),horiz=T,las=1,border=F,col=pal,
           xlab="Simulations",main=main,cex.axis=cex.axis)
   par(opar)
+  invisible(results)
 }
 
 
