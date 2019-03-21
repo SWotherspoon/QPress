@@ -4,7 +4,8 @@
 \alias{slider}
 \title{Slider Widgets}
 \usage{
-slider(parent, initial = 1, from = 0, to = 100, orient = "horizontal")
+slider(parent, initial = 1, from = 0, to = 100,
+  orient = "horizontal")
 }
 \arguments{
 \item{parent}{the parent window}

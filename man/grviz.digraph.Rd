@@ -4,8 +4,9 @@
 \alias{grviz.digraph}
 \title{Export to DOT}
 \usage{
-grviz.digraph(edges, name = "web", fontsize = 10, node.style = "filled",
-  node.shape = "oval", node.color = "DarkOrange", edge.color = "DarkGrey")
+grviz.digraph(edges, name = "web", fontsize = 10,
+  node.style = "filled", node.shape = "oval",
+  node.color = "DarkOrange", edge.color = "DarkGrey")
 }
 \arguments{
 \item{edges}{An edge list}

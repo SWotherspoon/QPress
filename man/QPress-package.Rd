@@ -3,7 +3,6 @@
 \docType{package}
 \name{QPress-package}
 \alias{QPress-package}
-\alias{QPress-package}
 \title{Qualitative Network Analysis}
 \description{
 Qualitiative analysis of press perturbations of network models.
