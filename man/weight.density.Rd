@@ -7,8 +7,8 @@
 \usage{
 weight.density(sim, epsilon = 1e-05, main = "")
 
-weight.density0(sim, perturb, monitor, edges, smooth = 1, epsilon = 1e-05,
-  main = "")
+weight.density0(sim, perturb, monitor, edges, smooth = 1,
+  epsilon = 1e-05, main = "")
 }
 \arguments{
 \item{sim}{the result from \code{system.simulate}}

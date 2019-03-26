@@ -5,7 +5,8 @@
 \title{Simulate System}
 \usage{
 system.simulate0(n.sims, edges, required.groups = c(0),
-  sampler = community.sampler(edges, required.groups), validators = NULL)
+  sampler = community.sampler(edges, required.groups),
+  validators = NULL)
 }
 \arguments{
 \item{n.sims}{number of matrices to simulate.}
