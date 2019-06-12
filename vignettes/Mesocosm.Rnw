@@ -4,7 +4,7 @@
 \usepackage{amsmath}
 
 %\SweaveOpts{engine=R, eps=FALSE, keep.source = FALSE}
-%\VignetteIndexEntry{Simple example analyses}
+%\VignetteIndexEntry{Mesocosm example analyses}
 %\VignetteDepends{QPress}
 %\VignettePackage{QPress}
 \begin{document}

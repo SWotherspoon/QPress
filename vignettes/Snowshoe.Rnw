@@ -6,7 +6,7 @@
 \usepackage{amsmath}
 
 \SweaveOpts{engine=R, eps=FALSE, keep.source = FALSE}
-%\VignetteIndexEntry{Simple example analyses}
+%\VignetteIndexEntry{Snowshoe hare example analyses}
 %\VignetteDepends{QPress}
 %\VignettePackage{QPress}
 \begin{document}

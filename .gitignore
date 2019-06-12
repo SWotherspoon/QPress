@@ -4,7 +4,6 @@
 
 #*#
 *.Rproj
-.Rbuildignore
 .Rhistory
 *~
 auto/
