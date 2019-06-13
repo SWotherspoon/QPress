@@ -23,17 +23,30 @@ The package has four main functions.
 First install the dependencies from CRAN:
 
 ```{r}
-install.packages(c("tcltk2","XML","devtools"))
+install.packages(c("tcltk2", "XML", "devtools"))
 ```
 
 (This assumes that R has been compiled with Tcl/Tk support, which should be true for most distributions.)
 
 Then install QPress itself from GitHub, using the devtools package. 
 
-```R
-devtools::install_github("SWotherspoon/QPress")
+```{r}
+devtools::install_github("SWotherspoon/QPress", build_vignettes = TRUE)
 ```
 
 (QPress otherwise does not need devtools for normal use.)
+
+The package vignettes can be viewed with:
+
+```{r}
+library(QPress)
+vignette("Snowshoe")
+```
+
+and
+
+```{r}
+vignette("Mesocosm")
+```
 
 
