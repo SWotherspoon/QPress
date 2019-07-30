@@ -24,3 +24,8 @@ License: GPL-2
 LazyData: TRUE
 Encoding: UTF-8
 RoxygenNote: 6.1.1
+Suggests:
+    DiagrammeR,
+    knitr,
+    rmarkdown
+VignetteBuilder: knitr
