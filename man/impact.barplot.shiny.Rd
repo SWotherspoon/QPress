@@ -14,10 +14,6 @@ impact.barplot.shiny(sim, epsilon = 1e-05, main = "", cex.axis = 1)
 \item{main}{text for plot title}
 
 \item{cex.axis}{character expansion factor for the edge labels}
-
-\item{perturb}{a named vector that indicates which nodes were perturbed and the relative magnitude of the perturbation.}
-
-\item{monitor}{n named vector of signs (-1,0,1) or NA that indicates the outcome of the perturbation.}
 }
 \description{
 Display the impact of a perturbation as a barplot

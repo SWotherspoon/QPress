@@ -16,6 +16,7 @@ Depends:
 Imports:
     XML,
     shiny,
+    shinythemes,
     tcltk,
     tcltk2
 License: GPL-2

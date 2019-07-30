@@ -8,6 +8,7 @@
 #' @name QPress-package
 #' @docType package
 #' @import XML tcltk tcltk2
-#' @importFrom shiny fluidPage radioButtons renderUI shinyApp tagList plotOutput uiOutput
+#' @importFrom shiny column fluidPage fluidRow radioButtons renderUI shinyApp tagList tags plotOutput renderPlot uiOutput
+#' @importFrom shinythemes shinytheme
 #' @author Ben Raymond, Jessica Melbourne-Thomas, Simon Wotherspoon
 NULL
