@@ -43,6 +43,7 @@ impact.barplot.shiny <- function(sim, epsilon = 1.0E-5, main = "", cex.axis = 1)
         )
     server <- function(input, output) {
         pal <- c("#92C5DE", "#808080", "#F4A582")
+        outcome_levels <- c("-", "0", "+")
         output$buttongrid <- renderUI({
             nodelab <- node.labels(sim$edges)
             temp <- lapply(seq_along(nodelab),
@@ -72,8 +73,21 @@ impact.barplot.shiny <- function(sim, epsilon = 1.0E-5, main = "", cex.axis = 1)
             mon <- list2namednum(mon, labs = nodelab)
             mon <- mon[mon != 99]
 
-            imres <- do_impact(sim = sim, perturb = pert, monitor = mon)##, epsilon = input$epsilon)
-            barplot(t(imres), horiz = TRUE, las = 1, border = FALSE, col = pal, xlab = "Simulations", main = main, cex.axis = cex.axis)
+            if (FALSE) {
+                ## base graphics barplot
+                imres <- do_impact(sim = sim, perturb = pert, monitor = mon, as_df = FALSE)##, epsilon = input$epsilon)
+                barplot(t(imres), horiz = TRUE, las = 1, border = FALSE, col = pal, xlab = "Simulations", main = main, cex.axis = cex.axis)
+            } else {
+                ## use ggplot
+                imres <- do_impact(sim = sim, perturb = pert, monitor = mon)##, epsilon = input$epsilon)
+                ## convert to long format
+                imres <- do.call(rbind, lapply(seq_len(ncol(imres)), function(z) data.frame(node = rownames(imres), outcome = colnames(imres)[z], n = imres[, z], stringsAsFactors = FALSE)))
+                imres$outcome <- factor(imres$outcome, levels = outcome_levels)
+                ggplot(imres, aes_string(x = "node", y = "n", group = "node", fill = "outcome")) + geom_col() +
+                    coord_flip() +
+                    scale_fill_manual(values = setNames(pal, outcome_levels), name = "Outcome") +
+                    theme_bw() + labs(y = "Simulations", x = "")
+            }
         })
     }
 
@@ -81,7 +95,7 @@ impact.barplot.shiny <- function(sim, epsilon = 1.0E-5, main = "", cex.axis = 1)
     shinyApp(ui = ui, server = server)
 }
 
-do_impact <- function(sim, perturb = 0, monitor = NA, epsilon = 1.0E-5) {
+do_impact <- function(sim, perturb = 0, monitor = NA, epsilon = 1.0E-5, as_df = TRUE) {
     As <- sim$A
     nodes <- node.labels(sim$edges)
     results <- matrix(0, length(nodes), 3)
@@ -96,5 +110,9 @@ do_impact <- function(sim, perturb = 0, monitor = NA, epsilon = 1.0E-5) {
         }
     }
     rownames(results) <- nodes
+    if (as_df) {
+        results <- as.data.frame(results)
+        colnames(results) <- c("-", "0", "+")
+    }
     results
 }

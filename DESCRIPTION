@@ -14,11 +14,12 @@ Description: Qualitiative analysis of press perturbations of network models.
 Depends:
     R(>= 3.2.0)
 Imports:
-    XML,
+    ggplot2,
     shiny,
     shinythemes,
     tcltk,
-    tcltk2
+    tcltk2,
+    XML
 License: GPL-2
 LazyData: TRUE
 Encoding: UTF-8
