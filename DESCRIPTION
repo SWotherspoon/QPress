@@ -26,3 +26,8 @@ Collate:
     'text.R'
     'tk.r'
     'XML.R'
+Suggests:
+    DiagrammeR,
+    knitr,
+    rmarkdown
+VignetteBuilder: knitr
