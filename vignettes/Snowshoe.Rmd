@@ -19,6 +19,8 @@ knitr::opts_chunk$set(
   fig.height = 6, fig.width = 6)
 ```
 
+<style>table tr.even { background-color: inherit; }</style>
+
 The `QPress` package provides facilities for qualitatively modelling the impact of a press perturbation upon a network model. This document illustrates the basic features of the package through a simple example.
 
 
@@ -32,23 +34,24 @@ In this document we illustrate some of the basic facilities provided by the pack
 
 ```{r modeldiags, echo = FALSE}
 library(DiagrammeR)
-str <- c("digraph m {", "rankdir=LR;", "node [shape=circle];", "V;H;P", "edge [arrowhead=dot];", "V->V", "P->P", "edge [dir=both arrowhead=normal arrowtail=dot];", "V->H", "H->P")
+str <- c("rankdir=LR;", "node [shape=circle];", "V;H;P", "edge [arrowhead=dot];", "V->V", "P->P", "edge [dir=both arrowhead=normal arrowtail=dot];", "V->H", "H->P")
 
-mA <- grViz(paste(c(str, "}"), collapse = "\n"), width = 300, height = 150)
-mB <- grViz(paste(c(str, "edge [arrowhead=normal arrowtail=none];", "V->P", "}"), collapse = "\n"), width = 300, height = 150)
-mC <- grViz(paste(c(str, "edge [arrowhead=normal arrowtail=none];", "V->P", "edge [arrowhead=dot];", "H->H", "}"), collapse = "\n"), width = 300, height = 150)
-mD <- grViz(paste(c(str, "edge [dir=both arrowhead=normal arrowtail=dot];", "V->P", "}"), collapse = "\n"), width = 300, height = 150)
-mE <- grViz(paste(c(str, "edge [dir=both arrowhead=normal arrowtail=dot];", "V->P", "edge [arrowhead=dot];", "H->H", "}"), collapse = "\n"), width = 300, height = 150)
+mA <- grViz(paste(c("digraph modelA {", str, "}"), collapse = "\n"), width = 300, height = 150)
+mB <- grViz(paste(c("digraph modelB {", str, "edge [arrowhead=normal arrowtail=none];", "V->P", "}"), collapse = "\n"), width = 300, height = 150)
+mC <- grViz(paste(c("digraph modelC {", str, "edge [arrowhead=normal arrowtail=none];", "V->P", "edge [arrowhead=dot];", "H->H", "}"), collapse = "\n"), width = 300, height = 150)
+mD <- grViz(paste(c("digraph modelD {", str, "edge [dir=both arrowhead=normal arrowtail=dot];", "V->P", "}"), collapse = "\n"), width = 300, height = 150)
+mE <- grViz(paste(c("digraph modelE {", str, "edge [dir=both arrowhead=normal arrowtail=dot];", "V->P", "edge [arrowhead=dot arrowtail=none];", "H->H", "}"), collapse = "\n"), width = 300, height = 150)
 ```
 
-Model    Diagram
------    -------
+-------  ---------
 Model A  `r mA`
 Model B  `r mB`
 Model C  `r mC`
 Model D  `r mD`
 Model E  `r mE`
+-------  ---------
 
+Table 1:  Alternate models for the snowshoe hare system.
 
 ## Model Definition
 
