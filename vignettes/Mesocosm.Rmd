@@ -22,7 +22,7 @@ tablerefs <- c()
 tableref <- function(z) paste0("Table ", ifelse(z %in% tablerefs, which(tablerefs == z), { warning ("unknown table reference: ", z); "??" }))
 ```
 
-<style>table tr.even { background-color: inherit; }</style>
+<style>table tr.even { background-color: inherit; } .caption { margin-bottom: 30px; }</style>
 
 The `QPress` package provides facilities for qualitatively modelling the impact of a press perturbation upon a network model. This document illustrates
 the comparison of alternative models in terms of their responses to perturbation.
@@ -31,9 +31,9 @@ Two examples are provided for experimental mesocosms in (I) a lake environment
 
 # Introduction
 
-An experimental mesocosm is an ecological tool that enables the experimenter to assess assemblage-level responses to environmental change. Mesocosm experiments are performed in the `natural environment' rather than in a laboratory, but in an enclosure that is small enough that key variables can be directly controlled. Because the responses of component species to perturbation can be observed directly in a mesocosm setting, the results from such studies lend themselves to analysis using qualitative network modelling. In particular, these analyses can be used to make inferences regarding the trophic and competitive interactions that drive assemblage-level responses to perturbation in a mesocosm setting and potentially more broadly.
+An experimental mesocosm is an ecological tool that enables the experimenter to assess assemblage-level responses to environmental change. Mesocosm experiments are performed in the "natural environment" rather than in a laboratory, but in an enclosure that is small enough that key variables can be directly controlled. Because the responses of component species to perturbation can be observed directly in a mesocosm setting, the results from such studies lend themselves to analysis using qualitative network modelling. In particular, these analyses can be used to make inferences regarding the trophic and competitive interactions that drive assemblage-level responses to perturbation in a mesocosm setting and potentially more broadly.
 
-In this document we use the `QPress` package to analyse two sets of models corresponding to two separate mesocosm experiments. Example I is for experimental mesocosms in a lake in France that were subjected to high and low nutrient treatments [@Hulot2000]. Example II examines the effects of elevated concentrations of CO$_2$ on the Southern Ocean microbial loop, studied in environmentally controlled tanks (referred to as `minicosms' by the authors) in Antarctica (Davidson et al. unpublished).
+In this document we use the `QPress` package to analyse two sets of models corresponding to two separate mesocosm experiments. Example I is for experimental mesocosms in a lake in France that were subjected to high and low nutrient treatments [@Hulot2000]. Example II examines the effects of elevated concentrations of CO$_2$ on the Southern Ocean microbial loop, studied in environmentally controlled tanks (referred to as "minicosms" by the authors) in Antarctica (Davidson et al. unpublished).
 
 # Example I: Lake mesocosm
 
@@ -42,12 +42,10 @@ In this document we use the `QPress` package to analyse two sets of models corre
 Hulot et al. [-@Hulot2000] describe an eight-variable lake mesocosm model comprising phosphorous, three algal groups, two size-classes of herbivores, invertebrate
 carnivores and carnivorous fish (`r figref("Lake")`). Unambiguous, directional responses of model components to increased phosphorous observed in the mesocosm experiment were increases in each of: phosphorous (Phos), large herbivores (Herb2), fish (Carn2) and periphyton (AlgP). Melbourne-Thomas et al. [-@JMT2012] compare the ability of Hulot et al.'s original model (`r figref("Lake")`a) and a variant of the model with one edge added and one edge deleted (`r figref("Lake")`b) to reproduce these changes in response to a positive perturbation to phosphorous. Specifically, the variant model (`r figref("Lake")`b) includes a self-limitation effect for invertebrate carnivores, and the predator-prey edge from fish to invertebrate carnivores has been deleted.
 
-<figure>
+<div class="figure">
   <img src="Lake.png" width="100%" alt = "`r figref("Lake")`" align = "center"/>
-  <figcaption>**`r figref("Lake")`:** Two versions of the eight-variable lake mesocosm model analyzed by Melbourne-Thomas et al. [-@JMT2012] and Hosack et al. [-@Hosack2008], and originally presented by Hulot et al. [-@Hulot2000]. Abbreviations are: Alg1, edible algae; Alg2, protected algae; AlgP, periphyton; Carn1,  invertebrate carnivores; Carn2, fish; Herb1, small herbivores; Herb2, large herbivores; Phos, phosphorus.</figcaption>
-</figure>
-
-
+  <p class="caption">**`r figref("Lake")`:** Two versions of the eight-variable lake mesocosm model analyzed by Melbourne-Thomas et al. [-@JMT2012] and Hosack et al. [-@Hosack2008], and originally presented by Hulot et al. [-@Hulot2000]. Abbreviations are: Alg1, edible algae; Alg2, protected algae; AlgP, periphyton; Carn1,  invertebrate carnivores; Carn2, fish; Herb1, small herbivores; Herb2, large herbivores; Phos, phosphorus.</p>
+</div>
 
 The models shown in `r figref("Lake")` were created using Dia and so are read using `model.dia`. Here we assign the two model objects to `lake.a` and `lake.b`.
 
@@ -68,10 +66,10 @@ impact.barplot(simlake.a)
 
 Doing the same for model (b) gives `r figref("Perturb1")`.
 
-<figure>
+<div class="figure">
   <img src="Lake-selector.png" width="60%" alt = "`r figref("Selector1")`" align = "center"/>
-  <figcaption>**`r figref("Selector1")`:** Node selector for the lake mesocosm example.</figcaption>
-</figure>
+  <p class="caption">**`r figref("Selector1")`:** Node selector for the lake mesocosm example.</p>
+</div>
 
 ```{r outc1, echo = FALSE, fig.height = 4, fig.width = 8, fig.cap = paste0("**", figref("Perturb1"), ":** Simulation outcomes from the two lake mesocosm models in response to a positive press perturbation to phosphorous. Each plot shows the fraction of positive (orange), and negative (blue) outcomes at each node. The x-axis indicates the number of simulations (out of 1000 total) that match with the selection for \"Monitor\" shown in ", figref("Selector1"), ".")}
 simlake.a <- system.simulate(1000, lake.a)
@@ -112,10 +110,10 @@ When this system was subjected to elevated CO$_2$ concentrations in experimental
 
 In the model shown in `r figref("Antarctic-a")` we assume that the direct effects of CO$_2$ correspond with these observed changes.
 
-<figure>
+<div class="figure">
   <img src="Antarctic-a.png" width="100%" alt = "`r figref("Antarctic-a")`" align = "center"/>
-  <figcaption>**`r figref("Antarctic-a")`:** Model (a) representing the effects of CO$_2$ on the Southern Ocean microbial loop, determined directly from observed responses in experimental mesocosms. These direct effects are shown in red.</figcaption>
-</figure>
+  <p class="caption">**`r figref("Antarctic-a")`:** Model (a) representing the effects of CO$_2$ on the Southern Ocean microbial loop, determined directly from observed responses in experimental mesocosms. These direct effects are shown in red.</p>
+</div>
 
 We then analyse the response this model to a positive press perturbation to CO$_2$. In this case we enforce a specific ordering of the nodes, and also enforce self-limitation for each model variable.
 
@@ -135,10 +133,10 @@ simantarctic.a <- system.simulate(1000, antarctic.a)
 impact.barplot(simantarctic.a)
 ```
 
-<figure>
+<div class="figure">
   <img src="Antarctic-selector.png" width="60%" alt = "`r figref("Selector2")`" align = "center"/>
-  <figcaption>**`r figref("Selector2")`:** Node selector for the Antarctic mesocosm example..</figcaption>
-</figure>
+  <p class="caption">**`r figref("Selector2")`:** Node selector for the Antarctic mesocosm example..</p>
+</div>
 
 
 ```{r simanta2, echo = FALSE, fig.height = 4, fig.cap = paste0("**", figref("Perturb2"), "**: Simulation outcomes in response to a positive press perturbation to CO$_2$ for Antarctic mesocosm model (a). Each plot shows the fraction of positive (orange), and negative (blue) outcomes at each node.")}
@@ -150,10 +148,10 @@ impact.barplot0(simantarctic.a, c(1, 0, 0, 0, 0, 0, 0, 0, 0), c(NA, NA, NA, 1, -
 
 For this version of the model, less than 20% of the simulations match with our "Monitor" criteria, suggesting that it does not provide a particularly good representation of the Antarctic microbial loop system or its response to increased CO$_2$ concentrations. Given that increases in dissolved CO$_2$ are generally expected to have negative impacts of the growth of marine organisms, we could assume a direct negative effect of CO$_2$ on each of large phytoplankton, small phytoplankton, heterotrophic nanoflagellates, and also the pool of available iron (`r figref("Antarctic-b")`).
 
-<figure>
+<div class="figure">
   <img src="Antarctic-b.png" width="100%" alt = "`r figref("Antarctic-b")`" align = "center"/>
-  <figcaption>**`r figref("Antarctic-b")`:** Alternative model (b) representing the effects of CO$_2$ on the Southern  Ocean microbial loop.</figcaption>
-</figure>
+  <p class="caption">**`r figref("Antarctic-b")`:** Alternative model (b) representing the effects of CO$_2$ on the Southern  Ocean microbial loop.</p>
+</div>
 
 Reading this alternative representation from a Dia file
 ```{r modb}
@@ -172,7 +170,7 @@ impact.barplot(simantarctic.b)
 
 `r figrefs <- c(figrefs, "Antarctic-c")`
 
-In this case, we still only see approximately 20% of simulations that meet our criteria, suggesting that we need to re-think the structure of our model. Davidson et al. (in prep) indicate that bacteria "transform dissolved organic carbon (DOC)... thereby repackaging carbon and making it available to higher trophic levels'". Looking at our original model, we haven't quite captured this in our representation of interactions between bacteria, DOC and macronutrients. In a third version of our microbial loop model (model (c) --- `r figref("Antarctic-c")`) we therefore assume a negative effect of bacteria on DOC and a positive effect of bacteria on macronutrients (which includes carbon).
+In this case, we still only see approximately 20% of simulations that meet our criteria, suggesting that we need to re-think the structure of our model. Davidson et al. (in prep) indicate that bacteria "transform dissolved organic carbon (DOC)... thereby repackaging carbon and making it available to higher trophic levels". Looking at our original model, we haven't quite captured this in our representation of interactions between bacteria, DOC and macronutrients. In a third version of our microbial loop model (model (c) --- `r figref("Antarctic-c")`) we therefore assume a negative effect of bacteria on DOC and a positive effect of bacteria on macronutrients (which includes carbon).
 
 `r figrefs <- c(figrefs, "Perturb4")`
 
@@ -189,10 +187,10 @@ simantarctic.b <- system.simulate(1000, antarctic.b)
 impact.barplot0(simantarctic.b, c(1, 0, 0, 0, 0, 0, 0, 0, 0), c(NA, NA, NA, 1, -1, -1, NA, 1, NA), main = "Model (b)")
 ```
 
-<figure>
+<div class="figure">
   <img src="Antarctic-c.png" width="100%" alt = "`r figref("Antarctic-c")`" align = "center"/>
-  <figcaption>**`r figref("Antarctic-c")`:** Alternative model (c) representing the effects of CO$_2$ on the Southern Ocean  microbial loop.</figcaption>
-</figure>
+  <p class="caption">**`r figref("Antarctic-c")`:** Alternative model (c) representing the effects of CO$_2$ on the Southern Ocean  microbial loop.</p>
+</div>
 
 
 ```{r simantc2, echo = FALSE, fig.height = 4, fig.cap = paste0("**", figref("Perturb4"), "**: Simulation outcomes in response to a positive press perturbation to the CO$_2$ for the alternative microbial loop model (c) shown in ", figref("Antarctic-c"), ".")}
@@ -200,5 +198,5 @@ simantarctic.c <- system.simulate(1000, antarctic.c)
 impact.barplot0(simantarctic.c, c(1, 0, 0, 0, 0, 0, 0, 0, 0), c(NA, NA, NA, 1, -1, -1, NA, 1, NA), main = "Model (c)")
 ```
 
-## Bibliography
+## References
 

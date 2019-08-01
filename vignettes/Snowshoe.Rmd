@@ -22,7 +22,7 @@ tablerefs <- c()
 tableref <- function(z) paste0("Table ", ifelse(z %in% tablerefs, which(tablerefs == z), { warning ("unknown table reference: ", z); "??" }))
 ```
 
-<style>table tr.even { background-color: inherit; }</style>
+<style>table tr.even { background-color: inherit; } .caption { margin-bottom: 30px; }</style>
 
 The `QPress` package provides facilities for qualitatively modelling the impact of a press perturbation upon a network model. This document illustrates the basic features of the package through a simple example.
 
@@ -322,5 +322,6 @@ g <- press.validate(modelBCDE,perturb=c(V=1),monitor=c(H=-1))
 g(W)
 ```
 
-## Bibliography
+## References
+
 
