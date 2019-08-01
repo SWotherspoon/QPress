@@ -24,6 +24,12 @@ License: GPL-2
 LazyData: TRUE
 Encoding: UTF-8
 RoxygenNote: 6.1.1
+Collate:
+    'Community.R'
+    'text.R'
+    'tk.r'
+    'XML.R',
+    'shiny.R'
 Suggests:
     DiagrammeR,
     knitr,
