@@ -1,7 +1,7 @@
 ---
 title: "Snowshoe hare example analyses"
 author: "Jessica Melbourne-Thomas, Ben Raymond, Andrew Constable, Simon Wotherspoon"
-date: "`r Sys.Date()`"
+date: "2013"
 output:
   rmarkdown::html_vignette:
     fig_caption: yes
@@ -14,9 +14,12 @@ vignette: >
 ---
 
 ```{r setup, include = FALSE}
-knitr::opts_chunk$set(
-  collapse = TRUE, warning = FALSE, message = FALSE, comment = "#>",
-  fig.height = 6, fig.width = 6)
+knitr::opts_chunk$set(collapse = TRUE, warning = FALSE, message = FALSE, comment = "#>",
+                      fig.height = 6, fig.width = 6)
+figrefs <- c()
+figref <- function(z) paste0("Figure ", ifelse(z %in% figrefs, which(figrefs == z), { warning ("unknown figure reference: ", z); "??" }))
+tablerefs <- c()
+tableref <- function(z) paste0("Table ", ifelse(z %in% tablerefs, which(tablerefs == z), { warning ("unknown table reference: ", z); "??" }))
 ```
 
 <style>table tr.even { background-color: inherit; }</style>
@@ -26,11 +29,13 @@ The `QPress` package provides facilities for qualitatively modelling the impact 
 
 ## Introduction
 
-The `QPress` package provides facilities for qualitatively modelling the impact of a press perturbation upon a network model in the style of [@JMT2012].
+The `QPress` package provides facilities for qualitatively modelling the impact of a press perturbation upon a network model in the style of Melbourne-Thomas et al. [-@JMT2012].
 
-In this document we illustrate some of the basic facilities provided by the package using the Snowshoe hare example from [@Dambacher2007].
+In this document we illustrate some of the basic facilities provided by the package using the Snowshoe hare example from Dambacher and Ramos-Jiliberto [-@Dambacher2007].
 
-[@Dambacher2007] describes five alternative models for the interactions between the snowshoe hare, its major predator and the supporting vegetation.  These five models are reproduced in Table 1, and show the interactions of the hare $H$ with the vegetation $V$ and predator $P$.
+`r tablerefs <- c(tablerefs, "models")`
+
+Dambacher and Ramos-Jiliberto [-@Dambacher2007] describes five alternative models for the interactions between the snowshoe hare, its major predator and the supporting vegetation.  These five models are reproduced in `r tableref("models")`, and show the interactions of the hare $H$ with the vegetation $V$ and predator $P$.
 
 ```{r modeldiags, echo = FALSE}
 library(DiagrammeR)
@@ -51,7 +56,7 @@ Model D  `r mD`
 Model E  `r mE`
 -------  ---------
 
-Table 1:  Alternate models for the snowshoe hare system.
+**`r tableref("models")`:**  Alternate models for the snowshoe hare system.
 
 ## Model Definition
 
@@ -127,7 +132,7 @@ Many analyses can be performed with the high level simulation function `system.s
 and returns the negative inverses and the non-zero elements of the simulated community matrices.  The properties of these simulated matrices can be interactively explored with the `impact.barplot` and `weight.density` functions.
 
 
-[@Dambacher2007] note that model A predicts that a positive press perturbation of the vegetation always results in an increase in hare numbers, yet manipulation experiments have shown that this is not always the case, suggesting that model A is not an adequate description of the physical system.
+Dambacher and Ramos-Jiliberto [-@Dambacher2007] note that model A predicts that a positive press perturbation of the vegetation always results in an increase in hare numbers, yet manipulation experiments have shown that this is not always the case, suggesting that model A is not an adequate description of the physical system.
 
 
 To show that model A predicts an increase in hare numbers following a positive press perturbation of the vegetation, we simulate 1000 community matrices corresponding to model A:
@@ -141,7 +146,9 @@ and explore the simulations with `impact.barplot`:
 impact.barplot(simA)
 ```
 
-This creates an interactive control panel that allows the user to specify a press perturbation and optionally a validation criterion, and then displays the impact of the perturbation on each node as a barplot. This plot shows the fraction of positive (orange), zero (brown), and negative (blue) outcomes at each node.  Selecting a positive (`+`) perturbation of the $V$ node in the perturbation panel, and pressing the update button produces the first barplot shown in Figure 1. This plot shows that a positive press perturbation to the vegetation always has a positive impact at each node.
+`r figrefs <- c(figrefs, c("barplots"))`
+
+This creates an interactive control panel that allows the user to specify a press perturbation and optionally a validation criterion, and then displays the impact of the perturbation on each node as a barplot. This plot shows the fraction of positive (orange), zero (brown), and negative (blue) outcomes at each node.  Selecting a positive (`+`) perturbation of the $V$ node in the perturbation panel, and pressing the update button produces the first barplot shown in `r figref("barplots")`. This plot shows that a positive press perturbation to the vegetation always has a positive impact at each node.
 
 Repeating this process for model B
 
@@ -150,18 +157,18 @@ simB <- system.simulate(1000, modelB)
 impact.barplot(simB)
 ```
 
-produces the second barplot in in Figure 1.  This shows that for model B, almost 40% of the community matrices simulated yield a decrease in hare numbers following a positive press perturbation to the vegetation.
+produces the second barplot in in `r figref("barplots")`.  This shows that for model B, almost 40% of the community matrices simulated yield a decrease in hare numbers following a positive press perturbation to the vegetation.
 
-The `impact.barplot` function takes a second argument `epsilon` that controls sensitivity to change --- outcomes smaller than `epsilon` are treated as zero.  The third barplot in in Figure 1 shows the result of simulating from the combined model BCDE and applying a positive press perturbation to V, but treating changes to the equilibrium value of less than 5% as neglible.
+The `impact.barplot` function takes a second argument `epsilon` that controls sensitivity to change --- outcomes smaller than `epsilon` are treated as zero.  The third barplot in in `r figref("barplots")` shows the result of simulating from the combined model BCDE and applying a positive press perturbation to V, but treating changes to the equilibrium value of less than 5% as neglible.
 
 ```{r modBCDEsim, eval = FALSE}
 simBCDE <- system.simulate(1000, modelBCDE)
 impact.barplot(simBCDE, epsilon = 0.05)
 ```
 
-We can limit the plot to just those cases in which hares decrease in response to the perturbation applied to $V$ by selecting a negative (`-`) for the $H$ node in the monitor panel. This yields the fourth barplot in in Figure 1.
+We can limit the plot to just those cases in which hares decrease in response to the perturbation applied to $V$ by selecting a negative (`-`) for the $H$ node in the monitor panel. This yields the fourth barplot in in `r figref("barplots")`.
 
-```{r fig1, echo = FALSE, fig.cap = "**Figure 1:** Model outcomes in response to a positive press perturbation to the vegetation. Each plot shows the fraction of positive (orange), zero (brown), and negative (blue) outcomes at each node following a positive press perturbation to the vegetation."}
+```{r fig1, echo = FALSE, fig.cap = paste0("**", figref("barplots"), "** Model outcomes in response to a positive press perturbation to the vegetation. Each plot shows the fraction of positive (orange), zero (brown), and negative (blue) outcomes at each node following a positive press perturbation to the vegetation.")}
 opar <- par(mfrow=c(2, 2))
 QPress:::impact.barplot0(simA, c(0, 0, 1),c(NA, NA, NA), main = "Model A")
 simB <- system.simulate(1000, modelB)
@@ -187,9 +194,11 @@ adjacency.matrix(modelBCDE, required.groups = 0:1)
 The community matrices simulated from the model are classified as either consistent or inconsistent with the observed outcome given the specified press perturbation, and for each selected edge, density plots of the edge weights are produced for the two groups of matrices. For matrices consistent with the observed outcome, the density of edge weights is shown in blue, while for those inconsistent with the observed outcome, the density of edge weights is shown in
 red.  For readability, the plots are labelled by the indices that edge would have in the adjacency matrix.
 
-For the simulated matrices from model BCDE, selecting a positive (`+`) perturbation of the $V$ node in the perturbation panel, and negative (`-`) outcome for $H$ in the monitor panel and selecting all edges produces the suite of density plots shown in Figure 2.  Each plot in the figure corresponds to an edge of model BCDE, and the blue lines show the density of the edge weights where hares decreased, while the red lines show the density of edge weights where hares increased.  So for example, the plot labelled 2:2 corresponds to the self limiting edge on $P$, and shows that decreases in hare numbers following a positive press perturbation to vegetation is associated with stronger self limitation of the predator.
+`r figrefs <- c(figrefs, "wdens")`
 
-```{r fig2, echo = FALSE, fig.cap = "**Figure 2:** Edge weight density plots for a decrease in hares following a positive press perturbation to vegetation in model BCDE. Each plot corresponds to an edge, and shows the distribution of edge weights when hares decrease (blue) and when hares increase (red)."}
+For the simulated matrices from model BCDE, selecting a positive (`+`) perturbation of the $V$ node in the perturbation panel, and negative (`-`) outcome for $H$ in the monitor panel and selecting all edges produces the suite of density plots shown in `r figref("wdens")`.  Each plot in the figure corresponds to an edge of model BCDE, and the blue lines show the density of the edge weights where hares decreased, while the red lines show the density of edge weights where hares increased.  So for example, the plot labelled 2:2 corresponds to the self limiting edge on $P$, and shows that decreases in hare numbers following a positive press perturbation to vegetation is associated with stronger self limitation of the predator.
+
+```{r fig2, echo = FALSE, fig.cap = paste0("**", figref("wdens"), ":** Edge weight density plots for a decrease in hares following a positive press perturbation to vegetation in model BCDE. Each plot corresponds to an edge, and shows the distribution of edge weights when hares decrease (blue) and when hares increase (red).")}
 colnames(simBCDE$w) <- paste(unclass(simBCDE$edges$To),unclass(simBCDE$edges$From),sep=":")
 weight.density0(simBCDE,c(0,0,1),c(-1,NA,NA),
                 edges=c(T,T,T,F,T,T,T,T,T))
