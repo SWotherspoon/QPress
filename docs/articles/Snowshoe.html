@@ -78,7 +78,7 @@
     
     
 <div class="contents">
-<style>table tr.even { background-color: inherit; }</style>
+<style>table tr.even { background-color: inherit; } .caption { margin-bottom: 30px; }</style>
 <p>The <code>QPress</code> package provides facilities for qualitatively modelling the impact of a press perturbation upon a network model. This document illustrates the basic features of the package through a simple example.</p>
 <div id="introduction" class="section level2">
 <h2 class="hasAnchor">
@@ -90,36 +90,36 @@
 <tr class="odd">
 <td>Model A</td>
 <td>
-<div id="htmlwidget-381cdf8ad8ca9d942cda" style="width:300px;height:150px;" class="grViz html-widget"></div>
-<script type="application/json" data-for="htmlwidget-381cdf8ad8ca9d942cda">{"x":{"diagram":"digraph modelA {\nrankdir=LR;\nnode [shape=circle];\nV;H;P\nedge [arrowhead=dot];\nV->V\nP->P\nedge [dir=both arrowhead=normal arrowtail=dot];\nV->H\nH->P\n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-03b9ed177cbb89ae1979" style="width:300px;height:150px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-03b9ed177cbb89ae1979">{"x":{"diagram":"digraph modelA {\nrankdir=LR;\nnode [shape=circle];\nV;H;P\nedge [arrowhead=dot];\nV->V\nP->P\nedge [dir=both arrowhead=normal arrowtail=dot];\nV->H\nH->P\n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 </td>
 </tr>
 <tr class="even">
 <td>Model B</td>
 <td>
-<div id="htmlwidget-fdbd72a42f1488f0ccc0" style="width:300px;height:150px;" class="grViz html-widget"></div>
-<script type="application/json" data-for="htmlwidget-fdbd72a42f1488f0ccc0">{"x":{"diagram":"digraph modelB {\nrankdir=LR;\nnode [shape=circle];\nV;H;P\nedge [arrowhead=dot];\nV->V\nP->P\nedge [dir=both arrowhead=normal arrowtail=dot];\nV->H\nH->P\nedge [arrowhead=normal arrowtail=none];\nV->P\n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-15929f2ea27690ca79b3" style="width:300px;height:150px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-15929f2ea27690ca79b3">{"x":{"diagram":"digraph modelB {\nrankdir=LR;\nnode [shape=circle];\nV;H;P\nedge [arrowhead=dot];\nV->V\nP->P\nedge [dir=both arrowhead=normal arrowtail=dot];\nV->H\nH->P\nedge [arrowhead=normal arrowtail=none];\nV->P\n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 </td>
 </tr>
 <tr class="odd">
 <td>Model C</td>
 <td>
-<div id="htmlwidget-06a0b62b9ae5f81c0a7d" style="width:300px;height:150px;" class="grViz html-widget"></div>
-<script type="application/json" data-for="htmlwidget-06a0b62b9ae5f81c0a7d">{"x":{"diagram":"digraph modelC {\nrankdir=LR;\nnode [shape=circle];\nV;H;P\nedge [arrowhead=dot];\nV->V\nP->P\nedge [dir=both arrowhead=normal arrowtail=dot];\nV->H\nH->P\nedge [arrowhead=normal arrowtail=none];\nV->P\nedge [arrowhead=dot];\nH->H\n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-d43ea85b97ad17da0071" style="width:300px;height:150px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-d43ea85b97ad17da0071">{"x":{"diagram":"digraph modelC {\nrankdir=LR;\nnode [shape=circle];\nV;H;P\nedge [arrowhead=dot];\nV->V\nP->P\nedge [dir=both arrowhead=normal arrowtail=dot];\nV->H\nH->P\nedge [arrowhead=normal arrowtail=none];\nV->P\nedge [arrowhead=dot];\nH->H\n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 </td>
 </tr>
 <tr class="even">
 <td>Model D</td>
 <td>
-<div id="htmlwidget-e16bc7f1585cd06fcb00" style="width:300px;height:150px;" class="grViz html-widget"></div>
-<script type="application/json" data-for="htmlwidget-e16bc7f1585cd06fcb00">{"x":{"diagram":"digraph modelD {\nrankdir=LR;\nnode [shape=circle];\nV;H;P\nedge [arrowhead=dot];\nV->V\nP->P\nedge [dir=both arrowhead=normal arrowtail=dot];\nV->H\nH->P\nedge [dir=both arrowhead=normal arrowtail=dot];\nV->P\n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-1b0092b940c1c16cf297" style="width:300px;height:150px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-1b0092b940c1c16cf297">{"x":{"diagram":"digraph modelD {\nrankdir=LR;\nnode [shape=circle];\nV;H;P\nedge [arrowhead=dot];\nV->V\nP->P\nedge [dir=both arrowhead=normal arrowtail=dot];\nV->H\nH->P\nedge [dir=both arrowhead=normal arrowtail=dot];\nV->P\n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 </td>
 </tr>
 <tr class="odd">
 <td>Model E</td>
 <td>
-<div id="htmlwidget-3983bf62e8b09328f80d" style="width:300px;height:150px;" class="grViz html-widget"></div>
-<script type="application/json" data-for="htmlwidget-3983bf62e8b09328f80d">{"x":{"diagram":"digraph modelE {\nrankdir=LR;\nnode [shape=circle];\nV;H;P\nedge [arrowhead=dot];\nV->V\nP->P\nedge [dir=both arrowhead=normal arrowtail=dot];\nV->H\nH->P\nedge [dir=both arrowhead=normal arrowtail=dot];\nV->P\nedge [arrowhead=dot arrowtail=none];\nH->H\n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-48387f5c67a9676a1a3d" style="width:300px;height:150px;" class="grViz html-widget"></div>
+<script type="application/json" data-for="htmlwidget-48387f5c67a9676a1a3d">{"x":{"diagram":"digraph modelE {\nrankdir=LR;\nnode [shape=circle];\nV;H;P\nedge [arrowhead=dot];\nV->V\nP->P\nedge [dir=both arrowhead=normal arrowtail=dot];\nV->H\nH->P\nedge [dir=both arrowhead=normal arrowtail=dot];\nV->P\nedge [arrowhead=dot arrowtail=none];\nH->H\n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 </td>
 </tr>
 </tbody></table>
@@ -265,7 +265,7 @@ likelihood &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">posterior &lt;-<span class="st"> </span>prior <span class="op">*</span><span class="st"> </span>likelihood <span class="op">/</span><span class="st"> </span><span class="kw">sum</span>(prior<span class="op">*</span>likelihood)
 posterior
 <span class="co">#&gt;         B         C         D         E </span>
-<span class="co">#&gt; 0.1480028 0.1771004 0.2877832 0.3871136</span></code></pre></div>
+<span class="co">#&gt; 0.1482024 0.1881286 0.2792648 0.3844042</span></code></pre></div>
 <p>suggesting that model E is the most likely model.</p>
 </div>
 <div id="low-level-simulation" class="section level2">
@@ -281,13 +281,13 @@ s<span class="op">$</span><span class="kw">select</span>(<span class="dt">p=</sp
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">W &lt;-<span class="st"> </span>s<span class="op">$</span><span class="kw">community</span>()
 W
 <span class="co">#&gt;            [,1]       [,2]       [,3]</span>
-<span class="co">#&gt; [1,] -0.6407091 -0.6884930  0.1788100</span>
-<span class="co">#&gt; [2,]  0.9431657 -0.3914091  0.5147646</span>
-<span class="co">#&gt; [3,] -0.6922677  0.0000000 -0.9345954</span></code></pre></div>
+<span class="co">#&gt; [1,] -0.4545210 -0.6312181  0.4460041</span>
+<span class="co">#&gt; [2,]  0.2200059 -0.8027115  0.2359806</span>
+<span class="co">#&gt; [3,] -0.3911064  0.0000000 -0.5199113</span></code></pre></div>
 <p>The non-zero elements of this matrix can be extracted with the <code>weights</code> element:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">s<span class="op">$</span><span class="kw">weights</span>(W)
-<span class="co">#&gt; [1] -0.9345954 -0.3914091  0.1788100  0.9431657  0.5147646 -0.6407091</span>
-<span class="co">#&gt; [7] -0.6922677 -0.6884930  0.0000000</span></code></pre></div>
+<span class="co">#&gt; [1] -0.5199113 -0.8027115  0.4460041  0.2200059  0.2359806 -0.4545210</span>
+<span class="co">#&gt; [7] -0.3911064 -0.6312181  0.0000000</span></code></pre></div>
 <p>and the corresponding edge labels, and the labels of the uncertain edges are given by <code>weight.labels</code> and <code>uncertain.labels</code>:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">s<span class="op">$</span>weight.labels
 <span class="co">#&gt; [1] "V -* V" "P -* P" "V -&gt; H" "H -&gt; P" "V -&gt; P" "H -* H" "H -* V" "P -* H"</span>
@@ -301,18 +301,18 @@ s<span class="op">$</span>uncertain.labels
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## Evaluate impact of a perturbation to V
 impact &lt;-<span class="st"> </span><span class="kw"><a href="../reference/press.impact.html">press.impact</a></span>(modelBCDE, <span class="dt">perturb =</span> <span class="kw">c</span>(<span class="dt">V =</span> <span class="dv">1</span>))
 <span class="kw">impact</span>(W)
-<span class="co">#&gt; [1] -0.4413976  0.7735628  1.3969310</span>
+<span class="co">#&gt; [1] 0.6083370 0.5976411 1.4657799</span>
 <span class="kw"><a href="../reference/signum.html">signum</a></span>(<span class="kw">impact</span>(W))
-<span class="co">#&gt; [1] -1  1  1</span></code></pre></div>
+<span class="co">#&gt; [1] 1 1 1</span></code></pre></div>
 <p>The <code>press.validate</code> function constructs a function to determine whether a community matrix satisfies a given validation criterion:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## a positive perturbation to V should produce a reduction in H
 g &lt;-<span class="st"> </span><span class="kw"><a href="../reference/press.validate.html">press.validate</a></span>(modelBCDE,<span class="dt">perturb=</span><span class="kw">c</span>(<span class="dt">V=</span><span class="dv">1</span>),<span class="dt">monitor=</span><span class="kw">c</span>(<span class="dt">H=</span><span class="op">-</span><span class="dv">1</span>))
 <span class="kw">g</span>(W)
-<span class="co">#&gt; [1] TRUE</span></code></pre></div>
+<span class="co">#&gt; [1] FALSE</span></code></pre></div>
 </div>
-<div id="bibliography" class="section level2 unnumbered">
+<div id="references" class="section level2 unnumbered">
 <h2 class="hasAnchor">
-<a href="#bibliography" class="anchor"></a>Bibliography</h2>
+<a href="#references" class="anchor"></a>References</h2>
 <div id="refs" class="references">
 <div id="ref-Dambacher2007">
 <p>Dambacher, Jeffrey M, and Rodrigo Ramos-Jiliberto. 2007. “Understanding and Predicting Effects of Modified Interactions Through a Qualitative Analysis of Community Structure.” <em>The Quarterly Review of Biology</em> 82 (3). JSTOR: 227–50.</p>
@@ -334,7 +334,7 @@ g &lt;-<span class="st"> </span><span class="kw"><a href="../reference/press.val
       <li><a href="#model-definition">Model Definition</a></li>
       <li><a href="#high-level-simulation">High Level Simulation</a></li>
       <li><a href="#low-level-simulation">Low Level Simulation</a></li>
-      <li><a href="#bibliography">Bibliography</a></li>
+      <li><a href="#references">References</a></li>
       </ul>
 </div>
       </div>
