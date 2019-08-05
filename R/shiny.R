@@ -135,11 +135,6 @@ do_impact <- function(sim, perturb = 0, monitor = NA, epsilon = 1.0E-5, as_df = 
 #' @param sim the result from \code{system.simulate}
 #' @param epsilon outomes below this in absolute magnitude are treated as zero.
 #' @param main text for plot title
-#' @param perturb a named vector that indicates which nodes were
-#' perturbed and the relative magnitude of the perturbation.
-#' @param monitor n named vector of signs (-1,0,1) or NA that indicates the outcome of the perturbation.
-#' @param edges logical vector indicating which edges to plot.
-#' @param smooth double in the range [0,1] controlling the level of smoothing applied.
 #' @export
 weight.density.shiny <- function(sim, epsilon = 1.0E-5, main = "") {
   edges <- sim$edges
@@ -206,7 +201,6 @@ weight.density.shiny <- function(sim, epsilon = 1.0E-5, main = "") {
                   }
               }
           }
-          cat("edg:\n"); cat(str(edg))
           pal <- c("#0571B0", "#CA0020")
           imres <- do_weight_density(sim = sim, perturb = pert, monitor = mon, edges = edg, smooth = 1)
           if (!is.null(imres)) {

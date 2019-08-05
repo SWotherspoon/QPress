@@ -12,15 +12,6 @@ weight.density.shiny(sim, epsilon = 1e-05, main = "")
 \item{epsilon}{outomes below this in absolute magnitude are treated as zero.}
 
 \item{main}{text for plot title}
-
-\item{perturb}{a named vector that indicates which nodes were
-perturbed and the relative magnitude of the perturbation.}
-
-\item{monitor}{n named vector of signs (-1,0,1) or NA that indicates the outcome of the perturbation.}
-
-\item{edges}{logical vector indicating which edges to plot.}
-
-\item{smooth}{double in the range [0,1] controlling the level of smoothing applied.}
 }
 \description{
 Shiny app to display weights of valid and invalid matrices as a density plots

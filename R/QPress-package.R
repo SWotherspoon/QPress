@@ -9,7 +9,7 @@
 #' @docType package
 #' @import XML tcltk tcltk2
 #' @importFrom ggplot2 ggplot aes_string coord_flip geom_col labs scale_fill_manual theme_bw
-#' @importFrom shiny column fluidPage fluidRow radioButtons renderUI shinyApp tagList tags plotOutput renderPlot uiOutput
+#' @importFrom shiny checkboxInput column fluidPage fluidRow radioButtons renderUI shinyApp tagList tags plotOutput renderPlot uiOutput
 #' @importFrom shinythemes shinytheme
 #' @importFrom stats setNames
 #' @author Ben Raymond, Jessica Melbourne-Thomas, Simon Wotherspoon
