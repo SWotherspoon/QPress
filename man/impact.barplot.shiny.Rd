@@ -2,7 +2,7 @@
 % Please edit documentation in R/shiny.R
 \name{impact.barplot.shiny}
 \alias{impact.barplot.shiny}
-\title{Impact Barplot}
+\title{Shiny Impact Barplot}
 \usage{
 impact.barplot.shiny(sim, epsilon = 1e-05, main = "", cex.axis = 1)
 }
@@ -16,7 +16,7 @@ impact.barplot.shiny(sim, epsilon = 1e-05, main = "", cex.axis = 1)
 \item{cex.axis}{character expansion factor for the edge labels}
 }
 \description{
-Display the impact of a perturbation as a barplot
+A Shiny app to display the impact of a perturbation as a barplot
 }
 \details{
 This control constructs a barplot that shows the fraction of
