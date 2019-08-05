@@ -35,7 +35,7 @@ In this document we illustrate some of the basic facilities provided by the pack
 
 `r tablerefs <- c(tablerefs, "models")`
 
-Dambacher and Ramos-Jiliberto [-@Dambacher2007] describes five alternative models for the interactions between the snowshoe hare, its major predator and the supporting vegetation.  These five models are reproduced in `r tableref("models")`, and show the interactions of the hare $H$ with the vegetation $V$ and predator $P$.
+Dambacher and Ramos-Jiliberto [-@Dambacher2007] describes five alternative models for the interactions between the snowshoe hare, its major predator and the supporting vegetation.  These five models are reproduced in `r tableref("models")`, and show the interactions of the hare *H* with the vegetation *V* and predator *P*.
 
 ```{r modeldiags, echo = FALSE}
 library(DiagrammeR)
@@ -85,7 +85,7 @@ Within R, the graph is represented as an edge list, a dataframe of directed edge
 modelA
 ```
 
-This dataframe records the nodes connected by the directed edge (`To` and `From`), whether the edge represents a positive (P) or negative (N) impact (`Type`), and which edges were paired in the original specification (`Pair`).  As will be demonstrated below, it also it is possible to group edges (`Group`). For example, the edge connecting $V$ and $H$ in model A has been separated into the positive impact of $V$ upon $H$, and the negative impact of $H$ upon $V$.
+This dataframe records the nodes connected by the directed edge (`To` and `From`), whether the edge represents a positive (P) or negative (N) impact (`Type`), and which edges were paired in the original specification (`Pair`).  As will be demonstrated below, it also it is possible to group edges (`Group`). For example, the edge connecting *V* and *H* in model A has been separated into the positive impact of *V* upon *H*, and the negative impact of *H* upon *V*.
 
 Models B to E may be defined similarly:
 
@@ -148,7 +148,7 @@ impact.barplot(simA)
 
 `r figrefs <- c(figrefs, c("barplots"))`
 
-This creates an interactive control panel that allows the user to specify a press perturbation and optionally a validation criterion, and then displays the impact of the perturbation on each node as a barplot. This plot shows the fraction of positive (orange), zero (brown), and negative (blue) outcomes at each node.  Selecting a positive (`+`) perturbation of the $V$ node in the perturbation panel, and pressing the update button produces the first barplot shown in `r figref("barplots")`. This plot shows that a positive press perturbation to the vegetation always has a positive impact at each node.
+This creates an interactive control panel that allows the user to specify a press perturbation and optionally a validation criterion, and then displays the impact of the perturbation on each node as a barplot. This plot shows the fraction of positive (orange), zero (brown), and negative (blue) outcomes at each node.  Selecting a positive (`+`) perturbation of the *V* node in the perturbation panel, and pressing the update button produces the first barplot shown in `r figref("barplots")`. This plot shows that a positive press perturbation to the vegetation always has a positive impact at each node.
 
 Repeating this process for model B
 
@@ -166,7 +166,7 @@ simBCDE <- system.simulate(1000, modelBCDE)
 impact.barplot(simBCDE, epsilon = 0.05)
 ```
 
-We can limit the plot to just those cases in which hares decrease in response to the perturbation applied to $V$ by selecting a negative (`-`) for the $H$ node in the monitor panel. This yields the fourth barplot in in `r figref("barplots")`.
+We can limit the plot to just those cases in which hares decrease in response to the perturbation applied to *V* by selecting a negative (`-`) for the *H* node in the monitor panel. This yields the fourth barplot in in `r figref("barplots")`.
 
 ```{r fig1, echo = FALSE, fig.cap = paste0("**", figref("barplots"), "** Model outcomes in response to a positive press perturbation to the vegetation. Each plot shows the fraction of positive (orange), zero (brown), and negative (blue) outcomes at each node following a positive press perturbation to the vegetation.")}
 opar <- par(mfrow=c(2, 2))
@@ -196,7 +196,7 @@ red.  For readability, the plots are labelled by the indices that edge would hav
 
 `r figrefs <- c(figrefs, "wdens")`
 
-For the simulated matrices from model BCDE, selecting a positive (`+`) perturbation of the $V$ node in the perturbation panel, and negative (`-`) outcome for $H$ in the monitor panel and selecting all edges produces the suite of density plots shown in `r figref("wdens")`.  Each plot in the figure corresponds to an edge of model BCDE, and the blue lines show the density of the edge weights where hares decreased, while the red lines show the density of edge weights where hares increased.  So for example, the plot labelled 2:2 corresponds to the self limiting edge on $P$, and shows that decreases in hare numbers following a positive press perturbation to vegetation is associated with stronger self limitation of the predator.
+For the simulated matrices from model BCDE, selecting a positive (`+`) perturbation of the *V* node in the perturbation panel, and negative (`-`) outcome for *H* in the monitor panel and selecting all edges produces the suite of density plots shown in `r figref("wdens")`.  Each plot in the figure corresponds to an edge of model BCDE, and the blue lines show the density of the edge weights where hares decreased, while the red lines show the density of edge weights where hares increased.  So for example, the plot labelled 2:2 corresponds to the self limiting edge on *P*, and shows that decreases in hare numbers following a positive press perturbation to vegetation is associated with stronger self limitation of the predator.
 
 ```{r fig2, echo = FALSE, fig.cap = paste0("**", figref("wdens"), ":** Edge weight density plots for a decrease in hares following a positive press perturbation to vegetation in model BCDE. Each plot corresponds to an edge, and shows the distribution of edge weights when hares decrease (blue) and when hares increase (red).")}
 colnames(simBCDE$w) <- paste(unclass(simBCDE$edges$To),unclass(simBCDE$edges$From),sep=":")
@@ -222,7 +222,7 @@ simBCDE1 <- system.simulate(1000, modelBCDE,
 
 simulates community matrices consistent with model BCDE that satisfy the validation criteria that hares decrease following a positive press perturbation of the predators, and vegetation increases following a press perturbation of vegetation.  As `system.simulate` attempts to generate a fixed number of matrices, the simulation may fail to terminate of too stringent a validation criteria is set.
 
-Competing models can be compared based on the frequency with which the models reproduce an observed outcome.  At a simple level, the more frequently a model reproduces a observed outcome, the more likely the model is correct.  This notion can be embedded within Bayesian framework to produce a formal system of model comparison. Suppose a positive press perturbation of vegetation is observed to produce a decrease in hare numbers.  It is believed that the system can be described by model B, C, D, or E, but it is believed that models D and E are slightly more plausible than models B and C.  Models B and C are both assigned prior probabilities of $4/16$ and models D and E are assigned prior probabilities of $5/16$ each.
+Competing models can be compared based on the frequency with which the models reproduce an observed outcome.  At a simple level, the more frequently a model reproduces a observed outcome, the more likely the model is correct.  This notion can be embedded within Bayesian framework to produce a formal system of model comparison. Suppose a positive press perturbation of vegetation is observed to produce a decrease in hare numbers.  It is believed that the system can be described by model B, C, D, or E, but it is believed that models D and E are slightly more plausible than models B and C.  Models B and C are both assigned prior probabilities of 4/16 and models D and E are assigned prior probabilities of 5/16 each.
 
 ```{r bayes1}
 prior <- c(B=3/16,C=3/16,D=5/16,E=5/16)
