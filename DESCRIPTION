@@ -25,10 +25,11 @@ LazyData: TRUE
 Encoding: UTF-8
 RoxygenNote: 6.1.1
 Collate:
+    'QPress-package.R'
     'Community.R'
     'text.R'
     'tk.r'
-    'XML.R',
+    'XML.R'
     'shiny.R'
 Suggests:
     DiagrammeR,
