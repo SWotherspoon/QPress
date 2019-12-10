@@ -1,7 +1,7 @@
 Package: QPress
 Type: Package
 Title: Qualitative Network Analysis
-Version: 0.21
+Version: 0.22
 Date: 2013-05-13
 Authors@R: c(
     as.person("Simon Wotherspoon <Simon.Wotherspoon@utas.edu.au> [aut,cre]"),

@@ -649,3 +649,73 @@ system.simulate <- function(n.sims,edges,
   colnames(ws) <- sampler$weight.labels
   list(edges=edges,A=As,w=ws,total=total,stable=stable,accepted=accepted)
 }
+
+
+
+##' Drop one or more nodes from a system
+##'
+##' This is an experimental function! Given a set of system simulation outputs
+##' (from \code{system.simulate}), it will drop one or more nodes and their
+##' associated edges, but leave all other elements of the system untouched. Each
+##' set of edge weights in \code{sim} is checked for stability after dropping
+##' the specified nodes, and any matrices representing unstable systems are
+##' removed from the returned set.
+##'
+##' @param sim the result from \code{system.simulate}
+##' @param to.drop the names of the nodes to drop (check \code{node.labels(sim$edges)})
+##' @param method either "remove" (the specified nodes will be fully removed from the
+##' system) or "zeros" (the specified nodes will be left in the system but all edges
+##' from or to these nodes (other than self-interactions) are set to zero).
+##' @return As for \code{system.simulate}
+##' @export
+drop.nodes <- function(sim, to.drop, method = "remove") {
+    method <- match.arg(tolower(method), c("remove", "zeros"))
+    if (!all(to.drop %in% node.labels(sim$edges))) stop("not all of the to.drop nodes appear in this system (check `node.labels(sim$edges)`)")
+    ## indexes of to.drop nodes
+    vidx <- sim$edges$From == to.drop | sim$edges$To == to.drop
+    vidx2 <- attr(sim$edges, "node.labels") == to.drop
+    ## check that each row in w still represents a stable system
+    n.nodes <- length(node.labels(sim$edges))
+    k.edges <- as.vector(unclass(sim$edges$To)+(unclass(sim$edges$From)-1)*n.nodes)
+    ## each row in w corresponds to W[k.edges] where W is a full (square, sparse) weights matrix
+    ## we need W to test stability
+    sim_new <- sim
+    if (method == "remove") {
+        sim_new$edges <- sim_new$edges[!vidx, ]
+        sim_new$edges$From <- droplevels(sim_new$edges$From)
+        sim_new$edges$To <- droplevels(sim_new$edges$To)
+        ## build the same k.edge indexer for the reduced edge set
+        k.edges_new <- as.vector(unclass(sim_new$edges$To)+(unclass(sim_new$edges$From)-1)*length(node.labels(sim_new$edges)))
+        w_new <- matrix(NA_real_, nrow = nrow(sim$w), ncol = sum(!vidx))
+    } else {
+        k.edges_new <- k.edges
+        w_new <- matrix(NA_real_, nrow = nrow(sim$w), ncol = ncol(sim$w))
+    }
+    A_new <- list()
+    accepted <- 0L
+    for (wi in seq_len(nrow(sim$w))) {
+        Wnew <- matrix(0, nrow = n.nodes, ncol = n.nodes)
+        Wnew[k.edges] <- sim$w[wi, ]
+        if (method == "remove") {
+            Wnew <- Wnew[!vidx2, !vidx2] ## drop edges connected to our unwanted node(s)
+            ## double-check that this indexing is correct:
+            stopifnot(all(Wnew[k.edges_new] == sim$w[wi, !vidx]))
+        } else {
+            ## set edge weights to zero
+            self <- diag(Wnew)
+            Wnew[vidx2, ] <- 0
+            Wnew[, vidx2] <- 0
+            diag(Wnew) <- self ## reinstate all self-lims, including on "removed" nodes
+        }
+        ## Wnew has to be stable
+        if (stable.community(Wnew)) {
+            accepted <- accepted + 1L
+            w_new[accepted, ] <- Wnew[k.edges_new]
+            A_new[[accepted]] <- -solve(Wnew)
+        }
+    }
+    sim_new$A <- A_new
+    sim_new$w <- w_new[seq_len(accepted), ]
+    sim_new$accepted <- accepted
+    sim_new
+}
