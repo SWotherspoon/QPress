@@ -7,8 +7,14 @@
 \usage{
 impact.barplot(sim, epsilon = 1e-05, main = "", cex.axis = 1)
 
-impact.barplot0(sim, perturb = 0, monitor = NA, epsilon = 1e-05,
-  main = "", cex.axis = 1)
+impact.barplot0(
+  sim,
+  perturb = 0,
+  monitor = NA,
+  epsilon = 1e-05,
+  main = "",
+  cex.axis = 1
+)
 }
 \arguments{
 \item{sim}{the result from \code{system.simulate}}

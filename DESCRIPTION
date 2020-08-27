@@ -23,7 +23,7 @@ Imports:
 License: GPL-2
 LazyData: TRUE
 Encoding: UTF-8
-RoxygenNote: 6.1.1
+RoxygenNote: 7.1.0
 Collate:
     'QPress-package.R'
     'Community.R'

@@ -4,8 +4,15 @@
 \alias{interactive.selection}
 \title{Interactive Selection Widget}
 \usage{
-interactive.selection(action, nodes, edges = NULL, slider = NULL,
-  checkbox = NULL, perturb = T, monitor = T)
+interactive.selection(
+  action,
+  nodes,
+  edges = NULL,
+  slider = NULL,
+  checkbox = NULL,
+  perturb = T,
+  monitor = T
+)
 }
 \arguments{
 \item{action}{function to perform the widgets action}
