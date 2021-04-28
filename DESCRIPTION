@@ -3,10 +3,9 @@ Type: Package
 Title: Qualitative Network Analysis
 Version: 0.22
 Date: 2013-05-13
-Authors@R: c(
-    as.person("Simon Wotherspoon <Simon.Wotherspoon@utas.edu.au> [aut,cre]"),
-    as.person("Jessica Melbourne-Thomas <Jess.Melbourne-Thomas@aad.gov.au> [aut]"),
-    as.person("Ben Raymond <Ben.Raymond@add.gov.au> [aut]"))
+Authors@R: c(person("Simon", "Wotherspoon", role = "aut"),
+             person("Jessica", "Melbourne-Thomas", email = "Jess.Melbourne-Thomas@aad.gov.au", role = "aut"),
+             person("Ben", "Raymond", role = c("aut", "cre"), email = "ben.raymond@aad.gov.au"))
 Description: Qualitiative analysis of press perturbations of network models.
     Given a network model represented as a signed directed graphs, this package
     provide facilities for evaluating the impact of a press perturbation to the
@@ -15,6 +14,7 @@ Depends:
     R(>= 3.2.0)
 Imports:
     ggplot2,
+    rmarkdown,
     shiny,
     shinythemes,
     tcltk,
@@ -23,7 +23,7 @@ Imports:
 License: GPL-2
 LazyData: TRUE
 Encoding: UTF-8
-RoxygenNote: 7.1.0
+RoxygenNote: 7.1.1
 Collate:
     'QPress-package.R'
     'Community.R'
@@ -33,6 +33,5 @@ Collate:
     'shiny.R'
 Suggests:
     DiagrammeR,
-    knitr,
-    rmarkdown
+    knitr
 VignetteBuilder: knitr
