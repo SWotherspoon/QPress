@@ -32,12 +32,21 @@ install.packages(c("tcltk2", "XML", "remotes"))
 Then install QPress itself from GitHub, using the remotes package.
 
 ```{r}
-remotes::install_github("SWotherspoon/QPress", build_vignettes = TRUE, dependencies = TRUE)
+remotes::install_github("SWotherspoon/QPress")
+
 ```
 
-(QPress otherwise does not need remotes for normal use.)
+The package documentation and vignettes can be [viewed online](https://swotherspoon.github.io/QPress/).
 
-The package vignettes can be viewed with:
+Alternatively, if you have pandoc on your system (which should be true if you are using RStudio) you can install the package and vignettes locally:
+
+
+```{r}
+remotes::install_github("SWotherspoon/QPress", build_vignettes = TRUE)
+
+```
+
+And the package vignettes can be viewed with:
 
 ```{r}
 library(QPress)
@@ -49,5 +58,4 @@ and
 ```{r}
 vignette("Mesocosm")
 ```
-
 
