@@ -158,7 +158,7 @@ weight.density.shiny <- function(sim, epsilon = 1.0E-5, main = "") {
                   c(list(do.call(tags$tr, c(list(tags$th("")), lapply(seq_len(nn), function(ci) tags$th(ci))))), ## header row
                     lapply(seq_len(nn), function(ri) {
                         do.call(tags$tr, c(list(tags$th(ri)), lapply(seq_len(nn), function(ci) {
-                            if (abs(A[ri, ci]) > 0) tags$td(checkboxInput(inputId = paste0("edge@", ri, "@", ci), label = NULL, width = "25px")) else tags$td()
+                            if (is.na(A[ri, ci]) || abs(A[ri, ci]) > 0) tags$td(checkboxInput(inputId = paste0("edge@", ri, "@", ci), label = NULL, width = "25px")) else tags$td()
                         })))
                     })
                     )
@@ -197,7 +197,7 @@ weight.density.shiny <- function(sim, epsilon = 1.0E-5, main = "") {
           for (ri in seq_len(nn)) {
               for (ci in seq_len(nn)) {
                   if (!is.null(input[[paste0("edge@", ri, "@", ci)]]) && input[[paste0("edge@", ri, "@", ci)]]) {
-                      edg[sim$edges$From == nodelab[ri] & sim$edges$To == nodelab[ci]] <- TRUE
+                      edg[sim$edges$To == nodelab[ri] & sim$edges$From == nodelab[ci]] <- TRUE
                   }
               }
           }
@@ -212,7 +212,7 @@ weight.density.shiny <- function(sim, epsilon = 1.0E-5, main = "") {
                   d1 <- imres[[k]]$d1
                   d2 <- imres[[k]]$d2
                   plot(NULL, xlab = imres[[k]]$edgelab, ylab = "",
-                       main = "", xlim = range(d1$x, d2$x), ylim =range(d1$y, d2$y))
+                       main = "", xlim = range(d1$x, d2$x), ylim = range(d1$y, d2$y))
                   lines(d1, col = pal[1])
                   lines(d2, col = pal[2])
                   title(main = main, outer = TRUE)
