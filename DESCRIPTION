@@ -14,7 +14,6 @@ Depends:
     R(>= 3.2.0)
 Imports:
     ggplot2,
-    rmarkdown,
     shiny,
     shinythemes,
     tcltk,
@@ -33,5 +32,6 @@ Collate:
     'shiny.R'
 Suggests:
     DiagrammeR,
-    knitr
+    knitr,
+    rmarkdown
 VignetteBuilder: knitr
