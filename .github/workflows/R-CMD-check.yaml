@@ -39,13 +39,20 @@ jobs:
           http-user-agent: ${{ matrix.config.http-user-agent }}
           use-public-rspm: true
 
+      - name: "Install XQuartz for macOS"
+        if: runner.os == 'macOS'
+        run: |
+          wget https://github.com/XQuartz/XQuartz/releases/download/XQuartz-2.7.11/XQuartz-2.7.11.dmg
+          sudo hdiutil attach XQuartz-2.7.11.dmg
+          sudo installer -package /Volumes/XQuartz-2.7.11/XQuartz.pkg -target /
+
       - name: "Install Mac system libs"
         if: runner.os == 'macOS'
         run: brew install tcl-tk
 
       - name: "Install Linux system libs"
         if: runner.os == 'Linux'
-        run: sudo apt-get install -y tk-dev r-cran-tcltk2
+        run: sudo apt-get install -y tk-dev
 
       - uses: r-lib/actions/setup-r-dependencies@v1
         with:
