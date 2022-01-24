@@ -53,7 +53,9 @@ jobs:
       # need to export DISPLAY for Tk
       - name: "Install Linux system libs"
         if: runner.os == 'Linux'
-        run: export DISPLAY=:99
+        run: |
+          export DISPLAY=:99.0
+          sudo apt-get install -y tk-dev
 
       - uses: r-lib/actions/setup-r-dependencies@v1
         with:
