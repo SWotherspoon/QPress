@@ -39,6 +39,14 @@ jobs:
           http-user-agent: ${{ matrix.config.http-user-agent }}
           use-public-rspm: true
 
+      - name: "Install Mac system libs"
+        if: runner.os == 'macOS'
+        run: brew install tcl-tk
+
+      - name: "Install Linux system libs"
+        if: runner.os == 'Linux'
+        run: sudo apt-get install -y tk-dev r-cran-tcltk2
+
       - uses: r-lib/actions/setup-r-dependencies@v1
         with:
           extra-packages: rcmdcheck
