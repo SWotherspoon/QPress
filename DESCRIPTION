@@ -4,7 +4,7 @@ Title: Qualitative Network Analysis
 Version: 0.23
 Date: 2013-05-13
 Authors@R: c(person("Simon", "Wotherspoon", role = "aut"),
-             person("Jessica", "Melbourne-Thomas", email = "Jess.Melbourne-Thomas@aad.gov.au", role = "aut"),
+             person("Jessica", "Melbourne-Thomas", role = "aut"),
              person("Ben", "Raymond", role = c("aut", "cre"), email = "ben.raymond@aad.gov.au"))
 Description: Qualitiative analysis of press perturbations of network models.
     Given a network model represented as a signed directed graphs, this package
