@@ -50,9 +50,10 @@ jobs:
         if: runner.os == 'macOS'
         run: brew install tcl-tk
 
+      # need to export DISPLAY for Tk
       - name: "Install Linux system libs"
         if: runner.os == 'Linux'
-        run: sudo apt-get install -y tk-dev
+        run: export DISPLAY=:99
 
       - uses: r-lib/actions/setup-r-dependencies@v1
         with:
