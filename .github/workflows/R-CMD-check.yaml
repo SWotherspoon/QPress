@@ -50,18 +50,31 @@ jobs:
         if: runner.os == 'macOS'
         run: brew install tcl-tk
 
-      # need to export DISPLAY for Tk
-      - name: "Install Linux system libs"
-        if: runner.os == 'Linux'
-        run: |
-          export DISPLAY=:99.0
-          sudo apt-get install -y tk-dev
+#      # need to export DISPLAY for Tk
+#      - name: "Install Linux system libs"
+#        if: runner.os == 'Linux'
+#        run: |
+#          export DISPLAY=:99.0
+#          sudo apt-get install -y tk-dev
 
       - uses: r-lib/actions/setup-r-dependencies@v1
         with:
           extra-packages: rcmdcheck
 
-      - uses: r-lib/actions/check-r-package@v1
+#      - uses: r-lib/actions/check-r-package@v1
+
+      - name: Check
+        env:
+          _R_CHECK_CRAN_INCOMING_: false
+#          _R_CHECK_DONTTEST_EXAMPLES_: false
+          DISPLAY: 99.0
+        run: |
+          ## --------------------------------------------------------------------
+          options(crayon.enabled = TRUE)
+          if (Sys.getenv("_R_CHECK_FORCE_SUGGESTS_", "") == "") Sys.setenv("_R_CHECK_FORCE_SUGGESTS_" = "false")
+          rcmdcheck::rcmdcheck(args = c("--no-manual", "--as-cran"), build_args = "--no-manual", error_on = "warning", check_dir = "check")
+        shell: Rscript {0}
+        working-directory: ${{ inputs.working-directory }}
 
       - name: Show testthat output
         if: always()
