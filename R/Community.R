@@ -128,7 +128,7 @@ adjacency.image <- function(edges,required.groups=c(0),cex.axis=1) {
   opar <- par(mai=c(0,lwidth+0.2,lwidth+0.2,0)+0.1)
   ## Flip image to match matrix ordering
   image(seq_len(n),seq_len(n),t(A)[,rev(seq_len(n))],axes=F,xlab="",ylab="",col=pal)
-  axis(2,seq_len(n),nodes,las=2,cex.axis=cex.axis)
+  axis(2,seq_len(n),rev(nodes),las=2,cex.axis=cex.axis)
   axis(3,seq_len(n),nodes,las=2,cex.axis=cex.axis)
   box()
   par(opar)
