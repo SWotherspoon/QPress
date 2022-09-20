@@ -31,15 +31,19 @@ text that was written to the file.
 The functions \code{read.digraph} and \code{parse.digraph} return an
 edge list - a data frame with columns
 
-\item{\code{From}}{a factor indicating the origin of each edge (the node that effects)}
-\item{\code{To}}{a factor indicating the destination of each edge (the node that is effected)}
-\item{\code{Group}}{an integer vector that indicates the group each edge belons to}
-\item{\code{Type}}{a factor indicating the edge type - "N" (negative) ,"P" (positive),"U" (unknown) or "Z" (zero)}
-\item{\code{Pair}}{an integer vector that indicates the pairing of directed edges}
+\item{\code{From}}{a factor indicating the origin of each edge (the node
+that effects)}
+\item{\code{To}}{a factor indicating the destination of each edge (the node
+that is effected)}
+\item{\code{Group}}{an integer vector that indicates the group each edge
+belongs to}
+\item{\code{Type}}{a factor indicating the edge type -
+"N" (negative) ,"P" (positive),"U" (unknown) or "Z" (zero)}
+\item{\code{Pair}}{an integer vector that indicates the pairing of
+directed edges}
 
-Each edge of the text specification is separated into two directed
-edges, and every row of an edge list corresponds to a single
-directed edge.
+Each edge of the text specification is separated into two directed edges,
+and every row of an edge list corresponds to a single directed edge.
 }
 \description{
 Read and write text representations of models
@@ -47,18 +51,18 @@ Read and write text representations of models
 \details{
 The functions \code{read.digraph} and \code{parse.digraph} read a model
 description from a text file and a string respectively, while
-\code{write.digraph} writes a text representation of the model to and
-file.
+\code{write.digraph} writes a text representation of the model to and file.
 
-These functions recognize the following text format.  Each line
-corresponds to an edge, and must consist of two node labels
-separated by an arrow.  An arrow consists of one of the character
-sequences "<","*","<>" or "" on the left and ">","*","<>" or "" on
-the right, separated by a sequence of dashes "-".  The number of
-dashes used in the arrow defines the group number of the edge.
+These functions recognize the following text format.  Each line corresponds
+to an edge, and must consist of two node labels separated by an arrow.  An
+arrow consists of one of the character sequences "<","*","<>" or "" on the
+left and ">","*","<>" or "" on the right, separated by a sequence of dashes
+"-".  The number of dashes used in the arrow defines the group number of the
+edge.
 }
 \examples{
-edges <- parse.digraph(c("A <-* B","C *-> A","C <- D","D -> B","B *--* C","A <--- D"))
+edges <- parse.digraph(c("A <-* B","C *-> A","C <- D",
+    "D -> B","B *--* C","A <--- D"))
 edges
 deparse.digraph(edges)
 }

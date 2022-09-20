@@ -15,17 +15,18 @@ charpoly(A)
 \value{
 \code{adjoint} returns the adjoint matrix of \code{A}
 
-\code{charpoly} returns the coefficients of the characteristic polynomial of \code{A} as a vector.
+\code{charpoly} returns the coefficients of the characteristic
+  polynomial of \code{A} as a vector.
 }
 \description{
 Adjoint matrix and Characteristic Polynomial
 }
 \details{
-These functions compute the adjoint matrix and characteristic
-polynomial of A by the Fedeew-Leverrier algorithm.
+These functions compute the adjoint matrix and characteristic polynomial of
+A by the Fedeew-Leverrier algorithm.
 
-If A has integer elements and the computations are performed with
-integer arithmetic the result is exact.
+If A has integer elements and the computations are performed with integer
+arithmetic the result is exact.
 }
 \examples{
 edges <- parse.digraph(c(

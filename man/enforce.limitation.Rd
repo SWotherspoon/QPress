@@ -16,7 +16,7 @@ Returns an edge list augmented with self limiting edges.
 Enforce self limitation
 }
 \details{
-For stability, the majority of nodes of the directed graph should
-have a self limiting edge. This function adds a self limiting edge
-for every node to an existing edge list.
+For stability, the majority of nodes of the directed graph should have a
+self limiting edge. This function adds a self limiting edge for every node
+to an existing edge list.
 }

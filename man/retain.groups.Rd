@@ -17,19 +17,18 @@ retain.nodes(edges, nodes)
 \item{nodes}{the nodes to retain in the subset}
 }
 \value{
-\code{retain.groups} returns an edge list containing only
-edges from the specified groups.
+\code{retain.groups} returns an edge list containing only edges from
+  the specified groups.
 
-\code{retain.nodes} returns an edge list containing only
-edges incident on the specified nodes.
+\code{retain.nodes} returns an edge list containing only edges
+  incident on the specified nodes.
 }
 \description{
 Subset an edge list
 }
 \details{
-These functions extract a subset of an edge list containing only
-edges in a specified group, or incident with a specified set of
-nodes.
+These functions extract a subset of an edge list containing only edges in a
+specified group, or incident with a specified set of nodes.
 }
 \examples{
 edges <- parse.digraph(c("A *-> B","B *-> C","C *--> D"))

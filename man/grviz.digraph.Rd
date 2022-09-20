@@ -36,6 +36,6 @@ Returns a string.
 Write a DOT specification of the model.
 }
 \details{
-Write a DOT specification of the model in a form suitable for use
-with \code{grViz} from \pkg{DiagrammeR}.
+Write a DOT specification of the model in a form suitable for use with
+\code{grViz} from \pkg{DiagrammeR}.
 }

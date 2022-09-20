@@ -20,8 +20,7 @@ Returns the adjacency matrix for the directed graph.
 Display adjacency matrix of the directed graph as an image
 }
 \details{
-Display the matrix constructed by \code{adjacency.matrix} as
-an image.
+Display the matrix constructed by \code{adjacency.matrix} as an image.
 }
 \examples{
 edges <- parse.digraph(c(

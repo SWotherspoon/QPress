@@ -5,10 +5,10 @@
 \alias{QPress-package}
 \title{Qualitative Network Analysis}
 \description{
-Qualitiative analysis of press perturbations of network models.
-Given a network model represented as a signed directed graphs, this
-package provide facilities for evaluating the impact of a press
-perturbation to the system through simulation.
+Qualitiative analysis of press perturbations of network models.  Given a
+network model represented as a signed directed graphs, this package provide
+facilities for evaluating the impact of a press perturbation to the system
+through simulation.
 
 This package provides facilities for simulating press
 perturbation scenarios for qualitative network models

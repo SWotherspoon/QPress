@@ -9,11 +9,13 @@ drop.nodes(sim, to.drop, method = "remove")
 \arguments{
 \item{sim}{the result from \code{system.simulate}}
 
-\item{to.drop}{the names of the nodes to drop (check \code{node.labels(sim$edges)})}
+\item{to.drop}{the names of the nodes to drop (check
+\code{node.labels(sim$edges)})}
 
-\item{method}{either "remove" (the specified nodes will be fully removed from the
-system) or "zeros" (the specified nodes will be left in the system but all edges
-from or to these nodes (other than self-interactions) are set to zero).}
+\item{method}{either "remove" (the specified nodes will be fully removed
+from the system) or "zeros" (the specified nodes will be left in the
+system but all edges from or to these nodes (other than self-interactions)
+are set to zero).}
 }
 \value{
 As for \code{system.simulate}

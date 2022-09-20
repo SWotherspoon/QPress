@@ -16,10 +16,9 @@ Returns TRUE if the system is stable, FALSE otherwise.
 Test community matrix stability
 }
 \details{
-The system is stable if the eigenvalues of community matrix all
-have negative real part. This function tests the eigenvalues of a
-simulated community matrix to determine the stability of the
-repreeented system.
+The system is stable if the eigenvalues of community matrix all have
+negative real part. This function tests the eigenvalues of a simulated
+community matrix to determine the stability of the repreeented system.
 }
 \examples{
 set.seed(32)

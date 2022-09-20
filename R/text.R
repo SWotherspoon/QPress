@@ -5,15 +5,14 @@
 ##'
 ##' The functions \code{read.digraph} and \code{parse.digraph} read a model
 ##' description from a text file and a string respectively, while
-##' \code{write.digraph} writes a text representation of the model to and
-##' file.
+##' \code{write.digraph} writes a text representation of the model to and file.
 ##'
-##' These functions recognize the following text format.  Each line
-##' corresponds to an edge, and must consist of two node labels
-##' separated by an arrow.  An arrow consists of one of the character
-##' sequences "<","*","<>" or "" on the left and ">","*","<>" or "" on
-##' the right, separated by a sequence of dashes "-".  The number of
-##' dashes used in the arrow defines the group number of the edge.
+##' These functions recognize the following text format.  Each line corresponds
+##' to an edge, and must consist of two node labels separated by an arrow.  An
+##' arrow consists of one of the character sequences "<","*","<>" or "" on the
+##' left and ">","*","<>" or "" on the right, separated by a sequence of dashes
+##' "-".  The number of dashes used in the arrow defines the group number of the
+##' edge.
 ##'
 ##' @title Text Representations of Models
 ##' @param file the name of the file to read or write
@@ -26,18 +25,23 @@
 ##' The functions \code{read.digraph} and \code{parse.digraph} return an
 ##' edge list - a data frame with columns
 ##'
-##' \item{\code{From}}{a factor indicating the origin of each edge (the node that effects)}
-##' \item{\code{To}}{a factor indicating the destination of each edge (the node that is effected)}
-##' \item{\code{Group}}{an integer vector that indicates the group each edge belons to}
-##' \item{\code{Type}}{a factor indicating the edge type - "N" (negative) ,"P" (positive),"U" (unknown) or "Z" (zero)}
-##' \item{\code{Pair}}{an integer vector that indicates the pairing of directed edges}
+##' \item{\code{From}}{a factor indicating the origin of each edge (the node
+##' that effects)}
+##' \item{\code{To}}{a factor indicating the destination of each edge (the node
+##' that is effected)}
+##' \item{\code{Group}}{an integer vector that indicates the group each edge
+##' belongs to}
+##' \item{\code{Type}}{a factor indicating the edge type -
+##' "N" (negative) ,"P" (positive),"U" (unknown) or "Z" (zero)}
+##' \item{\code{Pair}}{an integer vector that indicates the pairing of
+##' directed edges}
 ##'
-##' Each edge of the text specification is separated into two directed
-##' edges, and every row of an edge list corresponds to a single
-##' directed edge.
+##' Each edge of the text specification is separated into two directed edges,
+##' and every row of an edge list corresponds to a single directed edge.
 ##'
 ##' @examples
-##' edges <- parse.digraph(c("A <-* B","C *-> A","C <- D","D -> B","B *--* C","A <--- D"))
+##' edges <- parse.digraph(c("A <-* B","C *-> A","C <- D",
+##'     "D -> B","B *--* C","A <--- D"))
 ##' edges
 ##' deparse.digraph(edges)
 ##' @export
@@ -64,7 +68,8 @@ parse.digraph <- function(lines,labels=NULL) {
   head <- sapply(m,"[[",5)
 
   if(any(head=="" & tail==""))
-    warning("Zero edges specified: ",paste(lines[head=="" & tail==""],collapse=", "))
+    warning("Zero edges specified: ",
+            paste(lines[head=="" & tail==""],collapse=", "))
 
   ## Construct edge dataframe
   if(is.null(labels)) labels <- sort(unique(c(from,to)))
@@ -128,13 +133,13 @@ write.digraph <- function(edges,file="") {
   invisible(txt)
 }
 
-##' Parse a text representation of (directed) edges, return the index
-##' of the directed edge within the edge list.
+##' Parse a text representation of (directed) edges, return the index of the
+##' directed edge within the edge list.
 ##'
-##' Each directed edge is represented as a string consisting of two
-##' node labels separated by an arrow, where the arrow consists of a
-##' sequence of dashes "-" followed by one of the character sequences
-##' ">","*","<>". The number of dashes used in the arrow is ignored.
+##' Each directed edge is represented as a string consisting of two node labels
+##' separated by an arrow, where the arrow consists of a sequence of dashes "-"
+##' followed by one of the character sequences ">","*","<>". The number of
+##' dashes used in the arrow is ignored.
 ##'
 ##' @title Indices of (Directed) Edges
 ##' @param lines a vector of strings representing directed edges
@@ -184,7 +189,8 @@ parse.edge <- function(lines,edges) {
     from,to,type)
 
   if(any(is.na(es)))
-    warning("Encountered undefined edges: ",paste(lines[is.na(es)],collapse=", "))
+    warning("Encountered undefined edges: ",
+            paste(lines[is.na(es)],collapse=", "))
   es
  }
 
@@ -192,8 +198,8 @@ parse.edge <- function(lines,edges) {
 
 ##' Write a DOT specification of the model.
 ##'
-##' Write a DOT specification of the model in a form suitable for use
-##' with \code{grViz} from \pkg{DiagrammeR}.
+##' Write a DOT specification of the model in a form suitable for use with
+##' \code{grViz} from \pkg{DiagrammeR}.
 ##'
 ##' @title Export to DOT
 ##' @param edges An edge list
@@ -221,15 +227,18 @@ grviz.digraph <- function(edges,name="web",
     ln <- c("solid","dashed","dotted","bold")
     hd <- c("normal","dot","diamond","none")
     tl <- c("normal","dot","diamond","none")
-    paste("    ",
-          from[1],"->",to," [",
-          "style=",ln[edge$Group[1]+1],
-          ",",
-          "arrowtail=",if(any(!fwd)) tl[match(edge$Type[!fwd],c("P","N","U","Z"))] else "none",
-          ",",
-          "arrowhead=",if(any(fwd))  hd[match(edge$Type[fwd],c("P","N","U","Z"),4)] else "none",
-          "]",
-          sep="")
+    paste(
+      "    ",
+      from[1],"->",to," [",
+      "style=",ln[edge$Group[1]+1],
+      ",",
+      "arrowtail=",
+      if(any(!fwd)) tl[match(edge$Type[!fwd],c("P","N","U","Z"))] else "none",
+      ",",
+      "arrowhead=",
+      if(any(fwd))  hd[match(edge$Type[fwd],c("P","N","U","Z"),4)] else "none",
+      "]",
+      sep="")
   }
 
   ## Node definitions

@@ -15,14 +15,14 @@ parse.edge(lines, edges)
 the indices of the directed edges within the edge list
 }
 \description{
-Parse a text representation of (directed) edges, return the index
-of the directed edge within the edge list.
+Parse a text representation of (directed) edges, return the index of the
+directed edge within the edge list.
 }
 \details{
-Each directed edge is represented as a string consisting of two
-node labels separated by an arrow, where the arrow consists of a
-sequence of dashes "-" followed by one of the character sequences
-">","*","<>". The number of dashes used in the arrow is ignored.
+Each directed edge is represented as a string consisting of two node labels
+separated by an arrow, where the arrow consists of a sequence of dashes "-"
+followed by one of the character sequences ">","*","<>". The number of
+dashes used in the arrow is ignored.
 }
 \examples{
 ## Sample model

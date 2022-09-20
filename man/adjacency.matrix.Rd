@@ -20,9 +20,9 @@ Returns the adjacency matrix for the directed graph.
 Adjacency matrix of the directed graph.
 }
 \details{
-This function converts an edge list to an adjacency matrix
-\code{A}, following the convention that \code{A[i,j]} represents
-the impact of node \code{j} on node \code{i}.
+This function converts an edge list to an adjacency matrix \code{A},
+following the convention that \code{A[i,j]} represents the impact of node
+\code{j} on node \code{i}.
 }
 \examples{
 edges <- parse.digraph(c(
