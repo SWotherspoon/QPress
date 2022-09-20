@@ -89,7 +89,7 @@ parse.digraph <- function(lines,labels=NULL) {
                             Pair=seq_along(lines)))
 
   ## Drop zero weight edges
-  edges <- edges[edges$Type!="Z",,drop=F]
+  edges <- edges[edges$Type!="Z",,drop=FALSE]
   ## Add node labels
   attr(edges,"node.labels") <- labels
   edges
@@ -116,7 +116,7 @@ deparse.digraph <- function(edges) {
     paste(from," ",tail,line,head," ",to,sep="")
   }
 
-  sapply(split(edges,interaction(edges$Pair,edges$Group,drop=T)),make.edge)
+  sapply(split(edges,interaction(edges$Pair,edges$Group,drop=TRUE)),make.edge)
 }
 
 

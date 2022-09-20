@@ -150,7 +150,7 @@ parse.dia <- function(dia,labels=NULL) {
                             Pair=1:length(dia$edges)))
 
   ## Drop zero weight edges
-  edges <- edges[edges$Type!="Z",,drop=F]
+  edges <- edges[edges$Type!="Z",,drop=FALSE]
   ## Add node labels
   attr(edges,"node.labels") <- labels
   ## Add node colours
@@ -163,7 +163,7 @@ parse.dia <- function(dia,labels=NULL) {
 
 ##' @rdname model.dia
 ##' @export
-write.dia <- function(edges,file,width=8,height=2,self=T) {
+write.dia <- function(edges,file,width=8,height=2,self=TRUE) {
 
   writeHeader <- function() {
     ## Write Header
@@ -230,7 +230,7 @@ write.dia <- function(edges,file,width=8,height=2,self=T) {
         <dia:attribute name="vguides"/>
       </dia:composite>
     </dia:attribute>
-  </dia:diagramdata>',file=file,sep="",append=F)
+  </dia:diagramdata>',file=file,sep="",append=FALSE)
   }
 
 
@@ -287,7 +287,7 @@ write.dia <- function(edges,file,width=8,height=2,self=T) {
           </dia:attribute>
         </dia:composite>
       </dia:attribute>
-    </dia:object>',file=file,sep="",append=T)
+    </dia:object>',file=file,sep="",append=TRUE)
   }
 
   writeArc <- function(k,xy1,xy2,from,to,line,start,end) {
@@ -302,7 +302,7 @@ write.dia <- function(edges,file,width=8,height=2,self=T) {
       </dia:attribute>
       <dia:attribute name="line_style">
         <dia:enum val="',line,'"/>
-      </dia:attribute>',file=file,sep="",append=T)
+      </dia:attribute>',file=file,sep="",append=TRUE)
 
     if(length(start)>0 && !is.na(start)) {
       cat('
@@ -314,7 +314,7 @@ write.dia <- function(edges,file,width=8,height=2,self=T) {
       </dia:attribute>
       <dia:attribute name="start_arrow_width">
         <dia:real val="0.5"/>
-      </dia:attribute>',file=file,sep="",append=T)
+      </dia:attribute>',file=file,sep="",append=TRUE)
     }
 
     if(length(end)>0 && !is.na(end)) {
@@ -327,7 +327,7 @@ write.dia <- function(edges,file,width=8,height=2,self=T) {
       </dia:attribute>
       <dia:attribute name="end_arrow_width">
         <dia:real val="0.5"/>
-      </dia:attribute>',file=file,sep="",append=T)
+      </dia:attribute>',file=file,sep="",append=TRUE)
     }
 
     cat('
@@ -335,14 +335,14 @@ write.dia <- function(edges,file,width=8,height=2,self=T) {
         <dia:connection handle="0" to="O',from,'" connection="',if(from==to) "5" else "16",'"/>
         <dia:connection handle="1" to="O',to,'" connection="',if(from==to) "7" else "16",'"/>
       </dia:connections>
-    </dia:object>',file=file,sep="",append=T)
+    </dia:object>',file=file,sep="",append=TRUE)
 
   }
 
   writeHeader()
   ## Background layer
   cat('
-  <dia:layer name="Background" visible="true" active="true">',file=file,sep="",append=T)
+  <dia:layer name="Background" visible="true" active="true">',file=file,sep="",append=TRUE)
 
   ## Add Nodes
   labels <- node.labels(edges)
@@ -352,7 +352,7 @@ write.dia <- function(edges,file,width=8,height=2,self=T) {
     writeNode(k,xy[k,],labels[k])
 
   if(!self) edges <- edges[edges$From!=edges$To,]
-  prs <- split(edges,interaction(edges$Pair,edges$Group,drop=T))
+  prs <- split(edges,interaction(edges$Pair,edges$Group,drop=TRUE))
   for(k in seq_along(prs)) {
     edge <- prs[[k]]
     edge <- edge[order(match(edge$Type,c("P","N","U","Z"),4),edge$From),]
@@ -374,7 +374,7 @@ write.dia <- function(edges,file,width=8,height=2,self=T) {
   ## Write footer
   cat('
   </dia:layer>
-</dia:diagram>',file=file,sep="",append=T)
+</dia:diagram>',file=file,sep="",append=TRUE)
 
 }
 

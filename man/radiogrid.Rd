@@ -4,7 +4,7 @@
 \alias{radiogrid}
 \title{Grid of Radio Buttons}
 \usage{
-radiogrid(parent, label, rows, choices, initial = 1, label.rows = T)
+radiogrid(parent, label, rows, choices, initial = 1, label.rows = TRUE)
 }
 \arguments{
 \item{parent}{the parent window}

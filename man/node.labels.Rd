@@ -7,7 +7,7 @@
 \usage{
 node.labels(edges)
 
-edge.labels(edges, reverse = F)
+edge.labels(edges, reverse = FALSE)
 }
 \arguments{
 \item{edges}{an edge list}

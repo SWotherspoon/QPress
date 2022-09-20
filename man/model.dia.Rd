@@ -7,7 +7,7 @@
 \usage{
 model.dia(file, labels = NULL)
 
-write.dia(edges, file, width = 8, height = 2, self = T)
+write.dia(edges, file, width = 8, height = 2, self = TRUE)
 }
 \arguments{
 \item{file}{name of the file to read or write}

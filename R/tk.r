@@ -14,7 +14,7 @@
 ##' \item{\code{state}}{the tclVars representing the state of the radiobuttons}
 ##' @import tcltk
 ##' @import tcltk2
-radiogrid <- function(parent,label,rows,choices,initial=1,label.rows=T) {
+radiogrid <- function(parent,label,rows,choices,initial=1,label.rows=TRUE) {
   if(is.null(names(choices))) names(choices) <- as.character(choices)
   initial <- rep(initial,length=length(rows))
   state <- lapply(initial,function(k) tclVar(names(choices)[k]))
@@ -57,7 +57,7 @@ radiogrid <- function(parent,label,rows,choices,initial=1,label.rows=T) {
 ##' \item{\code{state}}{the tclVars representing the state of the check buttons}
 ##' @import tcltk
 ##' @import tcltk2
-checkedges <- function(parent,label,rows,edges,group=NULL,label.rows=T) {
+checkedges <- function(parent,label,rows,edges,group=NULL,label.rows=TRUE) {
   group <- if(is.null(group)) seq_len(nrow(edges)) else match(group,unique(group))
   state <- lapply(unique(group),function(k) tclVar("0"))[group]
   tk.frame <- tk2labelframe(parent,text=label)
@@ -107,7 +107,7 @@ checkbox <- function(parent,label,initial=0) {
 }
 
 ##' @rdname checkbox
-checkcolumn <- function(parent,label,rows,label.rows=T) {
+checkcolumn <- function(parent,label,rows,label.rows=TRUE) {
   state <- lapply(rows,function(k) tclVar("0"))
   names(state) <- rows
   tk.frame <- tk2labelframe(parent,text=label)
@@ -183,14 +183,14 @@ slider <- function(parent,initial=1,from=0,to=100,orient="horizontal") {
 ##' @import tcltk
 interactive.selection <- function(action,nodes,edges=NULL,
                                   slider=NULL,checkbox=NULL,
-                                  perturb=T,monitor=T) {
+                                  perturb=TRUE,monitor=TRUE) {
 
   tk.top <- tktoplevel()
   tktitle(tk.top) <- "Node Selector"
-  label <- T
-  w.perturb <- if(perturb) radiogrid(tk.top,"Perturb",nodes,c("-"=-1,"0"=0,"+"=1),initial=2,label.rows=label && !(label <- F))
-  w.monitor <- if(monitor) radiogrid(tk.top,"Monitor",nodes,c("-"=-1,"0"=0,"+"=1,"?"=NA),initial=4,label.rows=label && !(label <- F))
-  w.edges <- if(!is.null(edges)) checkedges(tk.top,"Edges",nodes,edges,label.rows=label && !(label <- F))
+  label <- TRUE
+  w.perturb <- if(perturb) radiogrid(tk.top,"Perturb",nodes,c("-"=-1,"0"=0,"+"=1),initial=2,label.rows=label && !(label <- FALSE))
+  w.monitor <- if(monitor) radiogrid(tk.top,"Monitor",nodes,c("-"=-1,"0"=0,"+"=1,"?"=NA),initial=4,label.rows=label && !(label <- FALSE))
+  w.edges <- if(!is.null(edges)) checkedges(tk.top,"Edges",nodes,edges,label.rows=label && !(label <- FALSE))
   w.checkbox <- if(!is.null(checkbox)) checkbox(tk.top,checkbox,0)
   w.slider <- if(!is.null(slider)) slider(tk.top,slider$initial,slider$to,slider$from)
 
@@ -266,7 +266,7 @@ impact.barplot <- function(sim,epsilon=1.0E-5,main="",cex.axis=1) {
     impact.barplot0(sim,perturb,monitor,epsilon=epsilon,
                     main=main,cex.axis=cex.axis)
   }
-  interactive.selection(action,node.labels(sim$edges),perturb=T,monitor=T)
+  interactive.selection(action,node.labels(sim$edges),perturb=TRUE,monitor=TRUE)
 }
 
 ##' @rdname impact.barplot
@@ -285,14 +285,14 @@ impact.barplot0 <- function(sim,perturb=0,monitor=NA,
 
   for(i in seq_along(As)) {
     impact <- signum(drop(As[[i]]%*%perturb),epsilon=epsilon)
-    if(all(monitor==impact,na.rm=T)) {
+    if(all(monitor==impact,na.rm=TRUE)) {
       results <- results + outer(impact,-1:1,'==')
     }
   }
   rownames(results) <- nodes
   lwidth <- max(strwidth(nodes,units="inches",cex=cex.axis))
   opar <- par(mai=c(1,lwidth+0.2,0.4,0.4)+0.2)
-  barplot(t(results),horiz=T,las=1,border=F,col=pal,
+  barplot(t(results),horiz=TRUE,las=1,border=FALSE,col=pal,
           xlab="Simulations",main=main,cex.axis=cex.axis)
   par(opar)
   invisible(results)
@@ -333,7 +333,7 @@ weight.density <- function(sim,epsilon=1.0E-5,main="") {
     weight.density0(sim,perturb,monitor,edges,smooth=slider,epsilon=epsilon,main=main)
   }
   interactive.selection(action,nodes,cbind(edges$From,edges$To),
-                        slider=list(initial=1,from=0,to=2),perturb=T,monitor=T)
+                        slider=list(initial=1,from=0,to=2),perturb=TRUE,monitor=TRUE)
 }
 
 ##' @rdname weight.density
@@ -351,10 +351,10 @@ weight.density0 <- function(sim,perturb,monitor,edges,
   monitor <- extend.vector(monitor,nodes,NA)
 
   if(any(edges)) {
-    keep <- rep(F,nrow(ws))
+    keep <- rep(FALSE,nrow(ws))
     for(i in seq_along(As)) {
       impact <- signum(drop(As[[i]]%*%perturb),epsilon=epsilon)
-      if(all(monitor==impact,na.rm=T)) keep[i] <- T
+      if(all(monitor==impact,na.rm=TRUE)) keep[i] <- TRUE
     }
     n <- ceiling(sqrt(sum(edges)))
     m <- ceiling(sum(edges)/n)
@@ -368,7 +368,7 @@ weight.density0 <- function(sim,perturb,monitor,edges,
            ylim=range(d1$y,d2$y))
       lines(d1,col=pal[1])
       lines(d2,col=pal[2])
-      title(main=main,outer=T)
+      title(main=main,outer=TRUE)
     }
     par(opar)
   }

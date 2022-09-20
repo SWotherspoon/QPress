@@ -4,7 +4,7 @@
 \alias{checkedges}
 \title{Edge Selection Widget}
 \usage{
-checkedges(parent, label, rows, edges, group = NULL, label.rows = T)
+checkedges(parent, label, rows, edges, group = NULL, label.rows = TRUE)
 }
 \arguments{
 \item{parent}{the parent window}

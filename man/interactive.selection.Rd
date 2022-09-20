@@ -10,8 +10,8 @@ interactive.selection(
   edges = NULL,
   slider = NULL,
   checkbox = NULL,
-  perturb = T,
-  monitor = T
+  perturb = TRUE,
+  monitor = TRUE
 )
 }
 \arguments{

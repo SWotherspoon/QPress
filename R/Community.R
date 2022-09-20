@@ -30,7 +30,7 @@ node.labels <- function(edges) {
 
 ##' @rdname node.labels
 ##' @export
-edge.labels <- function(edges,reverse=F) {
+edge.labels <- function(edges,reverse=FALSE) {
 
   if(!reverse) {
     symb <- c("*",">","<>","")
@@ -127,7 +127,7 @@ adjacency.image <- function(edges,required.groups=c(0),cex.axis=1) {
   lwidth <- max(strwidth(nodes,units="inches",cex=cex.axis))
   opar <- par(mai=c(0,lwidth+0.2,lwidth+0.2,0)+0.1)
   ## Flip image to match matrix ordering
-  image(seq_len(n),seq_len(n),t(A)[,rev(seq_len(n))],axes=F,xlab="",ylab="",col=pal)
+  image(seq_len(n),seq_len(n),t(A)[,rev(seq_len(n))],axes=FALSE,xlab="",ylab="",col=pal)
   axis(2,seq_len(n),rev(nodes),las=2,cex.axis=cex.axis)
   axis(3,seq_len(n),nodes,las=2,cex.axis=cex.axis)
   box()
@@ -412,7 +412,7 @@ community.sampler <- function(edges,required.groups=c(0)) {
 ##' stable.community(W)
 ##' @export
 stable.community <- function(W) {
-  all(Re(eigen(W,symmetric=FALSE,only.values=T)$values)<0)
+  all(Re(eigen(W,symmetric=FALSE,only.values=TRUE)$values)<0)
 }
 
 

@@ -7,7 +7,7 @@
 \usage{
 checkbox(parent, label, initial = 0)
 
-checkcolumn(parent, label, rows, label.rows = T)
+checkcolumn(parent, label, rows, label.rows = TRUE)
 }
 \arguments{
 \item{parent}{the parent window.}
